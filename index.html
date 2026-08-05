@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Салон Красоты «Колян» | Премиум Ресницы, Брови и Ногти в Киеве</title>
+    <meta name="description" content="Премиальный салон красоты «Колян» в Киеве. Экспертное наращивание ресниц, архитектура бровей и авторский маникюр. Онлайн-запись 24/7.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Remix Icon -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+    <!-- Custom Luxury Cursor -->
+    <div class="custom-cursor" id="customCursor"></div>
+    <div class="custom-cursor-follower" id="customCursorFollower"></div>
+
+    <!-- Floating Island Glass Navigation -->
+    <header class="navbar-wrapper">
+        <nav class="navbar-island">
+            <a href="#" class="brand-logo">
+                <span class="brand-title">КОЛЯН</span>
+                <span class="brand-sub">BEAUTY SALON</span>
+            </a>
+
+            <div class="nav-menu" id="navMenu">
+                <a href="#services" class="nav-link">Услуги</a>
+                <a href="#transformations" class="nav-link">Преображения</a>
+                <a href="#calculator" class="nav-link">Калькулятор</a>
+                <a href="#booking" class="nav-link">Мастера</a>
+                <a href="#contacts" class="nav-link">Контакты</a>
+            </div>
+
+            <div class="nav-actions">
+                <button class="icon-toggle-btn" id="soundToggle" title="Звуковой отклик" aria-label="Звук">
+                    <i class="ri-volume-up-line" id="soundIcon"></i>
+                </button>
+
+                <button class="icon-toggle-btn" id="themeToggle" title="Сменить тему" aria-label="Тема">
+                    <i class="ri-moon-clear-line" id="themeIcon"></i>
+                </button>
+
+                <a href="#booking" class="btn-nested-primary nav-cta-desktop">
+                    <span class="btn-text">Записаться</span>
+                    <span class="btn-icon-wrapper">
+                        <i class="ri-arrow-right-up-line"></i>
+                    </span>
+                </a>
+
+                <button class="hamburger-btn" id="hamburgerBtn" aria-label="Открыть меню">
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Mobile Navigation Overlay -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay">
+        <div class="mobile-menu-content">
+            <a href="#services" class="mobile-nav-link">Услуги & Прайс</a>
+            <a href="#transformations" class="mobile-nav-link">Видео-галерея</a>
+            <a href="#calculator" class="mobile-nav-link">Подбор комплекта</a>
+            <a href="#booking" class="mobile-nav-link">Онлайн-запись</a>
+            <a href="#reviews" class="mobile-nav-link">Отзывы</a>
+            <a href="#contacts" class="mobile-nav-link">Контакты</a>
+            
+            <div class="mobile-menu-footer">
+                <a href="#booking" class="btn-nested-primary btn-full-mobile">
+                    <span class="btn-text">Записаться онлайн</span>
+                    <span class="btn-icon-wrapper"><i class="ri-calendar-check-line"></i></span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section" id="hero">
+            <div class="hero-bg-media">
+                <video autoplay loop muted playsinline class="hero-video">
+                    <source src="assets/videos/kling_20260805_VIDEO_Smooth_cin_5926_0.mp4" type="video/mp4">
+                </video>
+                <div class="hero-overlay-gradient"></div>
+            </div>
+
+            <div class="hero-container">
+                <div class="hero-badge-pill">
+                    <span class="badge-dot"></span>
+                    <span>Премиальный салон эстетики и красоты • Киев</span>
+                </div>
+
+                <h1 class="hero-heading">
+                    Искусство вашей <br>
+                    <span class="text-serif-italic text-gradient">естественной</span> красоты
+                </h1>
+
+                <p class="hero-description">
+                    Авторское наращивание ресниц, скульптурная архитектура бровей и безупречный маникюр в центре Киева. Создаем преображения, вызывающие восхищение.
+                </p>
+
+                <div class="hero-actions">
+                    <a href="#booking" class="btn-nested-primary btn-hero">
+                        <span class="btn-text">Онлайн-запись</span>
+                        <span class="btn-icon-wrapper"><i class="ri-calendar-line"></i></span>
+                    </a>
+                    <a href="#transformations" class="btn-secondary-glass">
+                        <i class="ri-play-circle-line"></i>
+                        <span>Смотреть работы</span>
+                    </a>
+                </div>
+
+                <!-- Floating Feature Badges -->
+                <div class="hero-stats-grid">
+                    <div class="stat-card-bezel">
+                        <div class="stat-card-core">
+                            <span class="stat-number">4.98</span>
+                            <span class="stat-stars">★★★★★</span>
+                            <span class="stat-label">Оценка клиентов</span>
+                        </div>
+                    </div>
+                    <div class="stat-card-bezel">
+                        <div class="stat-card-core">
+                            <span class="stat-number">1 500+</span>
+                            <span class="stat-label">Довольных дам</span>
+                        </div>
+                    </div>
+                    <div class="stat-card-bezel">
+                        <div class="stat-card-core">
+                            <span class="stat-number">100%</span>
+                            <span class="stat-label">Премиум-материалы</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Floating Text / Marquee Banner -->
+        <section class="marquee-section">
+            <div class="marquee-track">
+                <div class="marquee-content">
+                    <span class="marquee-item"><i class="ri-sparkles-line"></i> КОЛЯН BEAUTY SALON КИЕВ</span>
+                    <span class="marquee-item"><i class="ri-heart-3-line"></i> ИДЕАЛЬНЫЙ ВЗГЛЯД ЗА 1.5 ЧАСА</span>
+                    <span class="marquee-item"><i class="ri-vip-crown-line"></i> ПРЕМИУМ МАТЕРИАЛЫ ИЗ КОРЕИ И ГЕРМАНИИ</span>
+                    <span class="marquee-item"><i class="ri-checkbox-circle-line"></i> ГАРАНТИЯ НА НОСКУ 4 НЕДЕЛИ</span>
+                    <span class="marquee-item"><i class="ri-cup-line"></i> СВЕЖЕСВАРЕННЫЙ КОФЕ И ШАМПАНСКОЕ</span>
+                </div>
+                <div class="marquee-content" aria-hidden="true">
+                    <span class="marquee-item"><i class="ri-sparkles-line"></i> КОЛЯН BEAUTY SALON КИЕВ</span>
+                    <span class="marquee-item"><i class="ri-heart-3-line"></i> ИДЕАЛЬНЫЙ ВЗГЛЯД ЗА 1.5 ЧАСА</span>
+                    <span class="marquee-item"><i class="ri-vip-crown-line"></i> ПРЕМИУМ МАТЕРИАЛЫ ИЗ КОРЕИ И ГЕРМАНИИ</span>
+                    <span class="marquee-item"><i class="ri-checkbox-circle-line"></i> ГАРАНТИЯ НА НОСКУ 4 НЕДЕЛИ</span>
+                    <span class="marquee-item"><i class="ri-cup-line"></i> СВЕЖЕСВАРЕННЫЙ КОФЕ И ШАМПАНСКОЕ</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section (REAL KYIV MARKET PRICES IN UAH / ГРН) -->
+        <section class="services-section" id="services">
+            <div class="section-container">
+                <div class="section-header">
+                    <div class="eyebrow-pill">Услуги & Прайс</div>
+                    <h2 class="section-title">Каталог <span class="text-serif-italic">процедур</span></h2>
+                    <p class="section-subtitle">Выберите интересующее направление и ознакомьтесь с анимированными процессами проведения процедур</p>
+                </div>
+
+                <!-- Category Tabs -->
+                <div class="services-tabs-bezel">
+                    <div class="services-tabs-core">
+                        <button class="tab-btn active" data-category="lashes">
+                            <i class="ri-eye-line"></i>
+                            <span>Ресницы</span>
+                        </button>
+                        <button class="tab-btn" data-category="brows">
+                            <i class="ri-brush-line"></i>
+                            <span>Брови</span>
+                        </button>
+                        <button class="tab-btn" data-category="nails">
+                            <i class="ri-hand-sanitizer-line"></i>
+                            <span>Ногти & Маникюр</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Services Grid (Kyiv Market Prices in UAH) -->
+                <div class="services-grid" id="servicesGrid">
+                    
+                    <!-- EYELASHES VARIATIONS -->
+                    <div class="service-card-shell category-item lashes active">
+                        <div class="service-card-core">
+                            <div class="service-media-preview">
+                                <img src="assets/images/lash_process.png" alt="Процесс наращивания ресниц пинцетами" class="card-img cinemagraph-media">
+                                <span class="media-tag">Процесс работы</span>
+                            </div>
+                            <div class="service-details">
+                                <div class="service-title-row">
+                                    <h3 class="service-name">Бархатный Объем 2D / 3D</h3>
+                                    <span class="service-price luxury-price">950 грн</span>
+                                </div>
+                                <p class="service-desc">Процесс аккуратного поресничного наращивания ювелирными пинцетами. Легкость и комфорт в носке до 5 недель.</p>
+                                <div class="service-meta">
+                                    <span><i class="ri-time-line"></i> 1 ч 45 мин</span>
+                                    <span><i class="ri-shield-star-line"></i> Гарантия 14 дней</span>
+                                </div>
+                                <button class="btn-nested-primary btn-service-add" data-service-id="1">
+                                    <span class="btn-text">Выбрать процедуру</span>
+                                    <span class="btn-icon-wrapper"><i class="ri-add-line"></i></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="service-card-shell category-item lashes active">
+                        <div class="service-card-core">
+                            <div class="service-media-preview">
+                                <img src="assets/images/lashes_masterpiece.png" alt="Результат ламинирования ресниц" class="card-img">
+                                <span class="media-tag">Результат ламинирования</span>
+                            </div>
+                            <div class="service-details">
+                                <div class="service-title-row">
+                                    <h3 class="service-name">Ламинирование Ресниц + BOTOX</h3>
+                                    <span class="service-price luxury-price">1 100 грн</span>
+                                </div>
+                                <p class="service-desc">Глубокое питание кератином, эффектный изгиб и насыщенный черный цвет натуральных ресниц без наращивания.</p>
+                                <div class="service-meta">
+                                    <span><i class="ri-time-line"></i> 1 ч 15 мин</span>
+                                    <span><i class="ri-sparkles-fill"></i> Эффект 2 месяца</span>
+                                </div>
+                                <button class="btn-nested-primary btn-service-add" data-service-id="2">
+                                    <span class="btn-text">Выбрать процедуру</span>
+                                    <span class="btn-icon-wrapper"><i class="ri-add-line"></i></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="service-card-shell category-item lashes active">
+                        <div class="service-card-core">
+                            <div class="service-media-preview">
+                                <img src="assets/images/Gemini_Generated_Image_3c9hzr3c9hzr3c9h.png" alt="Мегаобъем Голливуд 4D-6D" class="card-img">
+                                <span class="media-tag">Премиум выбор</span>
+                            </div>
+                            <div class="service-details">
+                                <div class="service-title-row">
+                                    <h3 class="service-name">Мегаобъем Голливуд 4D-6D</h3>
+                                    <span class="service-price luxury-price">1 300 грн</span>
+                                </div>
+                                <p class="service-desc">Максимально пышный и выразительный взгляд для особых событий. Невесомые ультратонкие моноволокна.</p>
+                                <div class="service-meta">
+                                    <span><i class="ri-time-line"></i> 2 ч 10 мин</span>
+                                    <span><i class="ri-vip-diamond-line"></i> Голливудский взгляд</span>
+                                </div>
+                                <button class="btn-nested-primary btn-service-add" data-service-id="7">
+                                    <span class="btn-text">Выбрать процедуру</span>
+                                    <span class="btn-icon-wrapper"><i class="ri-add-line"></i></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="service-card-shell category-item lashes active">
+                        <div class="service-card-core">
+                            <div class="service-media-preview">
+                                <img src="assets/images/wet_lash_effect.png" alt="Мокрый Эффект Лучи Кайли" class="card-img">
+                                <span class="media-tag">Трендовый эффект</span>
+                            </div>
+                            <div class="service-details">
+                                <div class="service-title-row">
+                                    <h3 class="service-name">Мокрый Эффект & Лучи Кайли</h3>
+                                    <span class="service-price luxury-price">1 050 грн</span>
+                                </div>
+                                <p class="service-desc">Трендовая небрежная текстура с эффектно выделяющимися лучиками, имитирующая накрашенные тушью ресницы.</p>
+                                <div class="service-meta">
+                                    <span><i class="ri-time-line"></i> 1 ч 40 мин</span>
+                                    <span><i class="ri-fire-line"></i> Тренд 2026</span>
+                                </div>
+                                <button class="btn-nested-primary btn-service-add" data-service-id="8">
+                                    <span class="btn-text">Выбрать процедуру</span>
+                                    <span class="btn-icon-wrapper"><i class="ri-add-line"></i></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- EYEBROWS VARIATIONS -->
+                    <div class="service-card-shell category-item brows">
+                        <div class="service-card-core">
+                            <div class="service-media-preview">
+                                <img src="assets/images/brow_process.png" alt="Процесс архитектуры бровей" class="card-img cinemagraph-media">
+                                <span class="media-tag">Процесс разметки</span>
+                            </div>
+                            <div class="service-details">
+                                <div class="service-title-row">
+                                    <h3 class="service-name">Архитектура & Окрашивание Бровей</h3>
+                                    <span class="service-price luxury-price">650 грн</span>
+                                </div>
+                                <p class="service-desc">Построение идеальной геометрической формы с помощью циркуля и кисти, коррекция воском и нанесение пигмента.</p>
+                                <div class="service-meta">
+                                    <span><i class="ri-time-line"></i> 50 мин</span>
+                                    <span><i class="ri-palette-line"></i> Стойкость до 4 недель</span>
+                                </div>
+                                <button class="btn-nested-primary btn-service-add" data-service-id="3">
+                                    <span class="btn-text">Выбрать процедуру</span>
+                                    <span class="btn-icon-wrapper"><i class="ri-add-line"></i></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="service-card-shell category-item brows">
+                        <div class="service-card-core">
+                            <div class="service-media-preview">
+                                <img src="assets/images/brow_masterpiece.png" alt="Долговременная укладка бровей" class="card-img">
+                                <span class="media-tag">Результат ламинирования</span>
+                            </div>
+                            <div class="service-details">
+                                <div class="service-title-row">
+                                    <h3 class="service-name">Долговременная Укладка (Ламинирование)</h3>
+                                    <span class="service-price luxury-price">950 грн</span>
+                                </div>
+                                <p class="service-desc">Укрощение непослушных волосков, создание эффекта пышных и соболиных бровей с уходовым составом.</p>
+                                <div class="service-meta">
+                                    <span><i class="ri-time-line"></i> 1 ч 10 мин</span>
+                                    <span><i class="ri-magic-line"></i> Соболиные брови</span>
+                                </div>
+                                <button class="btn-nested-primary btn-service-add" data-service-id="4">
+                                    <span class="btn-text">Выбрать процедуру</span>
+                                    <span class="btn-icon-wrapper"><i class="ri-add-line"></i></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- NAILS VARIATIONS -->
+                    <div class="service-card-shell category-item nails">
+                        <div class="service-card-core">
+                            <div class="service-media-preview">
+                                <img src="assets/images/nail_process.png" alt="Процесс нанесения гель лака" class="card-img cinemagraph-media">
+                                <span class="media-tag">Процесс маникюра</span>
+                            </div>
+                            <div class="service-details">
+                                <div class="service-title-row">
+                                    <h3 class="service-name">Премиум Маникюр + Покрытие Gel Polish</h3>
+                                    <span class="service-price luxury-price">850 грн</span>
+                                </div>
+                                <p class="service-desc">Процесс профессионального нанесения гель-лака кистью тонким слоем под кутикулу и сушка в UV-лампе.</p>
+                                <div class="service-meta">
+                                    <span><i class="ri-time-line"></i> 1 ч 30 мин</span>
+                                    <span><i class="ri-sparkles-line"></i> Износостойкость</span>
+                                </div>
+                                <button class="btn-nested-primary btn-service-add" data-service-id="5">
+                                    <span class="btn-text">Выбрать процедуру</span>
+                                    <span class="btn-icon-wrapper"><i class="ri-add-line"></i></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="service-card-shell category-item nails">
+                        <div class="service-card-core">
+                            <div class="service-media-preview">
+                                <img src="assets/images/pedicure_smart_process.png" alt="Smart Педикюр обработка стопы" class="card-img cinemagraph-media">
+                                <span class="media-tag">Процесс педикюра</span>
+                            </div>
+                            <div class="service-details">
+                                <div class="service-title-row">
+                                    <h3 class="service-name">Smart Педикюр с Обработкой Стопы</h3>
+                                    <span class="service-price luxury-price">1 200 грн</span>
+                                </div>
+                                <p class="service-desc">Запатентованный педикюр smart-дисками: зеркальная гладкость пяточек без размачивания и эстетическое покрытие.</p>
+                                <div class="service-meta">
+                                    <span><i class="ri-time-line"></i> 1 ч 45 мин</span>
+                                    <span><i class="ri-footprint-line"></i> Бархатная кожа</span>
+                                </div>
+                                <button class="btn-nested-primary btn-service-add" data-service-id="6">
+                                    <span class="btn-text">Выбрать процедуру</span>
+                                    <span class="btn-icon-wrapper"><i class="ri-add-line"></i></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="service-card-shell category-item nails">
+                        <div class="service-card-core">
+                            <div class="service-media-preview">
+                                <img src="assets/images/nail_masterpiece.png" alt="Наращивание Ногтей Гель" class="card-img">
+                                <span class="media-tag">Результат маникюра</span>
+                            </div>
+                            <div class="service-details">
+                                <div class="service-title-row">
+                                    <h3 class="service-name">Наращивание Ногтей Гель / Акригель</h3>
+                                    <span class="service-price luxury-price">1 400 грн</span>
+                                </div>
+                                <p class="service-desc">Моделирование любой длины и формы (миндаль, квадрат, балерина) с армированием и стойким покрытием.</p>
+                                <div class="service-meta">
+                                    <span><i class="ri-time-line"></i> 2 ч 15 мин</span>
+                                    <span><i class="ri-hand-heart-line"></i> Прочность 5 недель</span>
+                                </div>
+                                <button class="btn-nested-primary btn-service-add" data-service-id="10">
+                                    <span class="btn-text">Выбрать процедуру</span>
+                                    <span class="btn-icon-wrapper"><i class="ri-add-line"></i></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Before / After Transformation Video Gallery -->
+        <section class="gallery-section" id="transformations">
+            <div class="section-container">
+                <div class="section-header">
+                    <div class="eyebrow-pill">Галерея Преображений</div>
+                    <h2 class="section-title">Видео-доказательства <span class="text-serif-italic">совершенства</span></h2>
+                    <p class="section-subtitle">Оцените детали в высоком разрешении. Никаких фильтров — только чистое мастерство наших специалистов.</p>
+                </div>
+
+                <div class="transformation-stage">
+                    <div class="video-stage-shell">
+                        <div class="video-stage-core">
+                            <video id="galleryMainVideo" controls autoplay loop muted playsinline class="stage-video">
+                                <source src="assets/videos/kling_20260805_VIDEO_Smooth_cin_5870_0.mp4" type="video/mp4">
+                            </video>
+                            <img id="galleryMainImg" src="" alt="Преображение №3" class="stage-video cinemagraph-media" style="display: none; object-fit: cover;">
+
+                            <div class="stage-video-overlay">
+                                <div class="stage-badge">
+                                    <i class="ri-play-fill" id="stageBadgeIcon"></i>
+                                    <span id="videoTitle">Авторская Архитектура Бровей: Естественная густота и идеальный изгиб</span>
+                                </div>
+                                <button class="btn-sound-unmute" id="unmuteStageBtn">
+                                    <i class="ri-volume-mute-line"></i> Включить звук
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Video Selector Thumbnails -->
+                    <div class="gallery-thumbs-row">
+                        <button class="thumb-card active" data-video="assets/videos/kling_20260805_VIDEO_Smooth_cin_5870_0.mp4" data-title="Авторская Архитектура Бровей: Естественная густота и идеальный изгиб">
+                            <div class="thumb-media">
+                                <video muted loop class="thumb-video">
+                                    <source src="assets/videos/kling_20260805_VIDEO_Smooth_cin_5870_0.mp4" type="video/mp4">
+                                </video>
+                                <span class="play-icon"><i class="ri-play-circle-fill"></i></span>
+                            </div>
+                            <div class="thumb-info">
+                                <h4>Трансформация №1: Брови</h4>
+                                <p>Идеальная симметрия и укладка</p>
+                            </div>
+                        </button>
+
+                        <button class="thumb-card" data-video="assets/videos/kling_20260805_VIDEO_Smooth_cin_5926_0.mp4" data-title="Взгляд кинодивы: Ресницы 3D & Скульптурирование">
+                            <div class="thumb-media">
+                                <video muted loop class="thumb-video">
+                                    <source src="assets/videos/kling_20260805_VIDEO_Smooth_cin_5926_0.mp4" type="video/mp4">
+                                </video>
+                                <span class="play-icon"><i class="ri-play-circle-fill"></i></span>
+                            </div>
+                            <div class="thumb-info">
+                                <h4>Трансформация №2: Ресницы</h4>
+                                <p>Роскошный бархатный объем</p>
+                            </div>
+                        </button>
+
+                        <button class="thumb-card" data-img="assets/images/lash_process.png" data-title="Процесс ювелирного наращивания ресниц: Авторская техника">
+                            <div class="thumb-media">
+                                <img src="assets/images/lash_process.png" alt="Результат преображения" class="thumb-img">
+                                <span class="play-icon"><i class="ri-image-line"></i></span>
+                            </div>
+                            <div class="thumb-info">
+                                <h4>Преображение №3: Процесс</h4>
+                                <p>Поресничное наращивание</p>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Price Calculator / Service Matcher Quiz (UAH MARKET PRICES) -->
+        <section class="calculator-section" id="calculator">
+            <div class="section-container">
+                <div class="calculator-shell">
+                    <div class="calculator-core">
+                        <div class="quiz-header">
+                            <div class="eyebrow-pill">Интерактивный Подбор</div>
+                            <h2 class="quiz-title">Калькулятор и <span class="text-serif-italic">подбор образа</span></h2>
+                            <p class="quiz-desc">Ответьте на вопросы и получите расчет идеального комплекса процедур со скидкой 10% на первый визит!</p>
+                        </div>
+
+                        <div class="quiz-step-container" id="quizContainer">
+                            <div class="quiz-step active" data-step="1">
+                                <h3 class="step-question">Какую зону вы хотите усовершенствовать?</h3>
+                                <div class="options-grid">
+                                    <label class="quiz-option">
+                                        <input type="checkbox" name="zone" value="lashes" data-price="1050" data-time="90">
+                                        <div class="option-content">
+                                            <i class="ri-eye-line"></i>
+                                            <span>Ресницы (Наращивание/Ламинирование)</span>
+                                        </div>
+                                    </label>
+                                    <label class="quiz-option">
+                                        <input type="checkbox" name="zone" value="brows" data-price="650" data-time="50">
+                                        <div class="option-content">
+                                            <i class="ri-brush-line"></i>
+                                            <span>Брови (Архитектура/Укладка)</span>
+                                        </div>
+                                    </label>
+                                    <label class="quiz-option">
+                                        <input type="checkbox" name="zone" value="nails" data-price="850" data-time="90">
+                                        <div class="option-content">
+                                            <i class="ri-hand-sanitizer-line"></i>
+                                            <span>Ногти (Маникюр/Педикюр)</span>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quiz Live Result Bar -->
+                        <div class="quiz-result-bar">
+                            <div class="result-details">
+                                <div class="result-item">
+                                    <span class="result-label">Ориентировочное время:</span>
+                                    <span class="result-value" id="quizTotalTime">0 мин</span>
+                                </div>
+                                <div class="result-item">
+                                    <span class="result-label">Итоговая стоимость:</span>
+                                    <span class="result-value price-total" id="quizTotalPrice">0 грн</span>
+                                </div>
+                            </div>
+                            <button class="btn-nested-primary" id="btnBookQuizPackage">
+                                <span class="btn-text">Забронировать со скидкой 10%</span>
+                                <span class="btn-icon-wrapper"><i class="ri-percent-line"></i></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Online Booking Section (REAL KYIV MARKET PRICES IN UAH / ГРН) -->
+        <section class="booking-section" id="booking">
+            <div class="section-container">
+                <div class="section-header">
+                    <div class="eyebrow-pill">Онлайн-Запись</div>
+                    <h2 class="section-title">Забронируйте удобное <span class="text-serif-italic">время</span></h2>
+                    <p class="section-subtitle">Выберите мастера, процедуру и время в 4 простых шага</p>
+                </div>
+
+                <!-- Multi-Step Booking Widget -->
+                <div class="booking-widget-shell">
+                    <div class="booking-widget-core">
+                        <!-- Step Progress Indicator -->
+                        <div class="booking-progress-bar">
+                            <div class="progress-step active" data-step="1">
+                                <span class="step-num">1</span>
+                                <span class="step-title">Услуги</span>
+                            </div>
+                            <div class="progress-line"></div>
+                            <div class="progress-step" data-step="2">
+                                <span class="step-num">2</span>
+                                <span class="step-title">Мастер</span>
+                            </div>
+                            <div class="progress-line"></div>
+                            <div class="progress-step" data-step="3">
+                                <span class="step-num">3</span>
+                                <span class="step-title">Дата и Время</span>
+                            </div>
+                            <div class="progress-line"></div>
+                            <div class="progress-step" data-step="4">
+                                <span class="step-num">4</span>
+                                <span class="step-title">Подтверждение</span>
+                            </div>
+                        </div>
+
+                        <!-- Step Content Sections -->
+                        <div class="booking-steps-body">
+                            <!-- Step 1: Select Services (ALL 9 SERVICES WITH UAH PRICES) -->
+                            <div class="b-step-content active" id="bStep1">
+                                <h3>Выберите процедуру или полный комплекс:</h3>
+                                
+                                <div class="b-services-list">
+                                    
+                                    <!-- EYELASHES GROUP -->
+                                    <label class="b-service-item">
+                                        <input type="checkbox" class="b-service-cb" data-id="1" data-name="Бархатный Объем 2D / 3D" data-price="950" data-time="105">
+                                        <div class="b-service-info">
+                                            <span class="b-s-title">Бархатный Объем 2D / 3D (Ресницы)</span>
+                                            <span class="b-s-desc">Объемное поресничное наращивание из гипоаллергенного моноволокна</span>
+                                        </div>
+                                        <span class="b-s-price luxury-price">950 грн</span>
+                                    </label>
+
+                                    <label class="b-service-item">
+                                        <input type="checkbox" class="b-service-cb" data-id="2" data-name="Ламинирование ресниц + BOTOX" data-price="1100" data-time="75">
+                                        <div class="b-service-info">
+                                            <span class="b-s-title">Ламинирование Ресниц + BOTOX</span>
+                                            <span class="b-s-desc">Изгиб, уплотнение кератином и стойкое окрашивание натуральных ресниц</span>
+                                        </div>
+                                        <span class="b-s-price luxury-price">1 100 грн</span>
+                                    </label>
+
+                                    <label class="b-service-item">
+                                        <input type="checkbox" class="b-service-cb" data-id="7" data-name="Мегаобъем Голливуд 4D-6D" data-price="1300" data-time="130">
+                                        <div class="b-service-info">
+                                            <span class="b-s-title">Мегаобъем Голливуд 4D-6D (Ресницы)</span>
+                                            <span class="b-s-desc">Максимально пышный и выразительный взгляд из невесомых тонких волокон</span>
+                                        </div>
+                                        <span class="b-s-price luxury-price">1 300 грн</span>
+                                    </label>
+
+                                    <label class="b-service-item">
+                                        <input type="checkbox" class="b-service-cb" data-id="8" data-name="Мокрый Эффект & Лучи Кайли" data-price="1050" data-time="100">
+                                        <div class="b-service-info">
+                                            <span class="b-s-title">Мокрый Эффект & Лучи Кайли (Ресницы)</span>
+                                            <span class="b-s-desc">Трендовая небрежная текстура с выразительными лучиками</span>
+                                        </div>
+                                        <span class="b-s-price luxury-price">1 050 грн</span>
+                                    </label>
+
+                                    <!-- EYEBROWS GROUP -->
+                                    <label class="b-service-item">
+                                        <input type="checkbox" class="b-service-cb" data-id="3" data-name="Архитектура & Окрашивание Бровей" data-price="650" data-time="50">
+                                        <div class="b-service-info">
+                                            <span class="b-s-title">Архитектура & Окрашивание Бровей</span>
+                                            <span class="b-s-desc">Геометрическая разметка формы, коррекция воском и нанесение пигмента</span>
+                                        </div>
+                                        <span class="b-s-price luxury-price">650 грн</span>
+                                    </label>
+
+                                    <label class="b-service-item">
+                                        <input type="checkbox" class="b-service-cb" data-id="4" data-name="Долговременная Укладка (Ламинирование)" data-price="950" data-time="70">
+                                        <div class="b-service-info">
+                                            <span class="b-s-title">Долговременная Укладка Бровей (Ламинирование)</span>
+                                            <span class="b-s-desc">Укрощение непослушных волосков и фиксирующий уход на 2 месяца</span>
+                                        </div>
+                                        <span class="b-s-price luxury-price">950 грн</span>
+                                    </label>
+
+                                    <!-- NAILS GROUP -->
+                                    <label class="b-service-item">
+                                        <input type="checkbox" class="b-service-cb" data-id="5" data-name="Премиум Маникюр + Покрытие Gel Polish" data-price="850" data-time="90">
+                                        <div class="b-service-info">
+                                            <span class="b-s-title">Премиум Маникюр + Покрытие Gel Polish</span>
+                                            <span class="b-s-desc">Аппаратная обработка кутикулы, выравнивание и стойкое покрытие</span>
+                                        </div>
+                                        <span class="b-s-price luxury-price">850 грн</span>
+                                    </label>
+
+                                    <label class="b-service-item">
+                                        <input type="checkbox" class="b-service-cb" data-id="6" data-name="Smart Педикюр с Обработкой Стопы" data-price="1200" data-time="105">
+                                        <div class="b-service-info">
+                                            <span class="b-s-title">Smart Педикюр с Обработкой Стопы</span>
+                                            <span class="b-s-desc">Педикюр smart-дисками до зеркальной гладкости стоп и эстетика</span>
+                                        </div>
+                                        <span class="b-s-price luxury-price">1 200 грн</span>
+                                    </label>
+
+                                    <label class="b-service-item">
+                                        <input type="checkbox" class="b-service-cb" data-id="10" data-name="Наращивание Ногтей Гель / Акригель" data-price="1400" data-time="135">
+                                        <div class="b-service-info">
+                                            <span class="b-s-title">Наращивание Ногтей Гель / Акригель</span>
+                                            <span class="b-s-desc">Моделирование любой формы и длины с армированием</span>
+                                        </div>
+                                        <span class="b-s-price luxury-price">1 400 грн</span>
+                                    </label>
+
+                                </div>
+                            </div>
+
+                            <!-- Step 2: Select Master -->
+                            <div class="b-step-content" id="bStep2">
+                                <h3>Выберите вашего мастера:</h3>
+                                <div class="masters-grid">
+                                    <div class="master-card-shell selected" data-master-id="m1" data-master-name="Елена Соколова">
+                                        <div class="master-card-core">
+                                            <div class="master-avatar-wrapper">
+                                                <img src="assets/images/master_portrait.png" alt="Мастер Елена">
+                                                <span class="master-rating">★ 4.99</span>
+                                            </div>
+                                            <h4 class="master-name">Елена Соколова</h4>
+                                            <span class="master-role">Top Lash Artist</span>
+                                            <p class="master-experience">Опыт 7 лет • 4000+ процедур</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="master-card-shell" data-master-id="m2" data-master-name="Анна Романова">
+                                        <div class="master-card-core">
+                                            <div class="master-avatar-wrapper">
+                                                <img src="assets/images/master_anna.png" alt="Мастер Анна">
+                                                <span class="master-rating">★ 4.97</span>
+                                            </div>
+                                            <h4 class="master-name">Анна Романова</h4>
+                                            <span class="master-role">Brow & Lash Стилист</span>
+                                            <p class="master-experience">Опыт 5 лет • Чемпион Brow-2025</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="master-card-shell" data-master-id="m3" data-master-name="Виктория Ким">
+                                        <div class="master-card-core">
+                                            <div class="master-avatar-wrapper">
+                                                <img src="assets/images/master_viktoria.png" alt="Мастер Виктория">
+                                                <span class="master-rating">★ 4.98</span>
+                                            </div>
+                                            <h4 class="master-name">Виктория Ким</h4>
+                                            <span class="master-role">Nail Art Инструктор</span>
+                                            <p class="master-experience">Опыт 6 лет • Smart Педикюр</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Step 3: Date & Time Picker -->
+                            <div class="b-step-content" id="bStep3">
+                                <h3>Выберите удобный день и время:</h3>
+                                <div class="calendar-time-picker">
+                                    <div class="calendar-wrapper">
+                                        <div class="calendar-header">
+                                            <span class="calendar-month" id="calendarMonth">Август 2026</span>
+                                        </div>
+                                        <div class="calendar-days-grid" id="calendarDaysGrid">
+                                            <!-- Dynamic Days -->
+                                        </div>
+                                    </div>
+
+                                    <div class="time-slots-wrapper">
+                                        <h4>Доступное время:</h4>
+                                        <div class="time-slots-grid" id="timeSlotsGrid">
+                                            <button class="time-slot-btn" data-time="11:00">11:00</button>
+                                            <button class="time-slot-btn active" data-time="13:00">13:00</button>
+                                            <button class="time-slot-btn" data-time="15:00">15:00</button>
+                                            <button class="time-slot-btn" data-time="17:00">17:00</button>
+                                            <button class="time-slot-btn" data-time="19:00">19:00</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Step 4: Client Form & Confirmation -->
+                            <div class="b-step-content" id="bStep4">
+                                <h3>Ваши контактные данные:</h3>
+                                <form class="client-form" id="bookingClientForm">
+                                    <div class="form-group">
+                                        <label for="clientName">Ваше Имя *</label>
+                                        <input type="text" id="clientName" required placeholder="Екатерина" class="form-input">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="clientPhone">Номер Телефона *</label>
+                                        <input type="tel" id="clientPhone" required placeholder="+380 (67) 000-00-00" class="form-input">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="clientNotes">Пожелания или особые примечания</label>
+                                        <textarea id="clientNotes" placeholder="Например: хочу эффект мокрых ресниц с изгибом L" class="form-input textarea"></textarea>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Booking Actions Footer -->
+                        <div class="booking-footer">
+                            <div class="booking-summary-pill">
+                                <span>Выбрано: <strong id="summaryCount">0 услуг</strong></span>
+                                <span class="divider">•</span>
+                                <span>Сумма: <strong id="summaryPrice" class="text-pink luxury-price">0 грн</strong></span>
+                            </div>
+
+                            <div class="booking-nav-btns">
+                                <button class="btn-secondary-glass" id="btnBookingPrev" style="display: none;">
+                                    <i class="ri-arrow-left-line"></i> Назад
+                                </button>
+                                <button class="btn-nested-primary" id="btnBookingNext">
+                                    <span class="btn-text">Далее</span>
+                                    <span class="btn-icon-wrapper"><i class="ri-arrow-right-line"></i></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reviews & Testimonials Section -->
+        <section class="reviews-section" id="reviews">
+            <div class="section-container">
+                <div class="section-header">
+                    <div class="eyebrow-pill">Отзывы Довольных Клиенток</div>
+                    <h2 class="section-title">Любовь в <span class="text-serif-italic">каждом отзыве</span></h2>
+                    <p class="section-subtitle">Более 1500 прекрасных девушек доверили свою красоту мастерской «Колян»</p>
+                </div>
+
+                <div class="reviews-grid">
+                    <div class="review-card-shell">
+                        <div class="review-card-core">
+                            <div class="review-user">
+                                <div class="review-avatar">МК</div>
+                                <div class="review-meta">
+                                    <h4>Мария Ковалева</h4>
+                                    <span class="review-stars">★★★★★</span>
+                                </div>
+                            </div>
+                            <p class="review-text">«Хожу к Елене на наращивание ресниц уже полгода! Носка идеальная — ровно месяц без единого залома. В салоне невероятный уют, вкусный кофе и очень внимательные мастера!»</p>
+                            <span class="review-date">Вчера • Google Maps Киев</span>
+                        </div>
+                    </div>
+
+                    <div class="review-card-shell">
+                        <div class="review-card-core">
+                            <div class="review-user">
+                                <div class="review-avatar">ОС</div>
+                                <div class="review-meta">
+                                    <h4>Ольга Сергеева</h4>
+                                    <span class="review-stars">★★★★★</span>
+                                </div>
+                            </div>
+                            <p class="review-text">«Сделала долговременную укладку бровей и ламинирование ресниц перед отпуском. Результат превзошел все ожидания — естественные, густые, послушные! Спасибо мастерской Колян!»</p>
+                            <span class="review-date">3 дня назад • Instagram</span>
+                        </div>
+                    </div>
+
+                    <div class="review-card-shell">
+                        <div class="review-card-core">
+                            <div class="review-user">
+                                <div class="review-avatar">АВ</div>
+                                <div class="review-meta">
+                                    <h4>Анастасия Васильева</h4>
+                                    <span class="review-stars">★★★★★</span>
+                                </div>
+                            </div>
+                            <p class="review-text">«Smart педикюр — это лучшее, что случалось с моими ножками! Пяточки идеальные гладкие. Очень стильный интерьер на Крещатике и вежливый персонал!»</p>
+                            <span class="review-date">Неделю назад • Google Maps</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Location & Contact Section -->
+        <section class="contacts-section" id="contacts">
+            <div class="section-container">
+                <div class="contacts-grid">
+                    <div class="contact-info-card-shell">
+                        <div class="contact-info-card-core">
+                            <div class="eyebrow-pill">Ждем вас в гости</div>
+                            <h2 class="contact-title">Контакты & <span class="text-serif-italic">Локация</span></h2>
+                            
+                            <div class="contact-items-list">
+                                <div class="c-item">
+                                    <i class="ri-map-pin-2-line"></i>
+                                    <div>
+                                        <strong>Адрес салона:</strong>
+                                        <p>г. Киев, ул. Крещатик, д. 22 (ст. м. Майдан Незалежности)</p>
+                                    </div>
+                                </div>
+
+                                <div class="c-item">
+                                    <i class="ri-time-line"></i>
+                                    <div>
+                                        <strong>Часы работы:</strong>
+                                        <p>Ежедневно с 11:00 до 20:00 (без выходных)</p>
+                                    </div>
+                                </div>
+
+                                <div class="c-item">
+                                    <i class="ri-phone-line"></i>
+                                    <div>
+                                        <strong>Телефоны для связи:</strong>
+                                        <p>
+                                            <a href="tel:+380443901234">+380 (44) 390-12-34</a> <br>
+                                            <a href="tel:+380675550199">+380 (67) 555-01-99</a>
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="c-item">
+                                    <i class="ri-messenger-line"></i>
+                                    <div>
+                                        <strong>Мессенджеры:</strong>
+                                        <div class="social-links-row">
+                                            <a href="#" class="social-badge"><i class="ri-telegram-fill"></i> Telegram</a>
+                                            <a href="#" class="social-badge"><i class="ri-whatsapp-fill"></i> WhatsApp</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Location Map Visual -->
+                    <div class="map-card-shell">
+                        <div class="map-card-core">
+                            <div class="map-visual-placeholder">
+                                <div class="map-pin-pulse">
+                                    <i class="ri-map-pin-fill"></i>
+                                    <span>Салон «КОЛЯН» • Киев, Крещатик 22</span>
+                                </div>
+                                <div class="map-grid-overlay"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Visual Confirmation Pass Ticket Modal -->
+    <div class="modal-backdrop" id="ticketModal">
+        <div class="modal-ticket-shell">
+            <div class="modal-ticket-core">
+                <button class="modal-close-btn" id="closeTicketModal"><i class="ri-close-line"></i></button>
+
+                <div class="ticket-header">
+                    <div class="ticket-brand">КОЛЯН BEAUTY • КИЕВ</div>
+                    <span class="ticket-status-badge"><i class="ri-checkbox-circle-fill"></i> ЗАПИСЬ ПОДТВЕРЖДЕНА</span>
+                </div>
+
+                <div class="ticket-body">
+                    <h3 class="ticket-title">Ваш электронный билет</h3>
+                    
+                    <div class="ticket-info-grid">
+                        <div class="t-info-item">
+                            <span class="t-label">Клиент:</span>
+                            <span class="t-val" id="tClientName">Екатерина</span>
+                        </div>
+                        <div class="t-info-item">
+                            <span class="t-label">Мастер:</span>
+                            <span class="t-val" id="tMasterName">Елена Соколова</span>
+                        </div>
+                        <div class="t-info-item">
+                            <span class="t-label">Дата и Время:</span>
+                            <span class="t-val" id="tDateTime">06 Августа, 13:00</span>
+                        </div>
+                        <div class="t-info-item">
+                            <span class="t-label">Выбранные услуги:</span>
+                            <span class="t-val" id="tServicesList">Наращивание ресниц 2D</span>
+                        </div>
+                        <div class="t-info-item total">
+                            <span class="t-label">Итоговая стоимость:</span>
+                            <span class="t-val text-pink luxury-price" id="tTotalPrice">950 грн</span>
+                        </div>
+                    </div>
+
+                    <div class="ticket-qr-section">
+                        <div class="qr-box">
+                            <i class="ri-qr-code-line"></i>
+                        </div>
+                        <p class="qr-desc">Мы отправили подтверждение в СМС и WhatsApp. Ждем вас в Киеве на ул. Крещатик, 22 за 5 минут до начала!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Sticky Mini-Booking Bar -->
+    <div class="mobile-sticky-bar">
+        <div class="mobile-bar-info">
+            <span class="m-bar-title">«Колян» • Киев, Крещатик</span>
+            <span class="m-bar-sub">★ 4.98 • 11:00 - 20:00</span>
+        </div>
+        <a href="#booking" class="btn-nested-primary btn-sm-mobile">
+            <span class="btn-text">Записаться</span>
+            <span class="btn-icon-wrapper"><i class="ri-calendar-line"></i></span>
+        </a>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer-section">
+        <div class="section-container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="brand-title">КОЛЯН</span>
+                    <p>© 2026 Все права защищены. Салон эстетики и красоты «Колян» (Киев, ул. Крещатик, 22).</p>
+                </div>
+                <div class="footer-links">
+                    <a href="#services">Услуги</a>
+                    <a href="#transformations">Работы</a>
+                    <a href="#booking">Онлайн-запись</a>
+                    <a href="#contacts">Контакты</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- App JavaScript -->
+    <script src="app.js"></script>
+</body>
+</html>
