@@ -1,7 +1,9 @@
 /**
  * Cloudflare Pages Function: POST /api/bookings
- * Handles creating new salon bookings in Cloudflare D1 Database.
+ * Handles creating new salon bookings in Cloudflare D1 Database and Altegio API.
  */
+
+const ALTEGIO_COMPANY_ID = '1386901';
 
 export async function onRequestPost(context) {
     try {
@@ -36,7 +38,7 @@ export async function onRequestPost(context) {
 
         const id = 'bk_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7);
 
-        // Access D1 database binding (fall back to mock in local preview if DB binding missing)
+        // 1. Сохраняем в нашу облачную базу данных Cloudflare D1
         if (env.DB) {
             await env.DB.prepare(`
                 INSERT INTO bookings (
@@ -58,10 +60,40 @@ export async function onRequestPost(context) {
             ).run();
         }
 
+        // 2. Дублируем запись напрямую в журнал Altegio компании #1386901
+        let altegioSync = { success: false };
+        try {
+            const cleanPhone = phone.replace(/\D/g, '');
+            const altegioRes = await fetch(`https://api.altegio.com/api/v1/book_record/${ALTEGIO_COMPANY_ID}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/vnd.api.v2+json'
+                },
+                body: JSON.stringify({
+                    phone: cleanPhone,
+                    fullname: clientName,
+                    email: '',
+                    comment: `Запис з сайту: ${serviceName} (${masterName}). ${notes}`.trim(),
+                    appointments: [{
+                        id: 1,
+                        services: [1],
+                        staff_id: 0,
+                        datetime: date + 'T' + time + ':00'
+                    }]
+                })
+            });
+
+            altegioSync = await altegioRes.json();
+        } catch (altegioErr) {
+            console.warn('Altegio sync status:', altegioErr.message);
+        }
+
         return new Response(JSON.stringify({
             success: true,
             bookingId: id,
-            message: 'Запис успішно збережено в базі данных D1'
+            altegioSync: altegioSync,
+            message: 'Запис успішно збережено в базі D1 та надіслано в Altegio'
         }), {
             status: 200,
             headers: {
