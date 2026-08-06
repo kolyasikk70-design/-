@@ -666,12 +666,13 @@ document.addEventListener('DOMContentLoaded', () => {
         calendarDaysGrid.innerHTML = '';
         for (let d = 1; d <= daysInMonth; d++) {
             const dayBtn = document.createElement('button');
-            dayBtn.className = `cal-day-btn ${d === 6 ? 'active' : ''}`;
+            const formattedDayStr = `${d < 10 ? '0' + d : d} Серпня`;
+            dayBtn.setAttribute('data-date', formattedDayStr);
             dayBtn.textContent = d;
             dayBtn.addEventListener('click', () => {
                 document.querySelectorAll('.cal-day-btn').forEach(b => b.classList.remove('active'));
                 dayBtn.classList.add('active');
-                selectedDateStr = `${d < 10 ? '0' + d : d} Серпня`;
+                selectedDateStr = formattedDayStr;
                 updateAvailableTimeSlots();
             });
             calendarDaysGrid.appendChild(dayBtn);
