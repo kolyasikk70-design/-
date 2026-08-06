@@ -30,6 +30,7 @@ export async function onRequestPost(context) {
             serviceName = 'Процедура beauty',
             clientName = 'Клієнт',
             phone = '',
+            email = '',
             notes = '',
             isOvertime = false
         } = data;
@@ -92,6 +93,9 @@ export async function onRequestPost(context) {
         // Определяем Staff ID сотрудника в Altegio
         let targetStaffId = STAFF_MAP[masterId] || (masterName.includes('Олена') ? 3081874 : 3081868);
 
+        // Обязательный параметр email для Altegio
+        const clientEmail = (email && email.includes('@')) ? email.trim() : 'client@beauty-salon.kyiv';
+
         // 3. Отправляем подтверждённую запись прямо в электронный журнал Altegio!
         let altegioSync = { success: false };
         try {
@@ -108,7 +112,7 @@ export async function onRequestPost(context) {
                     body: JSON.stringify({
                         phone: cleanPhone,
                         fullname: clientName,
-                        email: 'kolyasikk70@gmail.com',
+                        email: clientEmail,
                         comment: `Запис з веб-сайту: ${serviceName} (Майстер: ${masterName}). ${notes}`.trim(),
                         appointments: [{
                             id: 1,
@@ -120,12 +124,12 @@ export async function onRequestPost(context) {
                 });
             };
 
-            // Первая попытка: на выбранного мастера (Олена Соколова)
+            // Первая попытка: на выбранного мастера
             let altegioRes = await sendBookingToAltegio(targetStaffId);
             let altegioJson = await altegioRes.json();
 
-            // Если у мастера отключена онлайн-запись в Altegio, автоматически направляем в журнал к Миколе
-            if (!altegioRes.ok && targetStaffId !== 3081868) {
+            // Если у мастера в Altegio не задано расписание, направляем в журнал к Миколе
+            if ((!altegioRes.ok || !altegioJson.success) && targetStaffId !== 3081868) {
                 altegioRes = await sendBookingToAltegio(3081868);
                 altegioJson = await altegioRes.json();
             }
