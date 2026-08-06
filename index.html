@@ -1210,14 +1210,24 @@
             const nameEl = document.getElementById('clientName');
             const phoneEl = document.getElementById('clientPhone');
             const notesEl = document.getElementById('clientNotes');
-            if (nameEl && phoneEl && nameEl.value && phoneEl.value && phoneEl.value.replace(/\D/g, '').length >= 9) {
-                const dateEl = document.querySelector('.calendar-day-btn.selected') || document.querySelector('.calendar-day-btn.active');
+                const activeDateBtn = document.querySelector('.cal-day-btn.active') || document.querySelector('.calendar-day-btn.active');
+                let activeDateStr = '12 Серпня';
+                if (activeDateBtn) {
+                    if (activeDateBtn.getAttribute('data-date')) {
+                        activeDateStr = activeDateBtn.getAttribute('data-date');
+                    } else if (activeDateBtn.textContent) {
+                        const dNum = parseInt(activeDateBtn.textContent.trim());
+                        if (!isNaN(dNum)) {
+                            activeDateStr = `${dNum < 10 ? '0' + dNum : dNum} Серпня`;
+                        }
+                    }
+                }
                 const timeEl = document.querySelector('.time-slot-btn.active');
                 const masterEl = document.querySelector('.cat-masters .master-card-shell.selected');
                 const serviceEl = document.querySelector('.b-service-cb:checked');
 
                 const payload = {
-                    date: dateEl ? dateEl.getAttribute('data-date') || '12 Серпня' : '12 Серпня',
+                    date: activeDateStr,
                     time: timeEl ? timeEl.getAttribute('data-time') || '14:00' : '14:00',
                     masterId: masterEl ? masterEl.getAttribute('data-master-id') || 'm1' : 'm1',
                     masterName: masterEl ? masterEl.getAttribute('data-master-name') || 'Олена Соколова' : 'Олена Соколова',
