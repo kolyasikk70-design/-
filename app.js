@@ -811,12 +811,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function isValidUkrPhone(phoneStr) {
+        if (!phoneStr) return false;
         const digits = phoneStr.replace(/\D/g, '');
-        if (digits.length !== 12 || !digits.startsWith('380')) {
-            return false;
-        }
-        const operatorCode = digits.substring(3, 5);
-        return VALID_UKR_CODES.includes(operatorCode);
+        return digits.length >= 9;
     }
 
     const btnEditTicket = document.getElementById('btnEditTicket');
