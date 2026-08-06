@@ -5,7 +5,15 @@
 
 const ALTEGIO_COMPANY_ID = '1386901';
 const ALTEGIO_PARTNER_TOKEN = 'eygdaa9bgg844dse4at5';
-const ALTEGIO_STAFF_ID = 3081868; // Микола
+
+// Карта мастеров Altegio: Name/ID -> Altegio Staff ID
+const STAFF_MAP = {
+    'm1': 3081874, // Олена Соколова
+    'm2': 3081874, // Аліна
+    'm3': 3081868, // Микола
+    'default': 3081868
+};
+
 const ALTEGIO_SERVICE_ID = 13734350;
 
 export async function onRequestPost(context) {
@@ -64,11 +72,11 @@ export async function onRequestPost(context) {
         }
 
         // 2. Форматируем дату для Altegio (YYYY-MM-DDTHH:MM:SS+03:00)
-        let formattedDatetime = '2026-08-07T14:00:00+03:00';
+        let formattedDatetime = '2026-08-08T14:00:00+03:00';
         try {
             const currentYear = new Date().getFullYear();
             let monthStr = '08';
-            let dayStr = '07';
+            let dayStr = '08';
 
             if (date) {
                 const parts = date.split(' ');
@@ -81,32 +89,48 @@ export async function onRequestPost(context) {
             formattedDatetime = `${currentYear}-${monthStr}-${dayStr}T${cleanTime}:00+03:00`;
         } catch (e) {}
 
+        // Определяем Staff ID сотрудника в Altegio
+        let targetStaffId = STAFF_MAP[masterId] || (masterName.includes('Олена') ? 3081874 : 3081868);
+
         // 3. Отправляем подтверждённую запись прямо в электронный журнал Altegio!
         let altegioSync = { success: false };
         try {
             const cleanPhone = phone.replace(/\D/g, '');
-            const altegioRes = await fetch(`https://api.altegio.com/api/v1/book_record/${ALTEGIO_COMPANY_ID}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/vnd.api.v2+json',
-                    'Authorization': `Bearer ${ALTEGIO_PARTNER_TOKEN}`
-                },
-                body: JSON.stringify({
-                    phone: cleanPhone,
-                    fullname: clientName,
-                    email: 'kolyasikk70@gmail.com',
-                    comment: `Запис з нашого сайту: ${serviceName} (${masterName}). ${notes}`.trim(),
-                    appointments: [{
-                        id: 1,
-                        services: [ALTEGIO_SERVICE_ID],
-                        staff_id: ALTEGIO_STAFF_ID,
-                        datetime: formattedDatetime
-                    }]
-                })
-            });
 
-            altegioSync = await altegioRes.json();
+            const sendBookingToAltegio = async (staffId) => {
+                return fetch(`https://api.altegio.com/api/v1/book_record/${ALTEGIO_COMPANY_ID}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/vnd.api.v2+json',
+                        'Authorization': `Bearer ${ALTEGIO_PARTNER_TOKEN}`
+                    },
+                    body: JSON.stringify({
+                        phone: cleanPhone,
+                        fullname: clientName,
+                        email: 'kolyasikk70@gmail.com',
+                        comment: `Запис з веб-сайту: ${serviceName} (Майстер: ${masterName}). ${notes}`.trim(),
+                        appointments: [{
+                            id: 1,
+                            services: [ALTEGIO_SERVICE_ID],
+                            staff_id: staffId,
+                            datetime: formattedDatetime
+                        }]
+                    })
+                });
+            };
+
+            // Первая попытка: на выбранного мастера (Олена Соколова)
+            let altegioRes = await sendBookingToAltegio(targetStaffId);
+            let altegioJson = await altegioRes.json();
+
+            // Если у мастера отключена онлайн-запись в Altegio, автоматически направляем в журнал к Миколе
+            if (!altegioRes.ok && targetStaffId !== 3081868) {
+                altegioRes = await sendBookingToAltegio(3081868);
+                altegioJson = await altegioRes.json();
+            }
+
+            altegioSync = altegioJson;
         } catch (altegioErr) {
             console.warn('Altegio sync status:', altegioErr.message);
         }
