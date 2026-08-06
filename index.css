@@ -2254,24 +2254,27 @@ section {
     color: var(--color-pink-primary);
 }
 
-/* Hard kill any injected Altegio / Yclients widget buttons and iframes */
-iframe[src*="alteg"],
-iframe[src*="yclients"],
-div[class*="alteg"],
-div[class*="yclients"],
-a[href*="alteg.io"],
+/* Universal obliteration of all floating widgets and buttons */
+*[class*="ms_widget"],
+*[id*="ms_widget"],
+*[class*="yclients"],
+*[id*="yclients"],
+*[class*="alteg"],
+*[id*="alteg"],
+.ms_widget_button,
 .yclients-widget-button,
-#yclients-widget,
-#altegio-widget-button,
-.altegio-widget-button {
+#yclients-widget-button {
     display: none !important;
     visibility: hidden !important;
     opacity: 0 !important;
     pointer-events: none !important;
+    transform: scale(0) !important;
     width: 0 !important;
     height: 0 !important;
-    position: absolute !important;
-    top: -9999px !important;
-    left: -9999px !important;
+    position: fixed !important;
+    bottom: -9999px !important;
+    right: -9999px !important;
+    z-index: -99999 !important;
 }
+
 
