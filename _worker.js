@@ -118,11 +118,24 @@ export default {
                     let dayStr = '08';
 
                     if (date) {
+                        const lowerDate = date.toLowerCase();
                         const parts = date.split(' ');
                         const dayNum = parseInt(parts[0]);
                         if (!isNaN(dayNum)) {
                             dayStr = dayNum < 10 ? '0' + dayNum : '' + dayNum;
                         }
+                        if (lowerDate.includes('січ')) monthStr = '01';
+                        else if (lowerDate.includes('лют')) monthStr = '02';
+                        else if (lowerDate.includes('берез')) monthStr = '03';
+                        else if (lowerDate.includes('квіт')) monthStr = '04';
+                        else if (lowerDate.includes('трав')) monthStr = '05';
+                        else if (lowerDate.includes('черв')) monthStr = '06';
+                        else if (lowerDate.includes('лип')) monthStr = '07';
+                        else if (lowerDate.includes('серп')) monthStr = '08';
+                        else if (lowerDate.includes('верес')) monthStr = '09';
+                        else if (lowerDate.includes('жовт')) monthStr = '10';
+                        else if (lowerDate.includes('листоп')) monthStr = '11';
+                        else if (lowerDate.includes('груд')) monthStr = '12';
                     }
                     const cleanTime = (time || '14:00').trim();
                     formattedDatetime = `${currentYear}-${monthStr}-${dayStr}T${cleanTime}:00+03:00`;
@@ -163,7 +176,7 @@ export default {
 
                     if ((!altegioRes.ok || !altegioJson.success) && targetStaffId !== 3081868) {
                         altegioRes = await sendBookingToAltegio(3081868);
-                        altegioJson = await altegioJson;
+                        altegioJson = await altegioRes.json();
                     }
 
                     altegioSync = altegioJson;
