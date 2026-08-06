@@ -1,4 +1,5 @@
 name = "beauty-salon"
+account_id = "ebad011087bca94c32af69ee3806668f"
 main = "worker.js"
 compatibility_date = "2026-08-06"
 
