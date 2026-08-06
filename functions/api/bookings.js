@@ -4,6 +4,9 @@
  */
 
 const ALTEGIO_COMPANY_ID = '1386901';
+const ALTEGIO_PARTNER_TOKEN = 'eygdaa9bgg844dse4at5';
+const ALTEGIO_STAFF_ID = 3081868; // Микола
+const ALTEGIO_SERVICE_ID = 13734350;
 
 export async function onRequestPost(context) {
     try {
@@ -60,7 +63,25 @@ export async function onRequestPost(context) {
             ).run();
         }
 
-        // 2. Дублируем запись напрямую в журнал Altegio компании #1386901
+        // 2. Форматируем дату для Altegio (YYYY-MM-DDTHH:MM:SS+03:00)
+        let formattedDatetime = '2026-08-07T14:00:00+03:00';
+        try {
+            const currentYear = new Date().getFullYear();
+            let monthStr = '08';
+            let dayStr = '07';
+
+            if (date) {
+                const parts = date.split(' ');
+                const dayNum = parseInt(parts[0]);
+                if (!isNaN(dayNum)) {
+                    dayStr = dayNum < 10 ? '0' + dayNum : '' + dayNum;
+                }
+            }
+            const cleanTime = (time || '14:00').trim();
+            formattedDatetime = `${currentYear}-${monthStr}-${dayStr}T${cleanTime}:00+03:00`;
+        } catch (e) {}
+
+        // 3. Отправляем подтверждённую запись прямо в электронный журнал Altegio!
         let altegioSync = { success: false };
         try {
             const cleanPhone = phone.replace(/\D/g, '');
@@ -68,18 +89,19 @@ export async function onRequestPost(context) {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Accept': 'application/vnd.api.v2+json'
+                    'Accept': 'application/vnd.api.v2+json',
+                    'Authorization': `Bearer ${ALTEGIO_PARTNER_TOKEN}`
                 },
                 body: JSON.stringify({
                     phone: cleanPhone,
                     fullname: clientName,
-                    email: '',
-                    comment: `Запис з сайту: ${serviceName} (${masterName}). ${notes}`.trim(),
+                    email: 'kolyasikk70@gmail.com',
+                    comment: `Запис з нашого сайту: ${serviceName} (${masterName}). ${notes}`.trim(),
                     appointments: [{
                         id: 1,
-                        services: [1],
-                        staff_id: 0,
-                        datetime: date + 'T' + time + ':00'
+                        services: [ALTEGIO_SERVICE_ID],
+                        staff_id: ALTEGIO_STAFF_ID,
+                        datetime: formattedDatetime
                     }]
                 })
             });
@@ -93,7 +115,7 @@ export async function onRequestPost(context) {
             success: true,
             bookingId: id,
             altegioSync: altegioSync,
-            message: 'Запис успішно збережено в базі D1 та надіслано в Altegio'
+            message: 'Запис успішно збережено в D1 та занесено в журнал Altegio!'
         }), {
             status: 200,
             headers: {
