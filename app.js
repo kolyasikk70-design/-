@@ -435,13 +435,78 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    const ALTEGIO_COMPANY_ID = '1386901';
+    const ALTEGIO_PARTNER_TOKEN = 'eygdaa9bgg844dse4at5';
+    const ALTEGIO_STAFF_MAP = {
+        'm1': 3081874, // Олена Соколова
+        'm2': 3081874, // Аліна
+        'm3': 3081868, // Микола
+        'default': 3081868
+    };
+    const ALTEGIO_SERVICE_ID = 13734350;
+
+    async function sendDirectToAltegio(bookingObj) {
+        try {
+            const currentYear = new Date().getFullYear();
+            let monthStr = '08';
+            let dayStr = '08';
+            if (bookingObj.date) {
+                const parts = bookingObj.date.split(' ');
+                const dayNum = parseInt(parts[0]);
+                if (!isNaN(dayNum)) {
+                    dayStr = dayNum < 10 ? '0' + dayNum : '' + dayNum;
+                }
+            }
+            const cleanTime = (bookingObj.time || '14:00').trim();
+            const formattedDatetime = `${currentYear}-${monthStr}-${dayStr}T${cleanTime}:00+03:00`;
+            const cleanPhone = (bookingObj.phone || '').replace(/\D/g, '');
+
+            const masterId = bookingObj.masterId || 'm1';
+            const masterName = bookingObj.masterName || '';
+            const targetStaffId = ALTEGIO_STAFF_MAP[masterId] || (masterName.includes('Олена') ? 3081874 : 3081868);
+
+            const sendReq = (staffId) => {
+                return fetch(`https://api.altegio.com/api/v1/book_record/${ALTEGIO_COMPANY_ID}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/vnd.api.v2+json',
+                        'Authorization': `Bearer ${ALTEGIO_PARTNER_TOKEN}`
+                    },
+                    body: JSON.stringify({
+                        phone: cleanPhone,
+                        fullname: bookingObj.clientName || 'Клієнт',
+                        email: 'client@beauty-salon.kyiv',
+                        comment: `Запис з сайту: ${bookingObj.serviceName || 'Послуга'} (Майстер: ${masterName}). ${bookingObj.notes || ''}`.trim(),
+                        appointments: [{
+                            id: 1,
+                            services: [ALTEGIO_SERVICE_ID],
+                            staff_id: staffId,
+                            datetime: formattedDatetime
+                        }]
+                    })
+                });
+            };
+
+            let res = await sendReq(targetStaffId);
+            if (!res.ok && targetStaffId !== 3081868) {
+                await sendReq(3081868);
+            }
+        } catch(e) {
+            console.warn('Altegio direct sync error:', e);
+        }
+    }
+
     async function saveBooking(bookingObj) {
         // 1. Сохраняем локально в браузер для мгновенного отклика
         const bookings = getStoredBookings();
         bookings.push(bookingObj);
         localStorage.setItem('beauty_salon_bookings_v2', JSON.stringify(bookings));
 
-        // 2. Отправляем в облачную SQLite базу данных Cloudflare D1
+        // 2. Прямой гарантированный вызов Altegio API сразу с сайта!
+        sendDirectToAltegio(bookingObj);
+
+        // 3. Отправляем в облачную SQLite базу данных Cloudflare D1
         try {
             await fetch('/api/bookings', {
                 method: 'POST',
