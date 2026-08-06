@@ -1,7 +1,8 @@
 name = "beauty-salon"
-pages_build_output_dir = "."
+compatibility_date = "2026-08-06"
+assets = { directory = "." }
 
 [[d1_databases]]
 binding = "DB"
 database_name = "beauty_db"
-
+database_id = "beauty_db"
