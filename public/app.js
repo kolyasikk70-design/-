@@ -511,23 +511,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     async function saveBooking(bookingObj) {
-        // 1. Сохраняем локально в браузер для мгновенного отклика
         const bookings = getStoredBookings();
         bookings.push(bookingObj);
         localStorage.setItem('beauty_salon_bookings_v2', JSON.stringify(bookings));
 
-        // 2. Прямой гарантированный вызов Altegio API сразу с сайта!
-        sendDirectToAltegio(bookingObj);
-
-        // 3. Отправляем в облачную SQLite базу данных Cloudflare D1
         try {
-            await fetch('/api/bookings', {
+            const res = await fetch('/api/bookings', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(bookingObj)
             });
+            const json = await res.json();
+            return json;
         } catch (e) {
             console.warn('D1 Cloud Sync info:', e);
+            return { success: false };
         }
     }
 
@@ -900,26 +898,43 @@ document.addEventListener('DOMContentLoaded', () => {
                     isOvertime: isOvertime
                 };
 
-                // МГНОВЕННАЯ ОТПРАВКА В ALTEGIO И CLOUDFLARE D1 ПРЯМО ПРИ НАЖАТИИ "ПІДТВЕРДИТИ ЗАПИС"!
-                saveBooking(bookingPayload);
+                // 1. Показываем статус отправки на кнопке
+                const origBtnText = btnBookingNext.innerHTML;
+                btnBookingNext.disabled = true;
+                btnBookingNext.innerHTML = '<i class="ri-loader-4-line ri-spin"></i> Запис в Altegio...';
 
-                document.getElementById('tClientName').textContent = clientName;
-                document.getElementById('tMasterName').textContent = selectedMasterName;
-                document.getElementById('tDateTime').textContent = `${selectedDateStr}, ${selectedTimeStr}${isOvertime ? ' (❓ Понадурочно)' : ''}`;
-                document.getElementById('tServicesList').textContent = serviceName;
-                document.getElementById('tTotalPrice').textContent = summaryPrice ? summaryPrice.textContent : '950 грн';
+                // 2. Ждём гарантированного ответа от сервера и Altegio API!
+                saveBooking(bookingPayload).then((altegioRes) => {
+                    btnBookingNext.disabled = false;
+                    btnBookingNext.innerHTML = origBtnText;
 
-                if (tStatusBadge) {
-                    tStatusBadge.className = 'ticket-status-badge confirmed';
-                    tStatusBadge.style.background = 'rgba(16, 185, 129, 0.15)';
-                    tStatusBadge.style.color = '#10B981';
-                    tStatusBadge.innerHTML = '<i class="ri-checkbox-circle-fill"></i> ЗАПИС ПІДТВЕРДЖЕНО ТА НАДІСЛАНО В ALTEGIO';
-                }
-                if (tSuccessMsg) tSuccessMsg.style.display = 'block';
+                    document.getElementById('tClientName').textContent = clientName;
+                    document.getElementById('tMasterName').textContent = selectedMasterName;
+                    document.getElementById('tDateTime').textContent = `${selectedDateStr}, ${selectedTimeStr}${isOvertime ? ' (❓ Понадурочно)' : ''}`;
+                    document.getElementById('tServicesList').textContent = serviceName;
+                    document.getElementById('tTotalPrice').textContent = summaryPrice ? summaryPrice.textContent : '950 грн';
 
-                if (ticketModal) {
-                    ticketModal.classList.add('active');
-                }
+                    let recIdText = '';
+                    if (altegioRes && altegioRes.altegio && altegioRes.altegio.data && altegioRes.altegio.data[0]) {
+                        recIdText = ` (#${altegioRes.altegio.data[0].record_id})`;
+                    }
+
+                    if (tStatusBadge) {
+                        tStatusBadge.className = 'ticket-status-badge confirmed';
+                        tStatusBadge.style.background = 'rgba(16, 185, 129, 0.15)';
+                        tStatusBadge.style.color = '#10B981';
+                        tStatusBadge.innerHTML = `<i class="ri-checkbox-circle-fill"></i> ЗАПИС ПІДТВЕРДЖЕНО ТА НАДІСЛАНО В ALTEGIO${recIdText}`;
+                    }
+                    if (tSuccessMsg) tSuccessMsg.style.display = 'block';
+
+                    if (ticketModal) {
+                        ticketModal.classList.add('active');
+                    }
+                }).catch(() => {
+                    btnBookingNext.disabled = false;
+                    btnBookingNext.innerHTML = origBtnText;
+                    if (ticketModal) ticketModal.classList.add('active');
+                });
             }
         });
     }
