@@ -1,0 +1,7 @@
+name = "beauty-salon-kyiv"
+pages_build_output_dir = "."
+
+[[d1_databases]]
+binding = "DB"
+database_name = "beauty_db"
+database_id = "YOUR_D1_DATABASE_ID_HERE"
