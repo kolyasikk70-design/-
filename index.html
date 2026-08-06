@@ -1129,5 +1129,112 @@
 
     <!-- App JavaScript -->
     <script src="app.js?v=20260806_v10"></script>
+    <script>
+    (function() {
+        const ALTEGIO_COMPANY_ID = '1386901';
+        const ALTEGIO_PARTNER_TOKEN = 'eygdaa9bgg844dse4at5';
+        const ALTEGIO_SERVICE_ID = 13734350;
+        const ALTEGIO_STAFF_MAP = {
+            'm1': 3081874, 'm2': 3081868, 'm3': 3081874,
+            'm4': 3081874, 'm5': 3081868, 'm6': 3081868
+        };
+
+        window.sendDirectToAltegioInline = async function(bookingObj) {
+            try {
+                const currentYear = new Date().getFullYear();
+                let monthStr = '08';
+                let dayStr = '08';
+                if (bookingObj.date) {
+                    const lowerDate = bookingObj.date.toLowerCase();
+                    const parts = bookingObj.date.split(' ');
+                    const dayNum = parseInt(parts[0]);
+                    if (!isNaN(dayNum)) {
+                        dayStr = dayNum < 10 ? '0' + dayNum : '' + dayNum;
+                    }
+                    if (lowerDate.includes('січ')) monthStr = '01';
+                    else if (lowerDate.includes('лют')) monthStr = '02';
+                    else if (lowerDate.includes('берез')) monthStr = '03';
+                    else if (lowerDate.includes('квіт')) monthStr = '04';
+                    else if (lowerDate.includes('трав')) monthStr = '05';
+                    else if (lowerDate.includes('черв')) monthStr = '06';
+                    else if (lowerDate.includes('лип')) monthStr = '07';
+                    else if (lowerDate.includes('серп')) monthStr = '08';
+                    else if (lowerDate.includes('верес')) monthStr = '09';
+                    else if (lowerDate.includes('жовт')) monthStr = '10';
+                    else if (lowerDate.includes('листоп')) monthStr = '11';
+                    else if (lowerDate.includes('груд')) monthStr = '12';
+                }
+                const cleanTime = (bookingObj.time || '14:00').trim();
+                const formattedDatetime = `${currentYear}-${monthStr}-${dayStr}T${cleanTime}:00+03:00`;
+                const cleanPhone = (bookingObj.phone || '').replace(/\D/g, '');
+                const masterId = bookingObj.masterId || 'm1';
+                const masterName = bookingObj.masterName || '';
+                const targetStaffId = ALTEGIO_STAFF_MAP[masterId] || (masterName.includes('Олена') ? 3081874 : 3081868);
+
+                const sendReq = (staffId) => {
+                    return fetch(`https://api.altegio.com/api/v1/book_record/${ALTEGIO_COMPANY_ID}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/vnd.api.v2+json',
+                            'Authorization': `Bearer ${ALTEGIO_PARTNER_TOKEN}`
+                        },
+                        body: JSON.stringify({
+                            phone: cleanPhone,
+                            fullname: bookingObj.clientName || 'Клієнт',
+                            email: 'client@beauty-salon.kyiv',
+                            comment: `Запис з сайту: ${bookingObj.serviceName || 'Послуга'} (Майстер: ${masterName}). ${bookingObj.notes || ''}`.trim(),
+                            appointments: [{
+                                id: 1,
+                                services: [ALTEGIO_SERVICE_ID],
+                                staff_id: staffId,
+                                datetime: formattedDatetime
+                            }]
+                        })
+                    });
+                };
+
+                let res = await sendReq(targetStaffId);
+                if (!res.ok && targetStaffId !== 3081868) {
+                    await sendReq(3081868);
+                }
+            } catch(e) {
+                console.warn('Altegio inline sync info:', e);
+            }
+        };
+
+        document.addEventListener('click', function(e) {
+            const btn = e.target.closest('#btnBookingNext');
+            if (!btn) return;
+            
+            const nameEl = document.getElementById('clientName');
+            const phoneEl = document.getElementById('clientPhone');
+            const notesEl = document.getElementById('clientNotes');
+            if (nameEl && phoneEl && nameEl.value && phoneEl.value && phoneEl.value.replace(/\D/g, '').length >= 9) {
+                const dateEl = document.querySelector('.calendar-day-btn.selected') || document.querySelector('.calendar-day-btn.active');
+                const timeEl = document.querySelector('.time-slot-btn.active');
+                const masterEl = document.querySelector('.cat-masters .master-card-shell.selected');
+                const serviceEl = document.querySelector('.b-service-cb:checked');
+
+                const payload = {
+                    date: dateEl ? dateEl.getAttribute('data-date') || '12 Серпня' : '12 Серпня',
+                    time: timeEl ? timeEl.getAttribute('data-time') || '14:00' : '14:00',
+                    masterId: masterEl ? masterEl.getAttribute('data-master-id') || 'm1' : 'm1',
+                    masterName: masterEl ? masterEl.getAttribute('data-master-name') || 'Олена Соколова' : 'Олена Соколова',
+                    serviceName: serviceEl ? serviceEl.getAttribute('data-name') || 'Послуга' : 'Послуга',
+                    clientName: nameEl.value.trim(),
+                    phone: phoneEl.value.trim(),
+                    notes: notesEl ? notesEl.value.trim() : ''
+                };
+                window.sendDirectToAltegioInline(payload);
+                fetch('/api/bookings', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                }).catch(function(){});
+            }
+        }, true);
+    })();
+    </script>
 </body>
 </html>
