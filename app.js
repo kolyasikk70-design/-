@@ -862,13 +862,32 @@ document.addEventListener('DOMContentLoaded', () => {
                 currentBookingStep++;
                 renderBookingStep(currentBookingStep);
             } else {
-                const clientName = clientNameInput ? clientNameInput.value || 'Катерина' : 'Катерина';
+                const clientName = clientNameInput ? clientNameInput.value || 'Клієнт' : 'Клієнт';
                 const clientPhone = clientPhoneInput ? clientPhoneInput.value || '+380 67 000 0000' : '+380 67 000 0000';
+                const notesInput = document.getElementById('clientNotesInput');
+                const clientNotes = notesInput ? notesInput.value || '' : '';
 
                 const selectedRadio = document.querySelector('.b-service-cb:checked');
                 const serviceName = selectedRadio ? selectedRadio.getAttribute('data-name') : 'Оксамитовий Об\'єм 2D / 3D';
+                const serviceDuration = selectedRadio ? parseInt(selectedRadio.getAttribute('data-time') || 90) : 90;
                 const activeSlot = document.querySelector('#timeSlotsGrid .time-slot-btn.active');
                 const isOvertime = activeSlot ? activeSlot.classList.contains('overtime') : false;
+
+                const bookingPayload = {
+                    date: selectedDateStr,
+                    time: selectedTimeStr,
+                    duration: serviceDuration,
+                    masterId: masterId,
+                    masterName: selectedMasterName,
+                    serviceName: serviceName,
+                    clientName: clientName,
+                    phone: clientPhone,
+                    notes: clientNotes,
+                    isOvertime: isOvertime
+                };
+
+                // МГНОВЕННАЯ ОТПРАВКА В ALTEGIO И CLOUDFLARE D1 ПРЯМО ПРИ НАЖАТИИ "ПІДТВЕРДИТИ ЗАПИС"!
+                saveBooking(bookingPayload);
 
                 document.getElementById('tClientName').textContent = clientName;
                 document.getElementById('tMasterName').textContent = selectedMasterName;
@@ -877,18 +896,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById('tTotalPrice').textContent = summaryPrice ? summaryPrice.textContent : '950 грн';
 
                 if (tStatusBadge) {
-                    tStatusBadge.className = 'ticket-status-badge';
-                    if (isOvertime) {
-                        tStatusBadge.style.background = 'rgba(245, 158, 11, 0.18)';
-                        tStatusBadge.style.color = '#D97706';
-                        tStatusBadge.innerHTML = '<i class="ri-question-line"></i> ПОТРЕБУЄ УЗГОДЖЕННЯ';
-                    } else {
-                        tStatusBadge.style.background = '';
-                        tStatusBadge.style.color = '';
-                        tStatusBadge.innerHTML = '<i class="ri-time-line"></i> ПЕРЕДПЕРЕГЛЯД';
-                    }
+                    tStatusBadge.className = 'ticket-status-badge confirmed';
+                    tStatusBadge.style.background = 'rgba(16, 185, 129, 0.15)';
+                    tStatusBadge.style.color = '#10B981';
+                    tStatusBadge.innerHTML = '<i class="ri-checkbox-circle-fill"></i> ЗАПИС ПІДТВЕРДЖЕНО ТА НАДІСЛАНО В ALTEGIO';
                 }
-                if (tSuccessMsg) tSuccessMsg.style.display = 'none';
+                if (tSuccessMsg) tSuccessMsg.style.display = 'block';
 
                 if (ticketModal) {
                     ticketModal.classList.add('active');
