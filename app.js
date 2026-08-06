@@ -258,8 +258,8 @@ document.addEventListener('DOMContentLoaded', () => {
         unmuteStageBtn.addEventListener('click', () => {
             galleryMainVideo.muted = !galleryMainVideo.muted;
             unmuteStageBtn.innerHTML = galleryMainVideo.muted ? 
-                '<i class="ri-volume-mute-line"></i> Включить звук' : 
-                '<i class="ri-volume-up-line"></i> Выключить звук';
+                '<i class="ri-volume-mute-line"></i> Увімкнути звук' : 
+                '<i class="ri-volume-up-line"></i> Вимкнути звук';
         });
     }
 
@@ -284,7 +284,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const discountedPrice = Math.round(totalPrice * 0.9);
 
-        if (quizTotalTime) quizTotalTime.textContent = `${totalTime} мин`;
+        if (quizTotalTime) quizTotalTime.textContent = `${totalTime} хв`;
         if (quizTotalPrice) quizTotalPrice.textContent = `${discountedPrice.toLocaleString()} грн`;
     }
 
@@ -318,7 +318,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ----------------------------------------------------------------------
-    // 9. MULTI-STEP ONLINE BOOKING MACHINE (UAH OUTPUT)
+    // 9. MULTI-STEP ONLINE BOOKING MACHINE (UAH OUTPUT & CATEGORY MASTERS)
     // ----------------------------------------------------------------------
     let currentBookingStep = 1;
     const totalBookingSteps = 4;
@@ -328,40 +328,272 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnBookingPrev = document.getElementById('btnBookingPrev');
     const btnBookingNext = document.getElementById('btnBookingNext');
     const summaryCount = document.getElementById('summaryCount');
+    const summaryTime = document.getElementById('summaryTime');
     const summaryPrice = document.getElementById('summaryPrice');
 
     const serviceCbs = document.querySelectorAll('.b-service-cb');
+    const bCatBtns = document.querySelectorAll('.b-cat-btn');
+    const bCatItems = document.querySelectorAll('.bcat-item');
+    const catMastersGrids = document.querySelectorAll('.cat-masters');
+    const masterCards = document.querySelectorAll('.master-card-shell');
+    let selectedMasterName = 'Олена Соколова (Старший Top Lash Artist)';
+    let activeCategory = 'lashes';
+
+    function formatMinutesToHours(totalMinutes) {
+        if (totalMinutes === 0) return '0 хв';
+        if (totalMinutes < 60) return `${totalMinutes} хв`;
+        const hrs = Math.floor(totalMinutes / 60);
+        const mins = totalMinutes % 60;
+        return mins > 0 ? `~${hrs} год ${mins} хв` : `~${hrs} год`;
+    }
 
     function updateBookingSummary() {
         let count = 0;
-        let total = 0;
+        let totalMinutes = 0;
+        let totalPrice = 0;
 
         serviceCbs.forEach(cb => {
             if (cb.checked) {
                 count++;
-                total += parseInt(cb.getAttribute('data-price') || 0);
+                totalMinutes += parseInt(cb.getAttribute('data-time') || 0);
+                totalPrice += parseInt(cb.getAttribute('data-price') || 0);
             }
         });
 
-        if (summaryCount) summaryCount.textContent = `${count} услуг`;
-        if (summaryPrice) summaryPrice.textContent = `${total.toLocaleString()} грн`;
+        if (summaryCount) {
+            summaryCount.textContent = count === 1 ? '1 процедура' : `${count} процедури`;
+        }
+        if (summaryTime) {
+            summaryTime.textContent = formatMinutesToHours(totalMinutes);
+        }
+        if (summaryPrice) {
+            summaryPrice.textContent = `${totalPrice.toLocaleString()} грн`;
+        }
     }
 
-    serviceCbs.forEach(cb => cb.addEventListener('change', updateBookingSummary));
+    function switchBookingCategory(cat) {
+        activeCategory = cat;
+        bCatBtns.forEach(btn => {
+            if (btn.getAttribute('data-bcat') === cat) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
 
-    const masterCards = document.querySelectorAll('.master-card-shell');
-    let selectedMasterName = 'Елена Соколова';
+        bCatItems.forEach(item => {
+            if (item.classList.contains(cat)) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active');
+            }
+        });
 
-    masterCards.forEach(card => {
-        card.addEventListener('click', () => {
-            masterCards.forEach(m => m.classList.remove('selected'));
-            card.classList.add('selected');
-            selectedMasterName = card.getAttribute('data-master-name') || 'Елена Соколова';
+        catMastersGrids.forEach(grid => {
+            if (grid.classList.contains(cat)) {
+                grid.classList.add('active');
+            } else {
+                grid.classList.remove('active');
+            }
+        });
+
+        document.querySelectorAll('.master-card-shell').forEach(m => m.classList.remove('selected'));
+        const activeMasters = document.querySelectorAll(`.cat-masters.${cat} .master-card-shell`);
+        if (activeMasters.length > 0) {
+            activeMasters[0].classList.add('selected');
+            selectedMasterName = activeMasters[0].getAttribute('data-master-name') || 'Олена Соколова';
+        }
+    }
+
+    bCatBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const cat = btn.getAttribute('data-bcat');
+            switchBookingCategory(cat);
         });
     });
 
+    serviceCbs.forEach(cb => cb.addEventListener('change', updateBookingSummary));
+
+    masterCards.forEach(card => {
+        card.addEventListener('click', () => {
+            document.querySelectorAll('.master-card-shell').forEach(m => m.classList.remove('selected'));
+            card.classList.add('selected');
+            selectedMasterName = card.getAttribute('data-master-name') || 'Олена Соколова';
+        });
+    });
+
+    // ----------------------------------------------------------------------
+    // 10. TIME SLOT BUFFER GUARD CONTROLLER (5 MINUTES COMPACT BUFFER)
+    // ----------------------------------------------------------------------
+    const TECHNICAL_BUFFER_MINUTES = 5; // Минимальный технический перерыв между приёмами ровно 5 минут!
+
+    function sendTelegramNotification(bookingObj) {
+        try {
+            const BOT_TOKEN = '8927767792:AAE6psxCkP629RBs4w-qESssDORPTRbRpn4';
+            const adminId = '5999385678';
+            const cleanPhone = (bookingObj.phone || '').replace(/\D/g, '');
+            const isOvertime = bookingObj.isOvertime;
+            const header = isOvertime ? '❓ ПОНАДУРОЧНИЙ ЗАПИС (ПІСЛЯ 20:00)' : '🆕 НОВА ЗАЯВКА НА БРОНЮВАННЯ';
+            const priceText = summaryPrice ? summaryPrice.textContent : '950 грн';
+            const notesText = (document.getElementById('clientNotes')?.value || 'Без приміток').trim();
+
+            const textMessage = `${header}\n━━━━━━━━━━━━━━━━━━━━━━\n👤 Клієнт: ${bookingObj.clientName || 'Катерина'}\n📞 Телефон: ${bookingObj.phone || 'Не вказано'}\n💬 Примітки: ${notesText}\n\n💅 Послуги: ${bookingObj.serviceName || 'Процедура beauty'}\n⏱ Тривалість: ~${bookingObj.duration || 90} хв\n👑 Майстер: ${bookingObj.masterName || 'Олена Соколова'}\n\n📅 Дата та Час: ${bookingObj.date}, о ${bookingObj.time}\n💰 Вартість: ${priceText}\n━━━━━━━━━━━━━━━━━━━━━━\nОтримано з сайту`;
+
+            const encodedText = encodeURIComponent(textMessage);
+
+            // 1. Способ POST с Inline-кнопками
+            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: adminId,
+                    text: textMessage,
+                    reply_markup: {
+                        inline_keyboard: [
+                            [
+                                { text: '✅ Підтвердити', callback_data: `confirm:${Date.now()}` },
+                                { text: '❌ Відхилити', callback_data: `reject:${Date.now()}` }
+                            ],
+                            [
+                                { text: '📞 Зателефонувати клієнту', url: `tel:${cleanPhone}` }
+                            ]
+                        ]
+                    }
+                })
+            }).catch(() => {});
+
+            // 2. Способ через Image Beacon (100% пуленепробиваемый обход CORS в Safari/Chrome на смартфонах!)
+            const beacon = new Image();
+            beacon.src = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${adminId}&text=${encodedText}`;
+
+        } catch(e) {}
+    }
+
+    function getStoredBookings() {
+        try {
+            return JSON.parse(localStorage.getItem('beauty_salon_bookings_v2')) || [];
+        } catch(e) {
+            return [];
+        }
+    }
+
+    function saveBooking(bookingObj) {
+        const bookings = getStoredBookings();
+        bookings.push(bookingObj);
+        localStorage.setItem('beauty_salon_bookings_v2', JSON.stringify(bookings));
+
+        // Отправляем асинхронное мгновенное уведомление в Telegram администратора!
+        sendTelegramNotification(bookingObj);
+    }
+
+    function timeToMinutes(timeStr) {
+        if (!timeStr) return 0;
+        const parts = timeStr.split(':');
+        return parseInt(parts[0]) * 60 + parseInt(parts[1]);
+    }
+
+    const SALON_CLOSING_MINUTES = 20 * 60; // 20:00 (1200 хвилин)
+
+    function minutesToFormattedTime(totalMins) {
+        const hrs = Math.floor(totalMins / 60);
+        const mins = totalMins % 60;
+        const hh = hrs < 10 ? '0' + hrs : '' + hrs;
+        const mm = mins < 10 ? '0' + mins : '' + mins;
+        return `${hh}:${mm}`;
+    }
+
+    function checkAndToggleOvertimeAlert(slotBtn) {
+        const overtimeAlertBox = document.getElementById('overtimeAlertBox');
+        const overtimeDescText = document.getElementById('overtimeDescText');
+        if (!overtimeAlertBox) return;
+
+        if (slotBtn && slotBtn.classList.contains('overtime')) {
+            const slotTimeStr = slotBtn.getAttribute('data-time') || '19:00';
+            const selectedCbs = document.querySelectorAll('.b-service-cb:checked');
+            let selectedDuration = 0;
+            selectedCbs.forEach(cb => {
+                selectedDuration += parseInt(cb.getAttribute('data-time') || 90);
+            });
+            if (selectedDuration === 0) selectedDuration = 60;
+
+            const endMin = timeToMinutes(slotTimeStr) + selectedDuration;
+            const endTimeStr = minutesToFormattedTime(endMin);
+
+            if (overtimeDescText) {
+                overtimeDescText.innerHTML = `Ваша процедура триватиме до <strong>${endTimeStr}</strong>. Оскільки салон працює до 20:00, цей запис потребує особистого узгодження з майстром <strong>${selectedMasterName}</strong>.`;
+            }
+            overtimeAlertBox.style.display = 'block';
+        } else {
+            overtimeAlertBox.style.display = 'none';
+        }
+    }
+
+    function updateAvailableTimeSlots() {
+        const bookings = getStoredBookings();
+        const selectedCbs = document.querySelectorAll('.b-service-cb:checked');
+        let selectedDuration = 0;
+        selectedCbs.forEach(cb => {
+            selectedDuration += parseInt(cb.getAttribute('data-time') || 90);
+        });
+        if (selectedDuration === 0) selectedDuration = 60;
+
+        const selectedMasterCard = document.querySelector('.cat-masters .master-card-shell.selected');
+        const selectedMasterId = selectedMasterCard ? selectedMasterCard.getAttribute('data-master-id') : 'm1';
+        const clientPhone = (document.getElementById('clientPhone')?.value || '').trim();
+
+        const allTimeSlots = document.querySelectorAll('#timeSlotsGrid .time-slot-btn');
+
+        allTimeSlots.forEach(slotBtn => {
+            const slotTimeStr = slotBtn.getAttribute('data-time');
+            const slotStartMin = timeToMinutes(slotTimeStr);
+            const slotEndMin = slotStartMin + selectedDuration;
+            let isConflict = false;
+
+            bookings.forEach(b => {
+                if (b.date === selectedDateStr) {
+                    const bStartMin = timeToMinutes(b.time);
+                    const bDuration = parseInt(b.duration || 90);
+                    const bEndMinWithBuffer = bStartMin + bDuration + TECHNICAL_BUFFER_MINUTES;
+
+                    const isSameMaster = b.masterId === selectedMasterId;
+                    const isSameClient = clientPhone && b.phone === clientPhone;
+
+                    if (isSameMaster || isSameClient) {
+                        if (slotStartMin < bEndMinWithBuffer && slotEndMin > bStartMin) {
+                            isConflict = true;
+                        }
+                    }
+                }
+            });
+
+            if (isConflict) {
+                slotBtn.classList.add('disabled');
+                slotBtn.classList.remove('active');
+                slotBtn.classList.remove('overtime');
+            } else {
+                slotBtn.classList.remove('disabled');
+                if (slotEndMin > SALON_CLOSING_MINUTES) {
+                    slotBtn.classList.add('overtime');
+                } else {
+                    slotBtn.classList.remove('overtime');
+                }
+            }
+        });
+
+        const firstFreeSlot = document.querySelector('#timeSlotsGrid .time-slot-btn:not(.disabled)');
+        const currentActiveSlot = document.querySelector('#timeSlotsGrid .time-slot-btn.active:not(.disabled)');
+
+        if (!currentActiveSlot && firstFreeSlot) {
+            firstFreeSlot.classList.add('active');
+            selectedTimeStr = firstFreeSlot.getAttribute('data-time') || '13:00';
+            checkAndToggleOvertimeAlert(firstFreeSlot);
+        } else if (currentActiveSlot) {
+            checkAndToggleOvertimeAlert(currentActiveSlot);
+        }
+    }
+
     const calendarDaysGrid = document.getElementById('calendarDaysGrid');
-    let selectedDateStr = '06 Августа';
+    let selectedDateStr = '06 Серпня';
     let selectedTimeStr = '13:00';
 
     if (calendarDaysGrid) {
@@ -374,7 +606,8 @@ document.addEventListener('DOMContentLoaded', () => {
             dayBtn.addEventListener('click', () => {
                 document.querySelectorAll('.cal-day-btn').forEach(b => b.classList.remove('active'));
                 dayBtn.classList.add('active');
-                selectedDateStr = `${d < 10 ? '0' + d : d} Августа`;
+                selectedDateStr = `${d < 10 ? '0' + d : d} Серпня`;
+                updateAvailableTimeSlots();
             });
             calendarDaysGrid.appendChild(dayBtn);
         }
@@ -383,9 +616,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const timeSlotBtns = document.querySelectorAll('#timeSlotsGrid .time-slot-btn');
     timeSlotBtns.forEach(slot => {
         slot.addEventListener('click', () => {
+            if (slot.classList.contains('disabled')) return;
             timeSlotBtns.forEach(s => s.classList.remove('active'));
             slot.classList.add('active');
             selectedTimeStr = slot.getAttribute('data-time') || '13:00';
+            checkAndToggleOvertimeAlert(slot);
         });
     });
 
@@ -403,6 +638,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
+        if (step === 3) {
+            updateAvailableTimeSlots();
+        }
+
         if (btnBookingPrev) {
             btnBookingPrev.style.display = step > 1 ? 'inline-flex' : 'none';
         }
@@ -410,36 +649,195 @@ document.addEventListener('DOMContentLoaded', () => {
         if (btnBookingNext) {
             const btnTextEl = btnBookingNext.querySelector('.btn-text');
             if (btnTextEl) {
-                btnTextEl.textContent = step === totalBookingSteps ? 'Завершить запись' : 'Далее';
+                btnTextEl.textContent = step === totalBookingSteps ? 'Підтвердити запис' : 'Далі';
             }
         }
     }
 
+    // ----------------------------------------------------------------------
+    // 11. STRICT UKRAINIAN PHONE NUMBER MASK & VALIDATOR
+    // ----------------------------------------------------------------------
+    const clientPhoneInput = document.getElementById('clientPhone');
+    const clientNameInput = document.getElementById('clientName');
+    const phoneErrorMsg = document.getElementById('phoneErrorMsg');
+    const nameErrorMsg = document.getElementById('nameErrorMsg');
+
+    const VALID_UKR_CODES = ['39', '50', '63', '66', '67', '68', '73', '89', '91', '92', '93', '94', '95', '96', '97', '98', '99'];
+
+    function formatUkrPhone(val) {
+        let digits = val.replace(/\D/g, '');
+
+        if (digits.startsWith('380')) {
+            digits = digits.substring(3);
+        } else if (digits.startsWith('0')) {
+            digits = digits.substring(1);
+        } else if (digits.startsWith('80')) {
+            digits = digits.substring(2);
+        }
+
+        digits = digits.substring(0, 9);
+
+        let res = '+380 ';
+        if (digits.length > 0) {
+            res += '(' + digits.substring(0, 2);
+        }
+        if (digits.length >= 2) {
+            res += ') ';
+        }
+        if (digits.length > 2) {
+            res += digits.substring(2, 5);
+        }
+        if (digits.length >= 5) {
+            res += '-';
+        }
+        if (digits.length > 5) {
+            res += digits.substring(5, 7);
+        }
+        if (digits.length >= 7) {
+            res += '-';
+        }
+        if (digits.length > 7) {
+            res += digits.substring(7, 9);
+        }
+
+        return res;
+    }
+
+    let isDeletingPhone = false;
+
+    if (clientPhoneInput) {
+        clientPhoneInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Backspace' || e.key === 'Delete') {
+                isDeletingPhone = true;
+                const val = clientPhoneInput.value;
+                if (val === '+380 ' || val.length <= 5) {
+                    clientPhoneInput.value = '';
+                    isDeletingPhone = false;
+                }
+            } else {
+                isDeletingPhone = false;
+            }
+        });
+
+        clientPhoneInput.addEventListener('focus', () => {
+            if (!clientPhoneInput.value || clientPhoneInput.value.trim() === '') {
+                clientPhoneInput.value = '+380 ';
+            }
+        });
+
+        clientPhoneInput.addEventListener('input', (e) => {
+            let raw = e.target.value;
+
+            if (isDeletingPhone) {
+                let digits = raw.replace(/\D/g, '');
+                if (digits.startsWith('380')) digits = digits.substring(3);
+                // При стирании удаляем последнюю цифру
+                if (digits.length > 0) {
+                    digits = digits.substring(0, digits.length - 1);
+                }
+                
+                if (digits.length === 0) {
+                    clientPhoneInput.value = '+380 ';
+                    isDeletingPhone = false;
+                    return;
+                }
+                raw = '380' + digits;
+                isDeletingPhone = false;
+            }
+
+            clientPhoneInput.value = formatUkrPhone(raw);
+            if (phoneErrorMsg) phoneErrorMsg.style.display = 'none';
+            clientPhoneInput.classList.remove('invalid');
+        });
+    }
+
+    if (clientNameInput) {
+        clientNameInput.addEventListener('input', () => {
+            if (nameErrorMsg) nameErrorMsg.style.display = 'none';
+            clientNameInput.classList.remove('invalid');
+        });
+    }
+
+    function isValidUkrPhone(phoneStr) {
+        const digits = phoneStr.replace(/\D/g, '');
+        if (digits.length !== 12 || !digits.startsWith('380')) {
+            return false;
+        }
+        const operatorCode = digits.substring(3, 5);
+        return VALID_UKR_CODES.includes(operatorCode);
+    }
+
+    const btnEditTicket = document.getElementById('btnEditTicket');
+    const btnFinalConfirm = document.getElementById('btnFinalConfirm');
+    const tStatusBadge = document.getElementById('tStatusBadge');
+    const tSuccessMsg = document.getElementById('tSuccessMsg');
+
+    if (btnEditTicket) {
+        btnEditTicket.addEventListener('click', () => {
+            if (ticketModal) ticketModal.classList.remove('active');
+        });
+    }
+
     if (btnBookingNext) {
         btnBookingNext.addEventListener('click', () => {
+            if (currentBookingStep === 4) {
+                let isValid = true;
+                const nameVal = (clientNameInput?.value || '').trim();
+                const phoneVal = (clientPhoneInput?.value || '').trim();
+
+                if (nameVal.length < 2) {
+                    isValid = false;
+                    if (clientNameInput) {
+                        clientNameInput.classList.add('invalid');
+                        clientNameInput.focus();
+                    }
+                    if (nameErrorMsg) nameErrorMsg.style.display = 'block';
+                }
+
+                if (!isValidUkrPhone(phoneVal)) {
+                    isValid = false;
+                    if (clientPhoneInput) {
+                        clientPhoneInput.classList.add('invalid');
+                        if (nameVal.length >= 2) clientPhoneInput.focus();
+                    }
+                    if (phoneErrorMsg) phoneErrorMsg.style.display = 'block';
+                }
+
+                if (!isValid) return;
+            }
+
             if (currentBookingStep < totalBookingSteps) {
                 currentBookingStep++;
                 renderBookingStep(currentBookingStep);
             } else {
-                const clientNameInput = document.getElementById('clientName');
-                const clientName = clientNameInput ? clientNameInput.value || 'Екатерина' : 'Екатерина';
+                const clientName = clientNameInput ? clientNameInput.value || 'Катерина' : 'Катерина';
+                const clientPhone = clientPhoneInput ? clientPhoneInput.value || '+380 67 000 0000' : '+380 67 000 0000';
+
+                const selectedRadio = document.querySelector('.b-service-cb:checked');
+                const serviceName = selectedRadio ? selectedRadio.getAttribute('data-name') : 'Оксамитовий Об\'єм 2D / 3D';
+                const activeSlot = document.querySelector('#timeSlotsGrid .time-slot-btn.active');
+                const isOvertime = activeSlot ? activeSlot.classList.contains('overtime') : false;
 
                 document.getElementById('tClientName').textContent = clientName;
                 document.getElementById('tMasterName').textContent = selectedMasterName;
-                document.getElementById('tDateTime').textContent = `${selectedDateStr}, ${selectedTimeStr}`;
-                
-                const selectedServices = [];
-                serviceCbs.forEach(cb => {
-                    if (cb.checked) {
-                        selectedServices.push(cb.getAttribute('data-name'));
-                    }
-                });
-                document.getElementById('tServicesList').textContent = selectedServices.length > 0 ? selectedServices.join(', ') : 'Бархатный Объем 2D / 3D';
+                document.getElementById('tDateTime').textContent = `${selectedDateStr}, ${selectedTimeStr}${isOvertime ? ' (❓ Понадурочно)' : ''}`;
+                document.getElementById('tServicesList').textContent = serviceName;
                 document.getElementById('tTotalPrice').textContent = summaryPrice ? summaryPrice.textContent : '950 грн';
 
-                playChimeSound();
+                if (tStatusBadge) {
+                    tStatusBadge.className = 'ticket-status-badge';
+                    if (isOvertime) {
+                        tStatusBadge.style.background = 'rgba(245, 158, 11, 0.18)';
+                        tStatusBadge.style.color = '#D97706';
+                        tStatusBadge.innerHTML = '<i class="ri-question-line"></i> ПОТРЕБУЄ УЗГОДЖЕННЯ';
+                    } else {
+                        tStatusBadge.style.background = '';
+                        tStatusBadge.style.color = '';
+                        tStatusBadge.innerHTML = '<i class="ri-time-line"></i> ПЕРЕДПЕРЕГЛЯД';
+                    }
+                }
+                if (tSuccessMsg) tSuccessMsg.style.display = 'none';
 
-                const ticketModal = document.getElementById('ticketModal');
                 if (ticketModal) {
                     ticketModal.classList.add('active');
                 }
@@ -447,7 +845,68 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    if (btnFinalConfirm) {
+        btnFinalConfirm.addEventListener('click', () => {
+            const clientName = clientNameInput ? clientNameInput.value || 'Катерина' : 'Катерина';
+            const clientPhone = clientPhoneInput ? clientPhoneInput.value || '+380 67 000 0000' : '+380 67 000 0000';
+            const selectedRadio = document.querySelector('.b-service-cb:checked');
+            const selectedMasterCard = document.querySelector('.cat-masters .master-card-shell.selected');
+            const masterId = selectedMasterCard ? selectedMasterCard.getAttribute('data-master-id') : 'm1';
+            const serviceDuration = selectedRadio ? parseInt(selectedRadio.getAttribute('data-time') || 90) : 90;
+            const serviceName = selectedRadio ? selectedRadio.getAttribute('data-name') : 'Оксамитовий Об\'єм 2D / 3D';
+            const activeSlot = document.querySelector('#timeSlotsGrid .time-slot-btn.active');
+            const isOvertime = activeSlot ? activeSlot.classList.contains('overtime') : false;
+
+            saveBooking({
+                date: selectedDateStr,
+                time: selectedTimeStr,
+                duration: serviceDuration,
+                masterId: masterId,
+                masterName: selectedMasterName,
+                serviceName: serviceName,
+                clientName: clientName,
+                phone: clientPhone,
+                isOvertime: isOvertime,
+                telegramStatus: isOvertime ? '❓ ПОНАДУРОЧНО (ПОТРЕБУЄ УЗГОДЖЕННЯ)' : '✅ ПІДТВЕРДЖЕНО'
+            });
+
+            playChimeSound();
+
+            if (tStatusBadge) {
+                if (isOvertime) {
+                    tStatusBadge.className = 'ticket-status-badge confirmed';
+                    tStatusBadge.style.background = 'rgba(245, 158, 11, 0.2)';
+                    tStatusBadge.style.color = '#D97706';
+                    tStatusBadge.innerHTML = '<i class="ri-question-mark"></i> НАДІСЛАНО НА УЗГОДЖЕННЯ';
+                } else {
+                    tStatusBadge.className = 'ticket-status-badge confirmed';
+                    tStatusBadge.style.background = 'rgba(16, 185, 129, 0.15)';
+                    tStatusBadge.style.color = '#10B981';
+                    tStatusBadge.innerHTML = '<i class="ri-checkbox-circle-fill"></i> ЗАПИС ПІДТВЕРДЖЕНО';
+                }
+            }
+
+            if (tSuccessMsg) {
+                if (isOvertime) {
+                    tSuccessMsg.innerHTML = '<i class="ri-question-line"></i> Дякуємо! Запит надіслано в Telegram майстру для узгодження прийому після 20:00! 📲';
+                    tSuccessMsg.style.color = '#D97706';
+                    tSuccessMsg.style.background = 'rgba(245, 158, 11, 0.12)';
+                } else {
+                    tSuccessMsg.innerHTML = '<i class="ri-checkbox-circle-fill"></i> Дякуємо! Вашу броню успішно внесено в графік майстра! 🎉';
+                    tSuccessMsg.style.color = '#10B981';
+                    tSuccessMsg.style.background = 'rgba(16, 185, 129, 0.1)';
+                }
+                tSuccessMsg.style.display = 'block';
+            }
+
+            setTimeout(() => {
+                if (ticketModal) ticketModal.classList.remove('active');
+            }, 2200);
+        });
+    }
+
     if (btnBookingPrev) {
+        btnBookingPrev.style.display = 'none';
         btnBookingPrev.addEventListener('click', () => {
             if (currentBookingStep > 1) {
                 currentBookingStep--;
