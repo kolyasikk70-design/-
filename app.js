@@ -827,7 +827,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function isValidUkrPhone(phoneStr) {
         if (!phoneStr) return false;
         const digits = phoneStr.replace(/\D/g, '');
-        return digits.length >= 9;
+        return digits.length >= 7;
     }
 
     const btnEditTicket = document.getElementById('btnEditTicket');
