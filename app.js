@@ -451,11 +451,24 @@ document.addEventListener('DOMContentLoaded', () => {
             let monthStr = '08';
             let dayStr = '08';
             if (bookingObj.date) {
+                const lowerDate = bookingObj.date.toLowerCase();
                 const parts = bookingObj.date.split(' ');
                 const dayNum = parseInt(parts[0]);
                 if (!isNaN(dayNum)) {
                     dayStr = dayNum < 10 ? '0' + dayNum : '' + dayNum;
                 }
+                if (lowerDate.includes('січ')) monthStr = '01';
+                else if (lowerDate.includes('лют')) monthStr = '02';
+                else if (lowerDate.includes('берез')) monthStr = '03';
+                else if (lowerDate.includes('квіт')) monthStr = '04';
+                else if (lowerDate.includes('трав')) monthStr = '05';
+                else if (lowerDate.includes('черв')) monthStr = '06';
+                else if (lowerDate.includes('лип')) monthStr = '07';
+                else if (lowerDate.includes('серп')) monthStr = '08';
+                else if (lowerDate.includes('верес')) monthStr = '09';
+                else if (lowerDate.includes('жовт')) monthStr = '10';
+                else if (lowerDate.includes('листоп')) monthStr = '11';
+                else if (lowerDate.includes('груд')) monthStr = '12';
             }
             const cleanTime = (bookingObj.time || '14:00').trim();
             const formattedDatetime = `${currentYear}-${monthStr}-${dayStr}T${cleanTime}:00+03:00`;
@@ -861,8 +874,8 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 const clientName = clientNameInput ? clientNameInput.value || 'Клієнт' : 'Клієнт';
                 const clientPhone = clientPhoneInput ? clientPhoneInput.value || '+380 67 000 0000' : '+380 67 000 0000';
-                const notesInput = document.getElementById('clientNotesInput');
-                const clientNotes = notesInput ? notesInput.value || '' : '';
+            const notesInput = document.getElementById('clientNotes');
+            const clientNotes = notesInput ? notesInput.value || '' : '';
 
                 const selectedMasterCard = document.querySelector('.cat-masters .master-card-shell.selected');
                 const currentMasterId = selectedMasterCard ? selectedMasterCard.getAttribute('data-master-id') : 'm1';
