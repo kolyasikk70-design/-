@@ -1,10 +1,7 @@
 name = "beauty-salon"
 main = "_worker.js"
 compatibility_date = "2026-08-06"
-
-[assets]
-directory = "."
-binding = "ASSETS"
+assets = "."
 
 [[d1_databases]]
 binding = "DB"
