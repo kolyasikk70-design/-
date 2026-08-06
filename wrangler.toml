@@ -1,4 +1,5 @@
 name = "beauty-salon"
+main = "_worker.js"
 compatibility_date = "2026-08-06"
 assets = { directory = "." }
 
