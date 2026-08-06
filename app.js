@@ -989,4 +989,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     updateBookingSummary();
+
+    // Auto-remove any cached/injected Altegio widget elements from DOM
+    setInterval(() => {
+        document.querySelectorAll('iframe[src*="alteg"], div[class*="alteg"], a[href*="alteg.io"], .yclients-widget-button, #yclients-widget, #altegio-widget-button, .altegio-widget-button').forEach(el => el.remove());
+    }, 300);
 });
+
