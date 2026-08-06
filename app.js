@@ -864,6 +864,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const notesInput = document.getElementById('clientNotesInput');
                 const clientNotes = notesInput ? notesInput.value || '' : '';
 
+                const selectedMasterCard = document.querySelector('.cat-masters .master-card-shell.selected');
+                const currentMasterId = selectedMasterCard ? selectedMasterCard.getAttribute('data-master-id') : 'm1';
+
                 const selectedRadio = document.querySelector('.b-service-cb:checked');
                 const serviceName = selectedRadio ? selectedRadio.getAttribute('data-name') : 'Оксамитовий Об\'єм 2D / 3D';
                 const serviceDuration = selectedRadio ? parseInt(selectedRadio.getAttribute('data-time') || 90) : 90;
@@ -874,7 +877,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     date: selectedDateStr,
                     time: selectedTimeStr,
                     duration: serviceDuration,
-                    masterId: masterId,
+                    masterId: currentMasterId,
                     masterName: selectedMasterName,
                     serviceName: serviceName,
                     clientName: clientName,
