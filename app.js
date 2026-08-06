@@ -423,51 +423,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ----------------------------------------------------------------------
-    // 10. TIME SLOT BUFFER GUARD CONTROLLER (5 MINUTES COMPACT BUFFER)
+    // 10. CLOUDFLARE D1 DATABASE & TIME SLOT CONTROLLER
     // ----------------------------------------------------------------------
     const TECHNICAL_BUFFER_MINUTES = 5; // Минимальный технический перерыв между приёмами ровно 5 минут!
-
-    function sendTelegramNotification(bookingObj) {
-        try {
-            const BOT_TOKEN = '8927767792:AAE6psxCkP629RBs4w-qESssDORPTRbRpn4';
-            const adminId = '5999385678';
-            const cleanPhone = (bookingObj.phone || '').replace(/\D/g, '');
-            const isOvertime = bookingObj.isOvertime;
-            const header = isOvertime ? '❓ ПОНАДУРОЧНИЙ ЗАПИС (ПІСЛЯ 20:00)' : '🆕 НОВА ЗАЯВКА НА БРОНЮВАННЯ';
-            const priceText = summaryPrice ? summaryPrice.textContent : '950 грн';
-            const notesText = (document.getElementById('clientNotes')?.value || 'Без приміток').trim();
-
-            const textMessage = `${header}\n━━━━━━━━━━━━━━━━━━━━━━\n👤 Клієнт: ${bookingObj.clientName || 'Катерина'}\n📞 Телефон: ${bookingObj.phone || 'Не вказано'}\n💬 Примітки: ${notesText}\n\n💅 Послуги: ${bookingObj.serviceName || 'Процедура beauty'}\n⏱ Тривалість: ~${bookingObj.duration || 90} хв\n👑 Майстер: ${bookingObj.masterName || 'Олена Соколова'}\n\n📅 Дата та Час: ${bookingObj.date}, о ${bookingObj.time}\n💰 Вартість: ${priceText}\n━━━━━━━━━━━━━━━━━━━━━━\nОтримано з сайту`;
-
-            const encodedText = encodeURIComponent(textMessage);
-
-            // 1. Способ POST с Inline-кнопками
-            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    chat_id: adminId,
-                    text: textMessage,
-                    reply_markup: {
-                        inline_keyboard: [
-                            [
-                                { text: '✅ Підтвердити', callback_data: `confirm:${Date.now()}` },
-                                { text: '❌ Відхилити', callback_data: `reject:${Date.now()}` }
-                            ],
-                            [
-                                { text: '📞 Зателефонувати клієнту', url: `tel:${cleanPhone}` }
-                            ]
-                        ]
-                    }
-                })
-            }).catch(() => {});
-
-            // 2. Способ через Image Beacon (100% пуленепробиваемый обход CORS в Safari/Chrome на смартфонах!)
-            const beacon = new Image();
-            beacon.src = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${adminId}&text=${encodedText}`;
-
-        } catch(e) {}
-    }
 
     function getStoredBookings() {
         try {
@@ -477,13 +435,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function saveBooking(bookingObj) {
+    async function saveBooking(bookingObj) {
+        // 1. Сохраняем локально в браузер для мгновенного отклика
         const bookings = getStoredBookings();
         bookings.push(bookingObj);
         localStorage.setItem('beauty_salon_bookings_v2', JSON.stringify(bookings));
 
-        // Отправляем асинхронное мгновенное уведомление в Telegram администратора!
-        sendTelegramNotification(bookingObj);
+        // 2. Отправляем в облачную SQLite базу данных Cloudflare D1
+        try {
+            await fetch('/api/bookings', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(bookingObj)
+            });
+        } catch (e) {
+            console.warn('D1 Cloud Sync info:', e);
+        }
     }
 
     function timeToMinutes(timeStr) {
@@ -528,8 +495,31 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function updateAvailableTimeSlots() {
-        const bookings = getStoredBookings();
+    async function updateAvailableTimeSlots() {
+        let bookings = getStoredBookings();
+
+        const selectedMasterCard = document.querySelector('.cat-masters .master-card-shell.selected');
+        const selectedMasterId = selectedMasterCard ? selectedMasterCard.getAttribute('data-master-id') : 'm1';
+
+        // Запрашиваем свежие актуальные слоты из базы данных Cloudflare D1
+        try {
+            const res = await fetch(`/api/slots?date=${encodeURIComponent(selectedDateStr)}&masterId=${encodeURIComponent(selectedMasterId)}`);
+            if (res.ok) {
+                const data = await res.json();
+                if (data.success && Array.isArray(data.bookings) && data.bookings.length > 0) {
+                    const cloudBookings = data.bookings;
+                    // Объединяем локальные и облачные записи
+                    const ids = new Set(bookings.map(b => b.id || (b.date + '_' + b.time)));
+                    cloudBookings.forEach(cb => {
+                        const cbKey = cb.id || (cb.date + '_' + cb.time);
+                        if (!ids.has(cbKey)) {
+                            bookings.push(cb);
+                        }
+                    });
+                }
+            }
+        } catch(e) {}
+
         const selectedCbs = document.querySelectorAll('.b-service-cb:checked');
         let selectedDuration = 0;
         selectedCbs.forEach(cb => {
@@ -537,10 +527,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         if (selectedDuration === 0) selectedDuration = 60;
 
-        const selectedMasterCard = document.querySelector('.cat-masters .master-card-shell.selected');
-        const selectedMasterId = selectedMasterCard ? selectedMasterCard.getAttribute('data-master-id') : 'm1';
         const clientPhone = (document.getElementById('clientPhone')?.value || '').trim();
-
         const allTimeSlots = document.querySelectorAll('#timeSlotsGrid .time-slot-btn');
 
         allTimeSlots.forEach(slotBtn => {
@@ -555,7 +542,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const bDuration = parseInt(b.duration || 90);
                     const bEndMinWithBuffer = bStartMin + bDuration + TECHNICAL_BUFFER_MINUTES;
 
-                    const isSameMaster = b.masterId === selectedMasterId;
+                    const isSameMaster = (b.masterId || b.master_id) === selectedMasterId;
                     const isSameClient = clientPhone && b.phone === clientPhone;
 
                     if (isSameMaster || isSameClient) {
