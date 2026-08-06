@@ -135,10 +135,14 @@ export default {
                     formattedDatetime = `${currentYear}-${monthStr}-${dayStr}T${cleanTime}:00+03:00`;
                 } catch (e) {}
 
-                let targetStaffId = STAFF_MAP[masterId] || (masterName.includes('Олена') ? 3081874 : 3081868);
+                let targetStaffId = 3081874; // За умовчанням Олена Соколова (3081874)
+                if (masterId === 'm2' || masterId === 'm5' || masterId === 'm6' || (masterName && masterName.includes('Микола'))) {
+                    targetStaffId = 3081868; // Микола (3081868)
+                }
+
                 const clientEmail = (email && email.includes('@')) ? email.trim() : 'client@beauty-salon.kyiv';
 
-                // В. Отправляем в Altegio API
+                // В. Отправляем в Altegio API строго выбранному мастеру (без фоллбека на Миколу)!
                 let altegioSync = { success: false };
                 try {
                     const cleanPhone = phone.replace(/\D/g, '');
@@ -167,15 +171,9 @@ export default {
 
                     let altegioRes = await sendBookingToAltegio(targetStaffId);
                     let altegioJson = await altegioRes.json();
-
-                    if ((!altegioRes.ok || !altegioJson.success) && targetStaffId !== 3081868) {
-                        altegioRes = await sendBookingToAltegio(3081868);
-                        altegioJson = await altegioRes.json();
-                    }
-
                     altegioSync = altegioJson;
                 } catch (altegioErr) {
-                    console.warn('Altegio sync status:', altegioErr.message);
+                    console.warn('Altegio sync error:', altegioErr);
                 }
 
                 return new Response(JSON.stringify({
