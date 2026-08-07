@@ -655,10 +655,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    const calendarHeaderEl = document.querySelector('.calendar-header');
     const calendarDaysGrid = document.getElementById('calendarDaysGrid');
-    const calendarMonthEl = document.getElementById('calendarMonth');
-    const prevMonthBtn = document.getElementById('prevMonthBtn');
-    const nextMonthBtn = document.getElementById('nextMonthBtn');
 
     const UKRAINIAN_MONTHS_NOMINATIVE = [
         'Січень', 'Лютий', 'Березень', 'Квітень', 'Травень', 'Червень',
@@ -682,20 +680,79 @@ document.addEventListener('DOMContentLoaded', () => {
     let selectedDateStr = `${selectedDay < 10 ? '0' + selectedDay : selectedDay} ${UKRAINIAN_MONTHS_GENITIVE[selectedMonth]}`;
     let selectedTimeStr = '13:00';
 
+    function renderCalendarHeader() {
+        if (!calendarHeaderEl) return;
+
+        let optionsHtml = '';
+        const startY = todayDate.getFullYear();
+        const startM = todayDate.getMonth();
+
+        for (let i = 0; i < 12; i++) {
+            const m = (startM + i) % 12;
+            const y = startY + Math.floor((startM + i) / 12);
+            const val = `${y}-${m}`;
+            const isSelected = (y === viewYear && m === viewMonth) ? 'selected' : '';
+            optionsHtml += `<option value="${val}" ${isSelected}>${UKRAINIAN_MONTHS_NOMINATIVE[m]} ${y}</option>`;
+        }
+
+        const isPrevDisabled = (viewYear < todayDate.getFullYear()) || 
+            (viewYear === todayDate.getFullYear() && viewMonth <= todayDate.getMonth());
+
+        calendarHeaderEl.innerHTML = `
+            <button type="button" class="cal-nav-btn" id="prevMonthBtn" aria-label="Попередній місяць" ${isPrevDisabled ? 'disabled' : ''}>
+                <i class="ri-arrow-left-s-line"></i>
+            </button>
+            <select id="calendarMonthSelect" class="calendar-month-select" aria-label="Оберіть місяць">
+                ${optionsHtml}
+            </select>
+            <button type="button" class="cal-nav-btn" id="nextMonthBtn" aria-label="Наступний місяць">
+                <i class="ri-arrow-right-s-line"></i>
+            </button>
+        `;
+
+        const prevBtn = document.getElementById('prevMonthBtn');
+        const nextBtn = document.getElementById('nextMonthBtn');
+        const monthSelect = document.getElementById('calendarMonthSelect');
+
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                viewMonth--;
+                if (viewMonth < 0) {
+                    viewMonth = 11;
+                    viewYear--;
+                }
+                renderCalendar();
+                updateAvailableTimeSlots();
+            });
+        }
+
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                viewMonth++;
+                if (viewMonth > 11) {
+                    viewMonth = 0;
+                    viewYear++;
+                }
+                renderCalendar();
+                updateAvailableTimeSlots();
+            });
+        }
+
+        if (monthSelect) {
+            monthSelect.addEventListener('change', (e) => {
+                const [y, m] = e.target.value.split('-').map(Number);
+                viewYear = y;
+                viewMonth = m;
+                renderCalendar();
+                updateAvailableTimeSlots();
+            });
+        }
+    }
+
     function renderCalendar() {
+        renderCalendarHeader();
+
         if (!calendarDaysGrid) return;
-
-        // Update Month title
-        if (calendarMonthEl) {
-            calendarMonthEl.textContent = `${UKRAINIAN_MONTHS_NOMINATIVE[viewMonth]} ${viewYear}`;
-        }
-
-        // Disable prev button if viewing current or earlier month
-        if (prevMonthBtn) {
-            const isCurrentMonthOrPast = (viewYear < todayDate.getFullYear()) || 
-                (viewYear === todayDate.getFullYear() && viewMonth <= todayDate.getMonth());
-            prevMonthBtn.disabled = isCurrentMonthOrPast;
-        }
 
         calendarDaysGrid.innerHTML = '';
 
@@ -748,30 +805,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             calendarDaysGrid.appendChild(dayBtn);
         }
-    }
-
-    if (prevMonthBtn) {
-        prevMonthBtn.addEventListener('click', () => {
-            viewMonth--;
-            if (viewMonth < 0) {
-                viewMonth = 11;
-                viewYear--;
-            }
-            renderCalendar();
-            updateAvailableTimeSlots();
-        });
-    }
-
-    if (nextMonthBtn) {
-        nextMonthBtn.addEventListener('click', () => {
-            viewMonth++;
-            if (viewMonth > 11) {
-                viewMonth = 0;
-                viewYear++;
-            }
-            renderCalendar();
-            updateAvailableTimeSlots();
-        });
     }
 
     renderCalendar();
