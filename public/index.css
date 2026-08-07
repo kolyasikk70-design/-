@@ -2589,6 +2589,7 @@ button.cal-day-btn.active,
     .gallery-thumbs-row { grid-template-columns: 1fr; }
     .options-grid { grid-template-columns: 1fr; }
     .masters-grid { grid-template-columns: 1fr; }
+    .masters-showcase-grid { grid-template-columns: repeat(2, 1fr); }
     .calendar-time-picker { grid-template-columns: 1fr; }
     .reviews-grid { grid-template-columns: 1fr; }
     .contacts-grid { grid-template-columns: 1fr; }
@@ -2835,6 +2836,31 @@ button.cal-day-btn.active,
 
     .booking-nav-btns {
         justify-content: space-between;
+    }
+
+    /* Masters Showcase Mobile Grid */
+    .masters-showcase-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1.25rem !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    .master-showcase-card-shell {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    .master-showcase-photo-box {
+        height: 220px !important;
+    }
+
+    .cat-masters.active {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
     }
 
     .footer-content {
