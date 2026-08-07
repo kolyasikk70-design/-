@@ -397,6 +397,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
+        const activeServices = document.querySelectorAll(`.b-service-item.bcat-item.${cat} .b-service-cb`);
+        if (activeServices.length > 0) {
+            activeServices[0].checked = true;
+            updateBookingSummary();
+        }
+
         document.querySelectorAll('.master-card-shell').forEach(m => m.classList.remove('selected'));
         const activeMasters = document.querySelectorAll(`.cat-masters.${cat} .master-card-shell`);
         if (activeMasters.length > 0) {
