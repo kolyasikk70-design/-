@@ -790,11 +790,31 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Is active selected date?
                 if (d === selectedDay && viewMonth === selectedMonth && viewYear === selectedYear) {
                     dayBtn.classList.add('active');
+                    dayBtn.style.setProperty('background', '#D98888', 'important');
+                    dayBtn.style.setProperty('background-color', '#D98888', 'important');
+                    dayBtn.style.setProperty('background-image', 'none', 'important');
+                    dayBtn.style.setProperty('color', '#FFFFFF', 'important');
+                    dayBtn.style.setProperty('border-color', '#D98888', 'important');
+                    dayBtn.style.setProperty('box-shadow', '0 4px 14px rgba(217, 136, 136, 0.4)', 'important');
                 }
 
                 dayBtn.addEventListener('click', () => {
-                    document.querySelectorAll('.cal-day-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.cal-day-btn').forEach(b => {
+                        b.classList.remove('active');
+                        b.style.background = '';
+                        b.style.backgroundColor = '';
+                        b.style.backgroundImage = '';
+                        b.style.color = '';
+                        b.style.borderColor = '';
+                        b.style.boxShadow = '';
+                    });
                     dayBtn.classList.add('active');
+                    dayBtn.style.setProperty('background', '#D98888', 'important');
+                    dayBtn.style.setProperty('background-color', '#D98888', 'important');
+                    dayBtn.style.setProperty('background-image', 'none', 'important');
+                    dayBtn.style.setProperty('color', '#FFFFFF', 'important');
+                    dayBtn.style.setProperty('border-color', '#D98888', 'important');
+                    dayBtn.style.setProperty('box-shadow', '0 4px 14px rgba(217, 136, 136, 0.4)', 'important');
                     selectedDay = d;
                     selectedMonth = viewMonth;
                     selectedYear = viewYear;
