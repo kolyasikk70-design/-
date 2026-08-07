@@ -656,36 +656,125 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const calendarDaysGrid = document.getElementById('calendarDaysGrid');
+    const calendarMonthEl = document.getElementById('calendarMonth');
+    const prevMonthBtn = document.getElementById('prevMonthBtn');
+    const nextMonthBtn = document.getElementById('nextMonthBtn');
+
+    const UKRAINIAN_MONTHS_NOMINATIVE = [
+        'Січень', 'Лютий', 'Березень', 'Квітень', 'Травень', 'Червень',
+        'Липень', 'Серпень', 'Вересень', 'Жовтень', 'Листопад', 'Грудень'
+    ];
     const UKRAINIAN_MONTHS_GENITIVE = [
         'Січня', 'Лютого', 'Березня', 'Квітня', 'Травня', 'Червня',
         'Липня', 'Серпня', 'Вересня', 'Жовтня', 'Листопада', 'Грудня'
     ];
-    const nowDate = new Date();
-    const currentMonthName = UKRAINIAN_MONTHS_GENITIVE[nowDate.getMonth()];
-    let selectedDateStr = `${nowDate.getDate() < 10 ? '0' + nowDate.getDate() : nowDate.getDate()} ${currentMonthName}`;
+
+    const todayDate = new Date();
+    todayDate.setHours(0, 0, 0, 0);
+
+    let viewYear = todayDate.getFullYear();
+    let viewMonth = todayDate.getMonth(); // 0 - 11
+
+    let selectedDay = todayDate.getDate();
+    let selectedMonth = todayDate.getMonth();
+    let selectedYear = todayDate.getFullYear();
+
+    let selectedDateStr = `${selectedDay < 10 ? '0' + selectedDay : selectedDay} ${UKRAINIAN_MONTHS_GENITIVE[selectedMonth]}`;
     let selectedTimeStr = '13:00';
 
-    if (calendarDaysGrid) {
-        const daysInMonth = new Date(nowDate.getFullYear(), nowDate.getMonth() + 1, 0).getDate();
+    function renderCalendar() {
+        if (!calendarDaysGrid) return;
+
+        // Update Month title
+        if (calendarMonthEl) {
+            calendarMonthEl.textContent = `${UKRAINIAN_MONTHS_NOMINATIVE[viewMonth]} ${viewYear}`;
+        }
+
+        // Disable prev button if viewing current or earlier month
+        if (prevMonthBtn) {
+            const isCurrentMonthOrPast = (viewYear < todayDate.getFullYear()) || 
+                (viewYear === todayDate.getFullYear() && viewMonth <= todayDate.getMonth());
+            prevMonthBtn.disabled = isCurrentMonthOrPast;
+        }
+
         calendarDaysGrid.innerHTML = '';
+
+        // Day 1 of view month weekday (0=Sun, 1=Mon... convert to 0=Mon..6=Sun)
+        const firstDayObj = new Date(viewYear, viewMonth, 1);
+        let firstDayIndex = firstDayObj.getDay() - 1; 
+        if (firstDayIndex < 0) firstDayIndex = 6; // Sunday
+
+        // Empty placeholder slots for previous month
+        for (let i = 0; i < firstDayIndex; i++) {
+            const emptyDiv = document.createElement('div');
+            emptyDiv.className = 'cal-day-empty';
+            calendarDaysGrid.appendChild(emptyDiv);
+        }
+
+        // Days of current view month
+        const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+
         for (let d = 1; d <= daysInMonth; d++) {
             const dayBtn = document.createElement('button');
-            const formattedDayStr = `${d < 10 ? '0' + d : d} ${currentMonthName}`;
-            dayBtn.setAttribute('data-date', formattedDayStr);
+            dayBtn.type = 'button';
             dayBtn.className = 'cal-day-btn';
             dayBtn.textContent = d;
-            if (d === nowDate.getDate()) {
-                dayBtn.classList.add('active');
+
+            const thisDate = new Date(viewYear, viewMonth, d);
+            thisDate.setHours(0, 0, 0, 0);
+
+            // Is past date?
+            if (thisDate < todayDate) {
+                dayBtn.classList.add('disabled');
+            } else {
+                const formattedDayStr = `${d < 10 ? '0' + d : d} ${UKRAINIAN_MONTHS_GENITIVE[viewMonth]}`;
+                dayBtn.setAttribute('data-date', formattedDayStr);
+
+                // Is active selected date?
+                if (d === selectedDay && viewMonth === selectedMonth && viewYear === selectedYear) {
+                    dayBtn.classList.add('active');
+                }
+
+                dayBtn.addEventListener('click', () => {
+                    document.querySelectorAll('.cal-day-btn').forEach(b => b.classList.remove('active'));
+                    dayBtn.classList.add('active');
+                    selectedDay = d;
+                    selectedMonth = viewMonth;
+                    selectedYear = viewYear;
+                    selectedDateStr = formattedDayStr;
+                    updateAvailableTimeSlots();
+                });
             }
-            dayBtn.addEventListener('click', () => {
-                document.querySelectorAll('.cal-day-btn').forEach(b => b.classList.remove('active'));
-                dayBtn.classList.add('active');
-                selectedDateStr = formattedDayStr;
-                updateAvailableTimeSlots();
-            });
+
             calendarDaysGrid.appendChild(dayBtn);
         }
     }
+
+    if (prevMonthBtn) {
+        prevMonthBtn.addEventListener('click', () => {
+            viewMonth--;
+            if (viewMonth < 0) {
+                viewMonth = 11;
+                viewYear--;
+            }
+            renderCalendar();
+            updateAvailableTimeSlots();
+        });
+    }
+
+    if (nextMonthBtn) {
+        nextMonthBtn.addEventListener('click', () => {
+            viewMonth++;
+            if (viewMonth > 11) {
+                viewMonth = 0;
+                viewYear++;
+            }
+            renderCalendar();
+            updateAvailableTimeSlots();
+        });
+    }
+
+    renderCalendar();
 
     const timeSlotBtns = document.querySelectorAll('#timeSlotsGrid .time-slot-btn');
     timeSlotBtns.forEach(slot => {
