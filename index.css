@@ -981,12 +981,18 @@ section {
     border-radius: var(--radius-outer);
     border: 1px solid var(--color-border-hairline);
     box-shadow: var(--shadow-ambient);
+    max-width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
 }
 
 .calculator-core {
     background: var(--color-bg-card-core);
     border-radius: calc(var(--radius-outer) - 6px);
     padding: 2.25rem 1.75rem;
+    max-width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
 }
 
 .quiz-header {
@@ -2673,10 +2679,13 @@ button.cal-day-btn.active,
         scroll-snap-type: x mandatory !important;
         -webkit-overflow-scrolling: touch !important;
         gap: 0.85rem !important;
-        padding: 0.4rem 0.25rem 1rem !important;
-        margin-left: -0.25rem !important;
-        margin-right: -0.25rem !important;
+        padding: 0.4rem 0.1rem 1rem !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
         margin-bottom: 1.5rem !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
         scrollbar-width: none !important;
     }
 
@@ -2685,9 +2694,9 @@ button.cal-day-btn.active,
     }
 
     .combo-card-shell {
-        flex: 0 0 86% !important;
-        min-width: 270px !important;
-        max-width: 320px !important;
+        flex: 0 0 85% !important;
+        min-width: 250px !important;
+        max-width: 285px !important;
         scroll-snap-align: center !important;
         box-sizing: border-box !important;
     }
