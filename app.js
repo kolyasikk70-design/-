@@ -656,17 +656,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const calendarDaysGrid = document.getElementById('calendarDaysGrid');
-    let selectedDateStr = '06 Серпня';
+    const UKRAINIAN_MONTHS_GENITIVE = [
+        'Січня', 'Лютого', 'Березня', 'Квітня', 'Травня', 'Червня',
+        'Липня', 'Серпня', 'Вересня', 'Жовтня', 'Листопада', 'Грудня'
+    ];
+    const nowDate = new Date();
+    const currentMonthName = UKRAINIAN_MONTHS_GENITIVE[nowDate.getMonth()];
+    let selectedDateStr = `${nowDate.getDate() < 10 ? '0' + nowDate.getDate() : nowDate.getDate()} ${currentMonthName}`;
     let selectedTimeStr = '13:00';
 
     if (calendarDaysGrid) {
-        const daysInMonth = 31;
+        const daysInMonth = new Date(nowDate.getFullYear(), nowDate.getMonth() + 1, 0).getDate();
         calendarDaysGrid.innerHTML = '';
         for (let d = 1; d <= daysInMonth; d++) {
             const dayBtn = document.createElement('button');
-            const formattedDayStr = `${d < 10 ? '0' + d : d} Серпня`;
+            const formattedDayStr = `${d < 10 ? '0' + d : d} ${currentMonthName}`;
             dayBtn.setAttribute('data-date', formattedDayStr);
+            dayBtn.className = 'cal-day-btn';
             dayBtn.textContent = d;
+            if (d === nowDate.getDate()) {
+                dayBtn.classList.add('active');
+            }
             dayBtn.addEventListener('click', () => {
                 document.querySelectorAll('.cal-day-btn').forEach(b => b.classList.remove('active'));
                 dayBtn.classList.add('active');
@@ -824,8 +834,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function isValidUkrPhone(phoneStr) {
         if (!phoneStr) return false;
-        const digits = phoneStr.replace(/\D/g, '');
-        return digits.length >= 7;
+        let digits = phoneStr.replace(/\D/g, '');
+        if (digits.startsWith('380')) digits = digits.substring(3);
+        else if (digits.startsWith('0')) digits = digits.substring(1);
+        else if (digits.startsWith('80')) digits = digits.substring(2);
+
+        if (digits.length !== 9) return false;
+        const opCode = digits.substring(0, 2);
+        return VALID_UKR_CODES.includes(opCode);
     }
 
     const btnEditTicket = document.getElementById('btnEditTicket');
@@ -1015,10 +1031,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     updateBookingSummary();
 
-    // Auto-remove any cached/injected Altegio widget elements from DOM
-    setInterval(() => {
+    // Auto-remove any cached/injected Altegio widget elements from DOM with lightweight MutationObserver
+    const removeAltegioWidgets = () => {
         document.querySelectorAll('*[class*="ms_widget"], *[id*="ms_widget"], *[class*="yclients"], *[id*="yclients"], *[class*="alteg"], *[id*="alteg"]').forEach(el => el.remove());
-    }, 100);
+    };
+    removeAltegioWidgets();
+    if (window.MutationObserver) {
+        const widgetObserver = new MutationObserver(removeAltegioWidgets);
+        widgetObserver.observe(document.body, { childList: true, subtree: true });
+    }
 });
 
 
