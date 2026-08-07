@@ -1562,12 +1562,15 @@ section {
     transform: translateY(-2px);
 }
 
+button.cal-day-btn.active,
 .cal-day-btn.active {
-    background: var(--color-pink-primary) !important;
+    background: #D98888 !important;
+    background-color: #D98888 !important;
+    background-image: none !important;
     color: #FFFFFF !important;
     font-weight: 700;
-    border-color: var(--color-pink-primary) !important;
-    box-shadow: 0 4px 14px var(--color-pink-glow) !important;
+    border-color: #D98888 !important;
+    box-shadow: 0 4px 14px rgba(217, 136, 136, 0.4) !important;
     transform: scale(1.05);
 }
 
