@@ -1556,18 +1556,18 @@ section {
 }
 
 .cal-day-btn:hover:not(.disabled):not(.active) {
-    background: rgba(236, 72, 153, 0.12);
+    background: rgba(217, 136, 136, 0.14);
     color: var(--color-pink-primary);
     border-color: var(--color-pink-primary);
     transform: translateY(-2px);
 }
 
 .cal-day-btn.active {
-    background: linear-gradient(135deg, #EC4899 0%, #D946EF 100%) !important;
+    background: var(--color-pink-primary) !important;
     color: #FFFFFF !important;
     font-weight: 700;
-    border-color: transparent !important;
-    box-shadow: 0 4px 14px rgba(236, 72, 153, 0.4);
+    border-color: var(--color-pink-primary) !important;
+    box-shadow: 0 4px 14px var(--color-pink-glow) !important;
     transform: scale(1.05);
 }
 
