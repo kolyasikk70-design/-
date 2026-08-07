@@ -264,52 +264,92 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ----------------------------------------------------------------------
-    // 8. INTERACTIVE PRICE CALCULATOR QUIZ (UAH OUTPUT)
+    // 8. PARALLEL BEAUTY COMBO ENGINE (4-6 HANDS)
     // ----------------------------------------------------------------------
-    const quizOptions = document.querySelectorAll('#quizContainer input[type="checkbox"]');
-    const quizTotalTime = document.getElementById('quizTotalTime');
-    const quizTotalPrice = document.getElementById('quizTotalPrice');
-    const btnBookQuizPackage = document.getElementById('btnBookQuizPackage');
+    const customZoneCheckboxes = document.querySelectorAll('input[name="customZone"]');
+    const customComboTeam = document.getElementById('customComboTeam');
+    const customComboTime = document.getElementById('customComboTime');
+    const customComboPrice = document.getElementById('customComboPrice');
+    const btnBookCustomCombo = document.getElementById('btnBookCustomCombo');
 
-    function calculateQuizTotals() {
-        let totalTime = 0;
+    function calculateCustomComboTotals() {
+        let selectedCount = 0;
+        let maxTime = 0;
         let totalPrice = 0;
 
-        quizOptions.forEach(opt => {
-            if (opt.checked) {
-                totalTime += parseInt(opt.getAttribute('data-time') || 0);
-                totalPrice += parseInt(opt.getAttribute('data-price') || 0);
+        customZoneCheckboxes.forEach(cb => {
+            if (cb.checked) {
+                selectedCount++;
+                const time = parseInt(cb.getAttribute('data-time') || 0);
+                const price = parseInt(cb.getAttribute('data-price') || 0);
+                if (time > maxTime) maxTime = time;
+                totalPrice += price;
             }
         });
 
-        const discountedPrice = Math.round(totalPrice * 0.9);
+        let teamText = '1 майстер';
+        if (selectedCount === 2) teamText = '2 майстри (4 руки)';
+        else if (selectedCount >= 3) teamText = '3 майстри (6 рук)';
+        else if (selectedCount === 0) teamText = '0 процедур';
 
-        if (quizTotalTime) quizTotalTime.textContent = `${totalTime} хв`;
-        if (quizTotalPrice) quizTotalPrice.textContent = `${discountedPrice.toLocaleString()} грн`;
+        if (customComboTeam) customComboTeam.textContent = teamText;
+        if (customComboTime) customComboTime.textContent = formatMinutesToHours(maxTime);
+        if (customComboPrice) customComboPrice.textContent = `${totalPrice.toLocaleString()} грн`;
     }
 
-    quizOptions.forEach(opt => {
-        opt.addEventListener('change', calculateQuizTotals);
+    customZoneCheckboxes.forEach(cb => {
+        cb.addEventListener('change', calculateCustomComboTotals);
     });
 
-    if (btnBookQuizPackage) {
-        btnBookQuizPackage.addEventListener('click', () => {
-            quizOptions.forEach(opt => {
-                if (opt.checked) {
-                    const val = opt.value;
-                    if (val === 'lashes') {
-                        const cb = document.querySelector('.b-service-cb[data-id="1"]');
-                        if (cb) cb.checked = true;
-                    } else if (val === 'brows') {
-                        const cb = document.querySelector('.b-service-cb[data-id="3"]');
-                        if (cb) cb.checked = true;
-                    } else if (val === 'nails') {
-                        const cb = document.querySelector('.b-service-cb[data-id="5"]');
-                        if (cb) cb.checked = true;
-                    }
-                }
-            });
-            updateBookingSummary();
+    // Preset Combo Buttons Click Handlers
+    document.querySelectorAll('.btn-select-combo').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const comboId = btn.getAttribute('data-combo-id');
+            switchBookingCategory('combos');
+
+            const targetCb = document.querySelector(`.b-service-cb[data-id="${comboId}"]`);
+            if (targetCb) {
+                targetCb.checked = true;
+                updateBookingSummary();
+            }
+
+            const targetMasterId = comboId === 'c3' ? 'm_combo6' : 'm_combo4';
+            const masterCard = document.querySelector(`.cat-masters.combos .master-card-shell[data-master-id="${targetMasterId}"]`);
+            if (masterCard) {
+                document.querySelectorAll('.master-card-shell').forEach(m => m.classList.remove('selected'));
+                masterCard.classList.add('selected');
+                selectedMasterName = masterCard.getAttribute('data-master-name') || 'Команда 4 Руки';
+            }
+
+            const bookingSection = document.getElementById('booking');
+            if (bookingSection) {
+                bookingSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
+
+    if (btnBookCustomCombo) {
+        btnBookCustomCombo.addEventListener('click', () => {
+            let count = 0;
+            customZoneCheckboxes.forEach(cb => { if (cb.checked) count++; });
+            
+            switchBookingCategory('combos');
+
+            const comboId = count >= 3 ? 'c3' : (count === 2 ? 'c1' : 'c2');
+            const targetCb = document.querySelector(`.b-service-cb[data-id="${comboId}"]`);
+            if (targetCb) {
+                targetCb.checked = true;
+                updateBookingSummary();
+            }
+
+            const targetMasterId = count >= 3 ? 'm_combo6' : 'm_combo4';
+            const masterCard = document.querySelector(`.cat-masters.combos .master-card-shell[data-master-id="${targetMasterId}"]`);
+            if (masterCard) {
+                document.querySelectorAll('.master-card-shell').forEach(m => m.classList.remove('selected'));
+                masterCard.classList.add('selected');
+                selectedMasterName = masterCard.getAttribute('data-master-name') || 'Команда 4 Руки';
+            }
+
             const bookingSection = document.getElementById('booking');
             if (bookingSection) {
                 bookingSection.scrollIntoView({ behavior: 'smooth' });
@@ -1134,7 +1174,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (tSuccessMsg) {
                     if (isOvertime) {
-                        tSuccessMsg.innerHTML = '<i class="ri-question-line"></i> Дякуємо! Запит надіслано в Telegram майстру для узгодження прийому після 20:00! 📲';
+                        tSuccessMsg.innerHTML = '<i class="ri-question-line"></i> Дякуємо! Запит надіслано в Telegram-бот майстру для узгодження прийому після 20:00! 📲';
                         tSuccessMsg.style.color = '#D97706';
                         tSuccessMsg.style.background = 'rgba(245, 158, 11, 0.12)';
                     } else {
