@@ -3,58 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Салон Краси «Elegance» | Преміум Вії, Брови та Нігті в Києві</title>
-    <meta name="description" content="Преміальний салон краси «Elegance» у Києві. Експертне нарощування вій, архітектура брів та авторський манікюр. Онлайн-запис 24/7.">
+    <title>Б'юті-Студія «Elegance» | Нарощування Вій, Брови та Манікюр у Києві</title>
+    <meta name="description" content="Преміальна б'юті-студія у центрі Києва. Професійне нарощування вій, ламінування BOTOX, архітектура брів та манікюр у 4 руки. Онлайн-запис 24/7.">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- Remix Icon -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     
-    <link rel="stylesheet" href="index.css?v=20260807_MASTERS_SHOWCASE_v1">
+    <link rel="stylesheet" href="index.css?v=20260807_PARALLEL_COMBOS_v2">
 </head>
 <body>
 
-    <!-- Custom Luxury Cursor -->
+    <!-- Custom Cursor Glow & Dot -->
     <div class="custom-cursor" id="customCursor"></div>
     <div class="custom-cursor-follower" id="customCursorFollower"></div>
 
-    <!-- Floating Island Glass Navigation -->
+    <!-- Floating Island Navigation Bar -->
     <header class="navbar-wrapper">
         <nav class="navbar-island">
             <a href="#" class="brand-logo">
                 <span class="brand-title">ELEGANCE</span>
-                <span class="brand-sub">BEAUTY SALON</span>
+                <span class="brand-sub">BEAUTY STUDIO • KYIV</span>
             </a>
 
-            <div class="nav-menu" id="navMenu">
+            <div class="nav-menu">
                 <a href="#services" class="nav-link">Послуги</a>
-                <a href="#transformations" class="nav-link">Перевтілення</a>
-                <a href="#calculator" class="nav-link">Калькулятор</a>
+                <a href="#gallery" class="nav-link">Портфоліо</a>
+                <a href="#calculator" class="nav-link">Комплекси 4-6 рук</a>
                 <a href="#masters" class="nav-link">Майстри</a>
+                <a href="#booking" class="nav-link">Онлайн-Запис</a>
                 <a href="#contacts" class="nav-link">Контакти</a>
             </div>
 
             <div class="nav-actions">
-                <button class="icon-toggle-btn" id="soundToggle" title="Звуковий відгук" aria-label="Звук">
+                <!-- Web Audio Sound Synthesizer Toggle -->
+                <button class="icon-toggle-btn" id="soundToggle" title="Звуковий супровід" aria-label="Увімкнути/Вимкнути звук">
                     <i class="ri-volume-up-line" id="soundIcon"></i>
                 </button>
 
-                <button class="icon-toggle-btn" id="themeToggle" title="Змінити тему" aria-label="Тема">
+                <!-- Theme Dark/Light Switcher -->
+                <button class="icon-toggle-btn" id="themeToggle" title="Змінити тему" aria-label="Змінити тему">
                     <i class="ri-moon-clear-line" id="themeIcon"></i>
                 </button>
 
+                <!-- Desktop CTA Button -->
                 <a href="#booking" class="btn-nested-primary nav-cta-desktop">
-                    <span class="btn-text">Записатися</span>
-                    <span class="btn-icon-wrapper">
-                        <i class="ri-arrow-right-up-line"></i>
-                    </span>
+                    <span class="btn-text">Забронювати</span>
+                    <span class="btn-icon-wrapper"><i class="ri-calendar-check-line"></i></span>
                 </a>
 
+                <!-- Mobile Hamburger Button -->
                 <button class="hamburger-btn" id="hamburgerBtn" aria-label="Відкрити меню">
+                    <span></span>
                     <span></span>
                     <span></span>
                 </button>
@@ -65,30 +69,26 @@
     <!-- Mobile Navigation Overlay -->
     <div class="mobile-menu-overlay" id="mobileMenuOverlay">
         <div class="mobile-menu-content">
-            <a href="#services" class="mobile-nav-link">Послуги та Прайс</a>
-            <a href="#transformations" class="mobile-nav-link">Відеогалерея</a>
-            <a href="#calculator" class="mobile-nav-link">Підбір комплекту</a>
-            <a href="#booking" class="mobile-nav-link">Онлайн-запис</a>
-            <a href="#reviews" class="mobile-nav-link">Відгуки</a>
-            <a href="#masters" class="mobile-nav-link">Наша Команда</a>
-            <a href="#contacts" class="mobile-nav-link">Контакти</a>
-            
-            <div class="mobile-menu-footer">
-                <a href="#booking" class="btn-nested-primary btn-full-mobile">
-                    <span class="btn-text">Записатися онлайн</span>
-                    <span class="btn-icon-wrapper"><i class="ri-calendar-check-line"></i></span>
-                </a>
-            </div>
+            <a href="#services" class="mobile-nav-link">Послуги та Ціни</a>
+            <a href="#gallery" class="mobile-nav-link">Портфоліо Процедур</a>
+            <a href="#calculator" class="mobile-nav-link">Комплекси 4-6 рук</a>
+            <a href="#masters" class="mobile-nav-link">Наші Майстри</a>
+            <a href="#booking" class="mobile-nav-link">Онлайн-Бронювання</a>
+            <a href="#contacts" class="mobile-nav-link">Контакти та Карта</a>
+            <a href="#booking" class="btn-nested-primary mobile-cta">
+                <span class="btn-text">Обрати час візиту</span>
+                <span class="btn-icon-wrapper"><i class="ri-arrow-right-line"></i></span>
+            </a>
         </div>
     </div>
 
-    <!-- Main Content -->
+    <!-- Main Content Container -->
     <main>
         <!-- Hero Section -->
         <section class="hero-section" id="hero">
             <div class="hero-bg-media">
-                <video autoplay loop muted playsinline class="hero-video">
-                    <source src="assets/videos/kling_20260805_VIDEO_Smooth_cin_5926_0.mp4" type="video/mp4">
+                <video class="hero-video" autoplay loop muted playsinline poster="assets/images/hero_poster.jpg">
+                    <source src="assets/videos/salon_hero_bg.mp4" type="video/mp4">
                 </video>
                 <div class="hero-overlay-gradient"></div>
             </div>
@@ -96,84 +96,85 @@
             <div class="hero-container">
                 <div class="hero-badge-pill">
                     <span class="badge-dot"></span>
-                    <span>Преміальний салон естетики та краси • Київ</span>
+                    <span>Преміальний сервіс у центрі Києва</span>
                 </div>
 
                 <h1 class="hero-heading">
-                    Мистецтво вашої <br>
-                    <span class="text-serif-italic text-gradient">природної</span> краси
+                    Мистецтво виразного <span class="text-serif-italic">погляду</span> & доглянутих рук
                 </h1>
 
                 <p class="hero-description">
-                    Авторське нарощування вій, скульптурна архітектура брів та бездоганний манікюр у центрі Києва. Створюємо перевтілення, що викликають захоплення.
+                    Авторські техніки нарощування вій, відновлювальне ламінування BOTOX, скульптурна архітектура брів та естетичний манікюр. Бездоганний результат із гарантією стійкості 4-6 тижнів.
                 </p>
 
                 <div class="hero-actions">
                     <a href="#booking" class="btn-nested-primary btn-hero">
-                        <span class="btn-text">Онлайн-запис</span>
-                        <span class="btn-icon-wrapper"><i class="ri-calendar-line"></i></span>
+                        <span class="btn-text">Забронювати візит</span>
+                        <span class="btn-icon-wrapper"><i class="ri-sparkles-line"></i></span>
                     </a>
-                    <a href="#transformations" class="btn-secondary-glass">
+                    <a href="#gallery" class="btn-secondary-glass">
                         <i class="ri-play-circle-line"></i>
-                        <span>Дивитися роботи</span>
+                        <span>Дивитися портфоліо</span>
                     </a>
                 </div>
 
-                <!-- Floating Feature Badges -->
+                <!-- Proof & Stat Badges -->
                 <div class="hero-stats-grid">
                     <div class="stat-card-bezel">
                         <div class="stat-card-core">
-                            <span class="stat-number">4.98</span>
-                            <span class="stat-stars">★★★★★</span>
-                            <span class="stat-label">Оцінка клієнтів</span>
-                        </div>
-                    </div>
-                    <div class="stat-card-bezel">
-                        <div class="stat-card-core">
-                            <span class="stat-number">1 500+</span>
+                            <span class="stat-number">4 800+</span>
                             <span class="stat-label">Задоволених клієнток</span>
                         </div>
                     </div>
                     <div class="stat-card-bezel">
                         <div class="stat-card-core">
+                            <div class="stat-stars">★★★★★</div>
+                            <span class="stat-number">4.98 / 5</span>
+                            <span class="stat-label">Оцінка в Google</span>
+                        </div>
+                    </div>
+                    <div class="stat-card-bezel">
+                        <div class="stat-card-core">
                             <span class="stat-number">100%</span>
-                            <span class="stat-label">Преміум-матеріали</span>
+                            <span class="stat-label">Стерильність та безпека</span>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Floating Text / Marquee Banner -->
-        <section class="marquee-section">
+        <!-- Infinite Running Marquee -->
+        <div class="marquee-section" aria-hidden="true">
             <div class="marquee-track">
                 <div class="marquee-content">
-                    <span class="marquee-item"><i class="ri-sparkles-line"></i> ELEGANCE BEAUTY SALON КИЇВ</span>
-                    <span class="marquee-item"><i class="ri-heart-3-line"></i> ІДЕАЛЬНИЙ ПОГЛЯД ЗА 1.5 ГОДИНИ</span>
-                    <span class="marquee-item"><i class="ri-vip-crown-line"></i> ПРЕМІУМ МАТЕРІАЛИ З КОРЕЇ ТА НІМЕЧЧИНИ</span>
-                    <span class="marquee-item"><i class="ri-checkbox-circle-line"></i> ГАРАНТІЯ НА НОСІННЯ 4 ТИЖНІ</span>
-                    <span class="marquee-item"><i class="ri-cup-line"></i> СВІЖОЗВАРЕНА КАВА ТА ШАМПАНСЬКЕ</span>
+                    <span class="marquee-item"><i class="ri-sparkles-fill"></i> НАРОЩУВАННЯ ВІЙ 2D - 6D</span>
+                    <span class="marquee-item"><i class="ri-sparkles-fill"></i> ЛАМІНУВАННЯ ВІЙ BOTOX</span>
+                    <span class="marquee-item"><i class="ri-sparkles-fill"></i> АРХІТЕКТУРА ТА ОФАРБУВАННЯ БРІВ</span>
+                    <span class="marquee-item"><i class="ri-sparkles-fill"></i> ДОВГОТРИВАЛА УКЛАДКА БРІВ</span>
+                    <span class="marquee-item"><i class="ri-sparkles-fill"></i> ЕСТЕТИЧНИЙ МАНІКЮР & GEL POLISH</span>
+                    <span class="marquee-item"><i class="ri-sparkles-fill"></i> ПОЛІМЕРНИЙ SMART ПЕДИКЮР</span>
                 </div>
-                <div class="marquee-content" aria-hidden="true">
-                    <span class="marquee-item"><i class="ri-sparkles-line"></i> ELEGANCE BEAUTY SALON КИЇВ</span>
-                    <span class="marquee-item"><i class="ri-heart-3-line"></i> ІДЕАЛЬНИЙ ПОГЛЯД ЗА 1.5 ГОДИНИ</span>
-                    <span class="marquee-item"><i class="ri-vip-crown-line"></i> ПРЕМІУМ МАТЕРІАЛИ З КОРЕЇ ТА НІМЕЧЧИНИ</span>
-                    <span class="marquee-item"><i class="ri-checkbox-circle-line"></i> ГАРАНТІЯ НА НОСІННЯ 4 ТИЖНІ</span>
-                    <span class="marquee-item"><i class="ri-cup-line"></i> СВІЖОЗВАРЕНА КАВА ТА ШАМПАНСЬКЕ</span>
+                <div class="marquee-content">
+                    <span class="marquee-item"><i class="ri-sparkles-fill"></i> НАРОЩУВАННЯ ВІЙ 2D - 6D</span>
+                    <span class="marquee-item"><i class="ri-sparkles-fill"></i> ЛАМІНУВАННЯ ВІЙ BOTOX</span>
+                    <span class="marquee-item"><i class="ri-sparkles-fill"></i> АРХІТЕКТУРА ТА ОФАРБУВАННЯ БРІВ</span>
+                    <span class="marquee-item"><i class="ri-sparkles-fill"></i> ДОВГОТРИВАЛА УКЛАДКА БРІВ</span>
+                    <span class="marquee-item"><i class="ri-sparkles-fill"></i> ЕСТЕТИЧНИЙ МАНІКЮР & GEL POLISH</span>
+                    <span class="marquee-item"><i class="ri-sparkles-fill"></i> ПОЛІМЕРНИЙ SMART ПЕДИКЮР</span>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <!-- Services Section (REAL KYIV MARKET PRICES IN UAH / ГРН) -->
+        <!-- Interactive Services Showcase & Menu (REAL KYIV MARKET PRICES IN UAH / ГРН) -->
         <section class="services-section" id="services">
             <div class="section-container">
                 <div class="section-header">
-                    <div class="eyebrow-pill">Послуги та Прайс</div>
-                    <h2 class="section-title">Каталог <span class="text-serif-italic">процедур</span></h2>
-                    <p class="section-subtitle">Оберіть напрямок, який вас цікавить, та ознайомтеся з анімованими процесами проведення процедур</p>
+                    <div class="eyebrow-pill">Каталог Послуг</div>
+                    <h2 class="section-title">Вишуканий догляд для вашої <span class="text-serif-italic">краси</span></h2>
+                    <p class="section-subtitle">Оберіть напрямок та ознайомтеся з деталями процедур</p>
                 </div>
 
-                <!-- Category Tabs -->
+                <!-- Category Tabs Filter -->
                 <div class="services-tabs-bezel">
                     <div class="services-tabs-core">
                         <button class="tab-btn active" data-category="lashes">
@@ -186,30 +187,32 @@
                         </button>
                         <button class="tab-btn" data-category="nails">
                             <i class="ri-hand-sanitizer-line"></i>
-                            <span>Нігті та Манікюр</span>
+                            <span>Нігті</span>
                         </button>
                     </div>
                 </div>
 
-                <!-- Services Grid (Kyiv Market Prices in UAH) -->
+                <!-- Interactive Services Grid (REAL UAH MARKET PRICES & CINEMAGRAPHS) -->
                 <div class="services-grid" id="servicesGrid">
                     
-                    <!-- EYELASHES VARIATIONS -->
-                    <div class="service-card-shell category-item lashes active">
+                    <!-- EYELASHES CARD 1 -->
+                    <div class="service-card-shell lashes active" data-service-id="1">
                         <div class="service-card-core">
                             <div class="service-media-preview">
-                                <img src="assets/images/lash_process.png" alt="Процес нарощування вій пінцетами" class="card-img cinemagraph-media">
-                                <span class="media-tag">Процес роботи</span>
+                                <video class="card-video cinemagraph-media" autoplay loop muted playsinline poster="assets/images/service_lashes.png">
+                                    <source src="assets/videos/lash_extension_loop.mp4" type="video/mp4">
+                                </video>
+                                <span class="media-tag">Топ-Вибір</span>
                             </div>
                             <div class="service-details">
                                 <div class="service-title-row">
                                     <h3 class="service-name">Оксамитовий Об'єм 2D / 3D</h3>
                                     <span class="service-price luxury-price">950 грн</span>
                                 </div>
-                                <p class="service-desc">Процес акуратного повійного нарощування ювелірними пінцетами. Легкість та комфорт у носінні до 5 тижнів.</p>
+                                <p class="service-desc">Ніжний та невагомий об'єм. Ідеальний баланс між виразністю та природністю погляду.</p>
                                 <div class="service-meta">
                                     <span><i class="ri-time-line"></i> 1 год 45 хв</span>
-                                    <span><i class="ri-shield-star-line"></i> Гарантія 14 днів</span>
+                                    <span><i class="ri-shield-star-line"></i> Стійкість 5 тижнів</span>
                                 </div>
                                 <button class="btn-nested-primary btn-service-add" data-service-id="1">
                                     <span class="btn-text">Обрати процедуру</span>
@@ -219,21 +222,22 @@
                         </div>
                     </div>
 
-                    <div class="service-card-shell category-item lashes active">
+                    <!-- EYELASHES CARD 2 -->
+                    <div class="service-card-shell lashes active" data-service-id="2">
                         <div class="service-card-core">
                             <div class="service-media-preview">
-                                <img src="assets/images/lashes_masterpiece.png" alt="Результат ламінування вій" class="card-img">
-                                <span class="media-tag">Результат ламінування</span>
+                                <img src="assets/images/service_lamination.png" alt="Ламінування вій" class="card-img cinemagraph-media">
+                                <span class="media-tag">Spa-Догляд</span>
                             </div>
                             <div class="service-details">
                                 <div class="service-title-row">
                                     <h3 class="service-name">Ламінування Вій + BOTOX</h3>
                                     <span class="service-price luxury-price">1 100 грн</span>
                                 </div>
-                                <p class="service-desc">Глибоке живлення кератином, ефектний вигин та насичений чорний колір натуральних вій без нарощування.</p>
+                                <p class="service-desc">Глибоке зміцнення кератином, завиток та фарбування власних вій з ефектом розкритого погляду.</p>
                                 <div class="service-meta">
                                     <span><i class="ri-time-line"></i> 1 год 15 хв</span>
-                                    <span><i class="ri-sparkles-fill"></i> Ефект 2 місяці</span>
+                                    <span><i class="ri-leaf-line"></i> Натуральний ефект</span>
                                 </div>
                                 <button class="btn-nested-primary btn-service-add" data-service-id="2">
                                     <span class="btn-text">Обрати процедуру</span>
@@ -243,21 +247,22 @@
                         </div>
                     </div>
 
-                    <div class="service-card-shell category-item lashes active">
+                    <!-- EYELASHES CARD 3 -->
+                    <div class="service-card-shell lashes active" data-service-id="7">
                         <div class="service-card-core">
                             <div class="service-media-preview">
-                                <img src="assets/images/Gemini_Generated_Image_3c9hzr3c9hzr3c9h.png" alt="Мегаоб'єм Голлівуд 4D-6D" class="card-img">
-                                <span class="media-tag">Преміум вибір</span>
+                                <img src="assets/images/service_hollywood.png" alt="Мегаоб'єм Голлівуд" class="card-img cinemagraph-media">
+                                <span class="media-tag">Голлівуд</span>
                             </div>
                             <div class="service-details">
                                 <div class="service-title-row">
                                     <h3 class="service-name">Мегаоб'єм Голлівуд 4D-6D</h3>
                                     <span class="service-price luxury-price">1 300 грн</span>
                                 </div>
-                                <p class="service-desc">Максимально пишний та виразний погляд для особливих подій. Невагомі ультратонкі моноволокна.</p>
+                                <p class="service-desc">Максимально пишний та виразний погляд із невагомих тонких волокон преміум-класу.</p>
                                 <div class="service-meta">
                                     <span><i class="ri-time-line"></i> 2 год 10 хв</span>
-                                    <span><i class="ri-vip-diamond-line"></i> Голлівудський погляд</span>
+                                    <span><i class="ri-vip-diamond-line"></i> VIP Ефект</span>
                                 </div>
                                 <button class="btn-nested-primary btn-service-add" data-service-id="7">
                                     <span class="btn-text">Обрати процедуру</span>
@@ -267,46 +272,22 @@
                         </div>
                     </div>
 
-                    <div class="service-card-shell category-item lashes active">
+                    <!-- EYEBROWS CARD 1 -->
+                    <div class="service-card-shell brows" data-service-id="3">
                         <div class="service-card-core">
                             <div class="service-media-preview">
-                                <img src="assets/images/wet_lash_effect.png" alt="Мокрий Ефект Промені Кайлі" class="card-img">
-                                <span class="media-tag">Трендовий ефект</span>
-                            </div>
-                            <div class="service-details">
-                                <div class="service-title-row">
-                                    <h3 class="service-name">Мокрий Ефект & Промені Кайлі</h3>
-                                    <span class="service-price luxury-price">1 050 грн</span>
-                                </div>
-                                <p class="service-desc">Трендова недбала текстура з виразними промінчиками, що імітує нафарбовані тушшю вії.</p>
-                                <div class="service-meta">
-                                    <span><i class="ri-time-line"></i> 1 год 40 хв</span>
-                                    <span><i class="ri-fire-line"></i> Тренд 2026</span>
-                                </div>
-                                <button class="btn-nested-primary btn-service-add" data-service-id="8">
-                                    <span class="btn-text">Обрати процедуру</span>
-                                    <span class="btn-icon-wrapper"><i class="ri-add-line"></i></span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- EYEBROWS VARIATIONS -->
-                    <div class="service-card-shell category-item brows">
-                        <div class="service-card-core">
-                            <div class="service-media-preview">
-                                <img src="assets/images/brow_process.png" alt="Процес архітектури брів" class="card-img cinemagraph-media">
-                                <span class="media-tag">Процес розмітки</span>
+                                <img src="assets/images/service_brows.png" alt="Архітектура брів" class="card-img cinemagraph-media">
+                                <span class="media-tag">Класика</span>
                             </div>
                             <div class="service-details">
                                 <div class="service-title-row">
                                     <h3 class="service-name">Архітектура & Офарбування Брів</h3>
                                     <span class="service-price luxury-price">650 грн</span>
                                 </div>
-                                <p class="service-desc">Побудова ідеальної геометричної форми за допомогою циркуля та пензля, корекція воском і нанесення пігменту.</p>
+                                <p class="service-desc">Моделювання ідеальної геометрії за пропорціями обличчя, корекція воском та фарбування фарбою/хною.</p>
                                 <div class="service-meta">
                                     <span><i class="ri-time-line"></i> 50 хв</span>
-                                    <span><i class="ri-palette-line"></i> Стійкість до 4 тижнів</span>
+                                    <span><i class="ri-magic-line"></i> Стійкий пігмент</span>
                                 </div>
                                 <button class="btn-nested-primary btn-service-add" data-service-id="3">
                                     <span class="btn-text">Обрати процедуру</span>
@@ -316,21 +297,22 @@
                         </div>
                     </div>
 
-                    <div class="service-card-shell category-item brows">
+                    <!-- EYEBROWS CARD 2 -->
+                    <div class="service-card-shell brows" data-service-id="4">
                         <div class="service-card-core">
                             <div class="service-media-preview">
-                                <img src="assets/images/brow_masterpiece.png" alt="Довготривала укладка брів" class="card-img">
-                                <span class="media-tag">Результат ламінування</span>
+                                <img src="assets/images/service_brow_lami.png" alt="Довготривала укладка брів" class="card-img cinemagraph-media">
+                                <span class="media-tag">Тренд 2026</span>
                             </div>
                             <div class="service-details">
                                 <div class="service-title-row">
-                                    <h3 class="service-name">Довготривала Укладка (Ламінування)</h3>
+                                    <h3 class="service-name">Довготривала Укладка Брів</h3>
                                     <span class="service-price luxury-price">950 грн</span>
                                 </div>
-                                <p class="service-desc">Укрощення неслухняних волосків, створення ефекту пишних та соболиних брів з доглядовим складом.</p>
+                                <p class="service-desc">Укрощення неслухняних волосків, надання пишності та об'єму із фіксуючим доглядом.</p>
                                 <div class="service-meta">
                                     <span><i class="ri-time-line"></i> 1 год 10 хв</span>
-                                    <span><i class="ri-magic-line"></i> Соболині брови</span>
+                                    <span><i class="ri-star-line"></i> Фіксація до 2 міс</span>
                                 </div>
                                 <button class="btn-nested-primary btn-service-add" data-service-id="4">
                                     <span class="btn-text">Обрати процедуру</span>
@@ -340,22 +322,22 @@
                         </div>
                     </div>
 
-                    <!-- NAILS VARIATIONS -->
-                    <div class="service-card-shell category-item nails">
+                    <!-- NAILS CARD 1 -->
+                    <div class="service-card-shell nails" data-service-id="5">
                         <div class="service-card-core">
                             <div class="service-media-preview">
-                                <img src="assets/images/nail_process.png" alt="Процес нанесення гель лаку" class="card-img cinemagraph-media">
-                                <span class="media-tag">Процес манікюру</span>
+                                <img src="assets/images/service_nails.png" alt="Преміум Манікюр" class="card-img cinemagraph-media">
+                                <span class="media-tag">Естетика</span>
                             </div>
                             <div class="service-details">
                                 <div class="service-title-row">
-                                    <h3 class="service-name">Преміум Манікюр + Покриття Gel Polish</h3>
+                                    <h3 class="service-name">Преміум Манікюр + Gel Polish</h3>
                                     <span class="service-price luxury-price">850 грн</span>
                                 </div>
-                                <p class="service-desc">Процес професійного нанесення гель-лаку пензлем тонким шаром під кутикулу та сушіння в UV-лампі.</p>
+                                <p class="service-desc">Апаратна обробка кутикули, вирівнювання нігтьової пластини та стійке покриття з блиском.</p>
                                 <div class="service-meta">
                                     <span><i class="ri-time-line"></i> 1 год 30 хв</span>
-                                    <span><i class="ri-sparkles-line"></i> Зносостійкість</span>
+                                    <span><i class="ri-heart-line"></i> Захист від відколів</span>
                                 </div>
                                 <button class="btn-nested-primary btn-service-add" data-service-id="5">
                                     <span class="btn-text">Обрати процедуру</span>
@@ -365,47 +347,24 @@
                         </div>
                     </div>
 
-                    <div class="service-card-shell category-item nails">
+                    <!-- NAILS CARD 2 -->
+                    <div class="service-card-shell nails" data-service-id="6">
                         <div class="service-card-core">
                             <div class="service-media-preview">
-                                <img src="assets/images/pedicure_smart_process.png" alt="Smart Педикюр обробка стопи" class="card-img cinemagraph-media">
-                                <span class="media-tag">Процес педикюру</span>
+                                <img src="assets/images/service_pedicure.png" alt="Smart Педикюр" class="card-img cinemagraph-media">
+                                <span class="media-tag">Smart Tech</span>
                             </div>
                             <div class="service-details">
                                 <div class="service-title-row">
-                                    <h3 class="service-name">Smart Педикюр з Обробкою Стопы</h3>
+                                    <h3 class="service-name">Smart Педикюр з Обробкою Стопи</h3>
                                     <span class="service-price luxury-price">1 200 грн</span>
                                 </div>
-                                <p class="service-desc">Запатентований педикюр smart-дисками: дзеркальна гладкість п'яточок без розмочування та естетичне покриття.</p>
+                                <p class="service-desc">Апаратний педикюр із використанням smart-дисків до дзеркальної гладкості стоп та покриттям.</p>
                                 <div class="service-meta">
                                     <span><i class="ri-time-line"></i> 1 год 45 хв</span>
-                                    <span><i class="ri-footprint-line"></i> Оксамитова шкіра</span>
+                                    <span><i class="ri-sparkles-line"></i> Гладкість на 4 тижні</span>
                                 </div>
                                 <button class="btn-nested-primary btn-service-add" data-service-id="6">
-                                    <span class="btn-text">Обрати процедуру</span>
-                                    <span class="btn-icon-wrapper"><i class="ri-add-line"></i></span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="service-card-shell category-item nails">
-                        <div class="service-card-core">
-                            <div class="service-media-preview">
-                                <img src="assets/images/nail_masterpiece.png" alt="Нарощування Нігтів Гель" class="card-img">
-                                <span class="media-tag">Результат манікюру</span>
-                            </div>
-                            <div class="service-details">
-                                <div class="service-title-row">
-                                    <h3 class="service-name">Нарощування Нігтів Гель / Акрігель</h3>
-                                    <span class="service-price luxury-price">1 400 грн</span>
-                                </div>
-                                <p class="service-desc">Моделювання будь-якої довжини та форми (мигдаль, квадрат, балерина) з армуванням та стійким покриттям.</p>
-                                <div class="service-meta">
-                                    <span><i class="ri-time-line"></i> 2 год 15 хв</span>
-                                    <span><i class="ri-hand-heart-line"></i> Міцність 5 тижнів</span>
-                                </div>
-                                <button class="btn-nested-primary btn-service-add" data-service-id="10">
                                     <span class="btn-text">Обрати процедуру</span>
                                     <span class="btn-icon-wrapper"><i class="ri-add-line"></i></span>
                                 </button>
@@ -417,27 +376,28 @@
             </div>
         </section>
 
-        <!-- Before / After Transformation Video Gallery -->
-        <section class="gallery-section" id="transformations">
+        <!-- Dynamic Visual Gallery / Process Stage Showcase -->
+        <section class="gallery-section" id="gallery">
             <div class="section-container">
                 <div class="section-header">
-                    <div class="eyebrow-pill">Галерея Перевтілень</div>
-                    <h2 class="section-title">Відеодокази <span class="text-serif-italic">досконалості</span></h2>
-                    <p class="section-subtitle">Оцініть деталі у високій роздільній здатності. Жодних фільтрів — тільки чиста майстерність наших фахівців.</p>
+                    <div class="eyebrow-pill">Портфоліо та Відеопроцес</div>
+                    <h2 class="section-title">Естетика процесів та <span class="text-serif-italic">результати</span></h2>
+                    <p class="section-subtitle">Оцініть ювелірну точність виконання робіт нашими майстрами</p>
                 </div>
 
+                <!-- Video Stage Box -->
                 <div class="transformation-stage">
                     <div class="video-stage-shell">
                         <div class="video-stage-core">
-                            <video id="galleryMainVideo" controls autoplay loop muted playsinline class="stage-video">
-                                <source src="assets/videos/kling_20260805_VIDEO_Smooth_cin_5870_0.mp4" type="video/mp4">
+                            <video class="stage-video" id="galleryMainVideo" autoplay loop muted playsinline poster="assets/images/gallery_poster.jpg">
+                                <source src="assets/videos/lash_process_hd.mp4" type="video/mp4">
                             </video>
-                            <img id="galleryMainImg" src="" alt="Перевтілення №3" class="stage-video cinemagraph-media" style="display: none; object-fit: cover;">
-
+                            <img src="assets/images/gallery_poster.jpg" alt="Галерея робіт" class="stage-video" id="galleryMainImg" style="display: none;">
+                            
                             <div class="stage-video-overlay">
                                 <div class="stage-badge">
                                     <i class="ri-play-fill" id="stageBadgeIcon"></i>
-                                    <span id="videoTitle">Авторська Архітектура Брів: Природна густота та ідеальний вигин</span>
+                                    <span id="videoTitle">Процес формування ювелірного пучка 3D</span>
                                 </div>
                                 <button class="btn-sound-unmute" id="unmuteStageBtn">
                                     <i class="ri-volume-mute-line"></i> Увімкнути звук
@@ -446,37 +406,37 @@
                         </div>
                     </div>
 
-                    <!-- Video Selector Thumbnails -->
+                    <!-- Thumbnails Interactive Row -->
                     <div class="gallery-thumbs-row">
-                        <button class="thumb-card active" data-video="assets/videos/kling_20260805_VIDEO_Smooth_cin_5870_0.mp4" data-title="Авторська Архітектура Брів: Природна густота та ідеальний вигин">
+                        <button class="thumb-card active" data-video="assets/videos/lash_process_hd.mp4" data-title="Процес нарощування вій 2D/3D (Макро зйомка)">
                             <div class="thumb-media">
-                                <video muted loop class="thumb-video">
-                                    <source src="assets/videos/kling_20260805_VIDEO_Smooth_cin_5870_0.mp4" type="video/mp4">
+                                <video class="thumb-video" muted playsinline>
+                                    <source src="assets/videos/lash_process_hd.mp4" type="video/mp4">
                                 </video>
-                                <span class="play-icon"><i class="ri-play-circle-fill"></i></span>
+                                <span class="play-icon"><i class="ri-play-line"></i></span>
                             </div>
                             <div class="thumb-info">
-                                <h4>Трансформація №1: Брови</h4>
-                                <p>Ідеальна симетрія та укладка</p>
+                                <h4>Перевтілення №1: Вії</h4>
+                                <p>Макрозйомка пучка</p>
                             </div>
                         </button>
 
-                        <button class="thumb-card" data-video="assets/videos/kling_20260805_VIDEO_Smooth_cin_5926_0.mp4" data-title="Погляд кінодіви: Вії 3D & Скульпурування">
+                        <button class="thumb-card" data-video="assets/videos/brow_process_hd.mp4" data-title="Архітектура та моделювання брів воском">
                             <div class="thumb-media">
-                                <video muted loop class="thumb-video">
-                                    <source src="assets/videos/kling_20260805_VIDEO_Smooth_cin_5926_0.mp4" type="video/mp4">
+                                <video class="thumb-video" muted playsinline>
+                                    <source src="assets/videos/brow_process_hd.mp4" type="video/mp4">
                                 </video>
-                                <span class="play-icon"><i class="ri-play-circle-fill"></i></span>
+                                <span class="play-icon"><i class="ri-play-line"></i></span>
                             </div>
                             <div class="thumb-info">
-                                <h4>Трансформація №2: Вії</h4>
-                                <p>Розкішний оксамитовий об'єм</p>
+                                <h4>Перевтілення №2: Брови</h4>
+                                <p>Розмітка & Корекція</p>
                             </div>
                         </button>
 
-                        <button class="thumb-card" data-img="assets/images/lash_process.png" data-title="Процес ювелірного нарощування вій: Авторська техніка">
+                        <button class="thumb-card" data-img="assets/images/gallery_result_3.png" data-title="Результат: Ефект оксамитового погляду 3D">
                             <div class="thumb-media">
-                                <img src="assets/images/lash_process.png" alt="Результат перевтілення" class="thumb-img">
+                                <img src="assets/images/gallery_result_3.png" alt="Результат" class="thumb-img">
                                 <span class="play-icon"><i class="ri-image-line"></i></span>
                             </div>
                             <div class="thumb-info">
@@ -489,62 +449,156 @@
             </div>
         </section>
 
-        <!-- Price Calculator / Service Matcher Quiz (UAH MARKET PRICES) -->
+        <!-- Parallel Beauty Combo Showcase (4-6 Hands Parallel Masters) -->
         <section class="calculator-section" id="calculator">
             <div class="section-container">
                 <div class="calculator-shell">
                     <div class="calculator-core">
                         <div class="quiz-header">
-                            <div class="eyebrow-pill">Інтерактивний Підбір</div>
-                            <h2 class="quiz-title">Калькулятор та <span class="text-serif-italic">підбір образу</span></h2>
-                            <p class="quiz-desc">Дайте відповіді на запитання та отримайте розрахунок ідеального комплексу процедур зі знижкою 10% на перший візит!</p>
+                            <div class="eyebrow-pill"><i class="ri-flashlight-line"></i> Економія часу до 3-х годин</div>
+                            <h2 class="quiz-title">Преміум Комплекси <span class="text-serif-italic">у 4-6 рук</span></h2>
+                            <p class="quiz-desc">Паралельна робота 2-х або 3-х топ-майстрів одночасно. Створіть ідеальний образ удвічі швидше без жодної доплати за паралельний сервіс!</p>
                         </div>
 
-                        <div class="quiz-step-container" id="quizContainer">
-                            <div class="quiz-step active" data-step="1">
-                                <h3 class="step-question">Яку зону ви прагнете вдосконалити?</h3>
-                                <div class="options-grid">
-                                    <label class="quiz-option">
-                                        <input type="checkbox" name="zone" value="lashes" data-price="1050" data-time="90">
-                                        <div class="option-content">
-                                            <i class="ri-eye-line"></i>
-                                            <span>Вії (Нарощування/Ламінування)</span>
+                        <!-- 3 Preset Combo Cards Grid -->
+                        <div class="combo-cards-grid">
+                            <!-- Combo 1 -->
+                            <div class="combo-card-shell" data-combo-id="c1">
+                                <div class="combo-card-core">
+                                    <span class="combo-badge"><i class="ri-flashlight-line"></i> 2 Майстри • 4 Руки</span>
+                                    <h3 class="combo-name">Express Combo (Вії + Манікюр)</h3>
+                                    <p class="combo-services">Оксамитовий Об'єм 2D/3D + Преміум Манікюр з покриттям Gel Polish</p>
+                                    
+                                    <div class="combo-metrics-row">
+                                        <div class="metric-item">
+                                            <span class="metric-label">Тривалість:</span>
+                                            <span class="metric-val text-pink"><i class="ri-time-line"></i> 1 год 45 хв</span>
                                         </div>
-                                    </label>
-                                    <label class="quiz-option">
-                                        <input type="checkbox" name="zone" value="brows" data-price="650" data-time="50">
-                                        <div class="option-content">
-                                            <i class="ri-brush-line"></i>
-                                            <span>Брови (Архітектура/Укладка)</span>
+                                        <div class="metric-item">
+                                            <span class="metric-label">Економія часу:</span>
+                                            <span class="metric-val"><i class="ri-history-line"></i> -1.5 години</span>
                                         </div>
-                                    </label>
-                                    <label class="quiz-option">
-                                        <input type="checkbox" name="zone" value="nails" data-price="850" data-time="90">
-                                        <div class="option-content">
-                                            <i class="ri-hand-sanitizer-line"></i>
-                                            <span>Нігті (Манікюр/Педикюр)</span>
+                                    </div>
+
+                                    <div class="combo-price-row">
+                                        <span class="combo-price luxury-price">1 800 грн</span>
+                                        <button class="btn-nested-primary btn-select-combo" data-combo-id="c1">
+                                            <span class="btn-text">Обрати комплекс</span>
+                                            <span class="btn-icon-wrapper"><i class="ri-arrow-right-line"></i></span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Combo 2 -->
+                            <div class="combo-card-shell" data-combo-id="c2">
+                                <div class="combo-card-core">
+                                    <span class="combo-badge"><i class="ri-eye-line"></i> ГАРМОНІЯ ПОГЛЯДУ</span>
+                                    <h3 class="combo-name">Lash & Brow Duo (Вії + Брови)</h3>
+                                    <p class="combo-services">Ламінування Вій з BOTOX + Скульптурна Архітектура та Офарбування Брів</p>
+                                    
+                                    <div class="combo-metrics-row">
+                                        <div class="metric-item">
+                                            <span class="metric-label">Тривалість:</span>
+                                            <span class="metric-val text-pink"><i class="ri-time-line"></i> 1 год 50 хв</span>
                                         </div>
-                                    </label>
+                                        <div class="metric-item">
+                                            <span class="metric-label">Команда:</span>
+                                            <span class="metric-val"><i class="ri-user-star-line"></i> Top Lash + Brow Pro</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="combo-price-row">
+                                        <span class="combo-price luxury-price">1 600 грн</span>
+                                        <button class="btn-nested-primary btn-select-combo" data-combo-id="c2">
+                                            <span class="btn-text">Обрати комплекс</span>
+                                            <span class="btn-icon-wrapper"><i class="ri-arrow-right-line"></i></span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Combo 3 -->
+                            <div class="combo-card-shell featured" data-combo-id="c3">
+                                <div class="combo-card-core">
+                                    <span class="combo-badge vip"><i class="ri-vip-crown-fill"></i> 3 Майстри • 6 Рук</span>
+                                    <h3 class="combo-name">VIP Full Look (Вії + Брови + Нігті)</h3>
+                                    <p class="combo-services">Нарощування Вій + Архітектура Брів + Smart Манікюр (Повний сет)</p>
+                                    
+                                    <div class="combo-metrics-row">
+                                        <div class="metric-item">
+                                            <span class="metric-label">Тривалість:</span>
+                                            <span class="metric-val text-pink"><i class="ri-time-line"></i> 2 години!</span>
+                                        </div>
+                                        <div class="metric-item">
+                                            <span class="metric-label">Економія часу:</span>
+                                            <span class="metric-val"><i class="ri-history-line"></i> -3 години</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="combo-price-row">
+                                        <span class="combo-price luxury-price">2 400 грн</span>
+                                        <button class="btn-nested-primary btn-select-combo" data-combo-id="c3">
+                                            <span class="btn-text">Обрати VIP Сет</span>
+                                            <span class="btn-icon-wrapper"><i class="ri-arrow-right-line"></i></span>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Quiz Live Result Bar -->
-                        <div class="quiz-result-bar">
-                            <div class="result-details">
-                                <div class="result-item">
-                                    <span class="result-label">Орієнтовний час:</span>
-                                    <span class="result-value" id="quizTotalTime">0 хв</span>
-                                </div>
-                                <div class="result-item">
-                                    <span class="result-label">Загальна вартість:</span>
-                                    <span class="result-value price-total" id="quizTotalPrice">0 грн</span>
-                                </div>
+                        <!-- Custom Combo Builder Section Header -->
+                        <div class="custom-builder-box">
+                            <h3 class="builder-title"><i class="ri-tools-line"></i> Сконструюйте власний кастомний комплекс:</h3>
+                            
+                            <div class="options-grid">
+                                <label class="quiz-option">
+                                    <input type="checkbox" name="customZone" value="lashes" data-price="950" data-time="105" data-name="Вії (Об'єм 2D/3D)" checked>
+                                    <div class="option-content">
+                                        <i class="ri-eye-line"></i>
+                                        <span>Вії (Нарощування 2D/3D)</span>
+                                        <small style="color: var(--color-text-muted); font-size: 0.78rem;">950 грн • ~105 хв</small>
+                                    </div>
+                                </label>
+                                <label class="quiz-option">
+                                    <input type="checkbox" name="customZone" value="brows" data-price="650" data-time="50" data-name="Брови (Архітектура)" checked>
+                                    <div class="option-content">
+                                        <i class="ri-brush-line"></i>
+                                        <span>Брови (Архітектура & Фарбування)</span>
+                                        <small style="color: var(--color-text-muted); font-size: 0.78rem;">650 грн • ~50 хв</small>
+                                    </div>
+                                </label>
+                                <label class="quiz-option">
+                                    <input type="checkbox" name="customZone" value="nails" data-price="850" data-time="90" data-name="Нігті (Манікюр Gel Polish)">
+                                    <div class="option-content">
+                                        <i class="ri-hand-sanitizer-line"></i>
+                                        <span>Нігті (Преміум Манікюр)</span>
+                                        <small style="color: var(--color-text-muted); font-size: 0.78rem;">850 грн • ~90 хв</small>
+                                    </div>
+                                </label>
                             </div>
-                            <button class="btn-nested-primary" id="btnBookQuizPackage">
-                                <span class="btn-text">Забронювати зі знижкою 10%</span>
-                                <span class="btn-icon-wrapper"><i class="ri-percent-line"></i></span>
-                            </button>
+
+                            <!-- Builder Results Summary Bar -->
+                            <div class="quiz-result-bar">
+                                <div class="result-details">
+                                    <div class="result-item">
+                                        <span class="result-label">Склад комплексу:</span>
+                                        <span class="result-value" id="customComboTeam">2 майстри (4 руки)</span>
+                                    </div>
+                                    <div class="result-item">
+                                        <span class="result-label">Час в кріслі (Паралельно):</span>
+                                        <span class="result-value text-pink" id="customComboTime">~1 год 45 хв</span>
+                                    </div>
+                                    <div class="result-item">
+                                        <span class="result-label">Загальна вартість:</span>
+                                        <span class="result-value price-total" id="customComboPrice">1 600 грн</span>
+                                    </div>
+                                </div>
+                                <button class="btn-nested-primary" id="btnBookCustomCombo">
+                                    <span class="btn-text">Забронювати ваш комплекс</span>
+                                    <span class="btn-icon-wrapper"><i class="ri-calendar-check-line"></i></span>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -605,6 +659,10 @@
                                         <button class="b-cat-btn" data-bcat="nails">
                                             <i class="ri-hand-sanitizer-line"></i>
                                             <span>Нігті & Манікюр</span>
+                                        </button>
+                                        <button class="b-cat-btn" data-bcat="combos">
+                                            <i class="ri-vip-crown-line"></i>
+                                            <span>✨ Комплекси (4-6 рук)</span>
                                         </button>
                                     </div>
                                 </div>
@@ -722,6 +780,43 @@
                                         <span class="b-s-price luxury-price">1 400 грн</span>
                                     </label>
 
+                                    <!-- COMBOS GROUP (PARALLEL 4-6 HANDS) -->
+                                    <label class="b-service-item bcat-item combos">
+                                        <input type="radio" name="bookingService" class="b-service-cb" data-id="c1" data-cat="combos" data-name="Express Combo 4 Руки (Вії + Манікюр)" data-price="1800" data-time="105">
+                                        <div class="b-service-info">
+                                            <div class="b-s-title-row">
+                                                <span class="b-s-title">Express Combo 4 Руки (Вії + Манікюр)</span>
+                                                <span class="time-badge"><i class="ri-flashlight-line"></i> 2 Майстри • 1 год 45 хв</span>
+                                            </div>
+                                            <span class="b-s-desc">Паралельне виконання нарощування вій 2D/3D та манікюру Gel Polish у 4 руки</span>
+                                        </div>
+                                        <span class="b-s-price luxury-price">1 800 грн</span>
+                                    </label>
+
+                                    <label class="b-service-item bcat-item combos">
+                                        <input type="radio" name="bookingService" class="b-service-cb" data-id="c2" data-cat="combos" data-name="Lash & Brow Duo (Вії + Брови)" data-price="1600" data-time="110">
+                                        <div class="b-service-info">
+                                            <div class="b-s-title-row">
+                                                <span class="b-s-title">Lash & Brow Duo (Вії + Брови)</span>
+                                                <span class="time-badge"><i class="ri-sparkles-line"></i> 2 Майстри • 1 год 50 хв</span>
+                                            </div>
+                                            <span class="b-s-desc">Ламінування вій BOTOX + Архітектура брів з фарбуванням</span>
+                                        </div>
+                                        <span class="b-s-price luxury-price">1 600 грн</span>
+                                    </label>
+
+                                    <label class="b-service-item bcat-item combos">
+                                        <input type="radio" name="bookingService" class="b-service-cb" data-id="c3" data-cat="combos" data-name="VIP Full Look 6 Рук (Вії + Брови + Манікюр)" data-price="2400" data-time="120">
+                                        <div class="b-service-info">
+                                            <div class="b-s-title-row">
+                                                <span class="b-s-title">VIP Full Look 6 Рук (Вії + Брови + Манікюр)</span>
+                                                <span class="time-badge"><i class="ri-vip-crown-fill"></i> 3 Майстри • 2 години</span>
+                                            </div>
+                                            <span class="b-s-desc">Одночасна робота 3-х топ-майстрів: Нарощування вій + Брови + Smart Манікюр</span>
+                                        </div>
+                                        <span class="b-s-price luxury-price">2 400 грн</span>
+                                    </label>
+
                                 </div>
                             </div>
 
@@ -817,106 +912,128 @@
                                         </div>
                                     </div>
 
+                                    <!-- COMBO MASTERS TEAMS -->
+                                    <div class="masters-grid cat-masters combos">
+                                        <div class="master-card-shell selected" data-master-id="m_combo4" data-master-name="Команда «4 Руки» (Олена + Вікторія)" data-cat="combos">
+                                            <div class="master-card-core">
+                                                <span class="rank-badge senior"><i class="ri-vip-crown-fill"></i> 2 Майстри • 4 Руки</span>
+                                                <div class="master-avatar-wrapper">
+                                                    <img src="assets/images/master_portrait.png" alt="Команда 4 руки">
+                                                    <span class="master-rating">★ 4.99</span>
+                                                </div>
+                                                <h4 class="master-name">Олена + Вікторія</h4>
+                                                <span class="master-role">Top Lash & Senior Nail Instructor</span>
+                                                <p class="master-experience">Паралельний сервіс у 4 руки</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="master-card-shell" data-master-id="m_combo6" data-master-name="VIP Команда «6 Рук» (Олена + Анна + Вікторія)" data-cat="combos">
+                                            <div class="master-card-core">
+                                                <span class="rank-badge senior"><i class="ri-vip-crown-fill"></i> 3 Майстри • VIP 6 Рук</span>
+                                                <div class="master-avatar-wrapper">
+                                                    <img src="assets/images/master_anna.png" alt="Команда 6 рук">
+                                                    <span class="master-rating">★ 5.00</span>
+                                                </div>
+                                                <h4 class="master-name">Олена + Анна + Вікторія</h4>
+                                                <span class="master-role">Преміальний Склад Салону</span>
+                                                <p class="master-experience">Максимальний експрес-сервіс</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
 
                             <!-- Step 3: Date & Time Picker -->
                             <div class="b-step-content" id="bStep3">
-                                <h3>Оберіть зручний день та час:</h3>
+                                <h3>3. Оберіть дату та зручний час:</h3>
                                 <div class="calendar-time-picker">
+                                    <!-- Interactive Calendar -->
                                     <div class="calendar-wrapper">
                                         <div class="calendar-header">
-                                            <button type="button" class="cal-nav-btn" id="prevMonthBtn" aria-label="Попередній місяць">
-                                                <i class="ri-arrow-left-s-line"></i>
-                                            </button>
-                                            <select id="calendarMonthSelect" class="calendar-month-select" aria-label="Оберіть місяць">
-                                                <option value="2026-7">Серпень 2026</option>
-                                                <option value="2026-8">Вересень 2026</option>
-                                                <option value="2026-9">Жовтень 2026</option>
-                                                <option value="2026-10">Листопад 2026</option>
-                                                <option value="2026-11">Грудень 2026</option>
-                                                <option value="2027-0">Січень 2027</option>
-                                            </select>
-                                            <button type="button" class="cal-nav-btn" id="nextMonthBtn" aria-label="Наступний місяць">
-                                                <i class="ri-arrow-right-s-line"></i>
-                                            </button>
+                                            <span class="calendar-month">Серпень 2026</span>
+                                            <div class="cal-nav-btns">
+                                                <button class="cal-nav-btn"><i class="ri-arrow-left-s-line"></i></button>
+                                                <button class="cal-nav-btn"><i class="ri-arrow-right-s-line"></i></button>
+                                            </div>
                                         </div>
                                         <div class="calendar-weekdays-row">
-                                            <span>Пн</span><span>Вів</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Нд</span>
+                                            <span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Нд</span>
                                         </div>
                                         <div class="calendar-days-grid" id="calendarDaysGrid">
-                                            <!-- Dynamic Days -->
+                                            <!-- Dynamically generated days -->
                                         </div>
                                     </div>
 
+                                    <!-- Time Slots Grid -->
                                     <div class="time-slots-wrapper">
-                                        <h4>Доступний час:</h4>
+                                        <h4>Вільні слоти на обрану дату:</h4>
                                         <div class="time-slots-grid" id="timeSlotsGrid">
                                             <button class="time-slot-btn" data-time="10:00">10:00</button>
                                             <button class="time-slot-btn" data-time="11:30">11:30</button>
                                             <button class="time-slot-btn active" data-time="13:00">13:00</button>
-                                            <button class="time-slot-btn" data-time="14:30">14:30</button>
-                                            <button class="time-slot-btn" data-time="16:00">16:00</button>
-                                            <button class="time-slot-btn" data-time="17:30">17:30</button>
-                                            <button class="time-slot-btn" data-time="19:00">19:00</button>
+                                            <button class="time-slot-btn" data-time="14:45">14:45</button>
+                                            <button class="time-slot-btn" data-time="16:30">16:30</button>
+                                            <button class="time-slot-btn overtime" data-time="18:15">18:15</button>
                                         </div>
 
-                                        <!-- Overtime Special Alert Box -->
+                                        <!-- Overtime Slot Warning Alert Box -->
                                         <div class="overtime-alert-box" id="overtimeAlertBox" style="display: none;">
                                             <div class="overtime-title">
-                                                <i class="ri-time-line text-pink"></i> 
-                                                <strong>Запис після 20:00 (Понад урочно)</strong>
+                                                <i class="ri-time-line"></i> Запис у понадурочний час салону
                                             </div>
                                             <p class="overtime-desc" id="overtimeDescText">
-                                                Ваша процедура триватиме до <strong>21:15</strong>. Оскільки салон працює до 20:00, цей запис потребує особистого підтвердження майстра.
+                                                Ваша процедура виходить за межі стандартного графіку салону (до 20:00).
                                             </p>
                                             <div class="overtime-contact-badge">
-                                                <i class="ri-phone-fill"></i> Прямий телефон майстра: 
-                                                <a href="tel:+380675550199" id="masterDirectPhone">+380 (67) 555-01-99</a>
+                                                <span>Зв'язатися напряму з майстром:</span>
+                                                <a href="https://t.me/kolyasikk70" target="_blank" rel="noopener"><i class="ri-telegram-line"></i> Telegram</a>
+                                                <span>або</span>
+                                                <a href="tel:+380671234567"><i class="ri-phone-line"></i> +38 (067) 123-45-67</a>
                                             </div>
                                             <p class="overtime-note">
-                                                ❓ Запит буде надіслано в Telegram-бот майстру з позначкою <strong>«Повідомлення під питанням»</strong> для особистого узгодження.
+                                                💡 Ви можете надіслати заявку зараз — майстер підтвердить можливість прийому протягом 15 хвилин.
                                             </p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Step 4: Client Form & Confirmation -->
+                            <!-- Step 4: Contact Confirmation Form -->
                             <div class="b-step-content" id="bStep4">
-                                <h3>Ваші контактні дані:</h3>
+                                <h3>4. Введіть ваші контактні дані:</h3>
                                 <form class="client-form" id="bookingClientForm" onsubmit="return false;">
                                     <div class="form-group">
                                         <label for="clientName">Ваше Ім'я *</label>
-                                        <input type="text" id="clientName" required placeholder="Катерина" class="form-input">
-                                        <span class="form-error-msg" id="nameErrorMsg" style="display:none; color: #EF4444; font-size: 0.78rem; font-weight: 600; margin-top: 4px;"><i class="ri-error-warning-fill"></i> Будь ласка, вкажіть ваше ім'я</span>
+                                        <input type="text" id="clientName" class="form-input" placeholder="Катерина" required>
+                                        <span class="error-msg-text" id="nameErrorMsg" style="display: none; color: #EF4444; font-size: 0.75rem; margin-top: 2px;">⚠️ Будь ласка, введіть ваше ім'я (мінімум 2 символи)</span>
                                     </div>
                                     <div class="form-group">
-                                        <label for="clientPhone">Номер Телефону *</label>
-                                        <input type="tel" id="clientPhone" required placeholder="+380 (67) 000-00-00" class="form-input" maxlength="19" autocomplete="tel">
-                                        <span class="form-error-msg" id="phoneErrorMsg" style="display:none; color: #EF4444; font-size: 0.78rem; font-weight: 600; margin-top: 4px;"><i class="ri-error-warning-fill"></i> Введіть дійсний український номер: +380 (XX) XXX-XX-XX</span>
+                                        <label for="clientPhone">Номер Телефону (Україна) *</label>
+                                        <input type="tel" id="clientPhone" class="form-input" placeholder="+380 (67) 123-45-67" required>
+                                        <span class="error-msg-text" id="phoneErrorMsg" style="display: none; color: #EF4444; font-size: 0.75rem; margin-top: 2px;">⚠️ Введіть коректний номер телефону України: +380 (XX) XXX-XX-XX</span>
                                     </div>
                                     <div class="form-group">
-                                        <label for="clientNotes">Побажання або особливі примітки</label>
-                                        <textarea id="clientNotes" placeholder="Наприклад: хочу ефект мокрих вій із вигином L" class="form-input textarea"></textarea>
+                                        <label for="clientNotes">Побажання чи коментар (необов'язково)</label>
+                                        <textarea id="clientNotes" class="form-input textarea" placeholder="Наприклад: хочу додаткове ламінування або мокрий ефект..."></textarea>
                                     </div>
                                 </form>
                             </div>
                         </div>
 
-                        <!-- Booking Actions Footer -->
+                        <!-- Booking Widget Navigation Footer -->
                         <div class="booking-footer">
                             <div class="booking-summary-pill">
-                                <span>Обрано: <strong id="summaryCount">0 процедур</strong></span>
+                                <span id="summaryCount">1 процедура</span>
                                 <span class="divider">•</span>
-                                <span>Час: <strong id="summaryTime" class="text-pink">0 хв</strong></span>
+                                <span id="summaryTime">1 год 45 хв</span>
                                 <span class="divider">•</span>
-                                <span>Сума: <strong id="summaryPrice" class="text-pink luxury-price">0 грн</strong></span>
+                                <span id="summaryPrice" class="luxury-price" style="font-size: 1.3rem !important;">950 грн</span>
                             </div>
 
                             <div class="booking-nav-btns">
                                 <button class="btn-secondary-glass" id="btnBookingPrev" style="display: none;">
-                                    <i class="ri-arrow-left-line"></i> Назад
+                                    <i class="ri-arrow-left-line"></i>Назад
                                 </button>
                                 <button class="btn-nested-primary" id="btnBookingNext">
                                     <span class="btn-text">Далі</span>
@@ -929,282 +1046,266 @@
             </div>
         </section>
 
-        <!-- Reviews & Testimonials Section -->
+        <!-- Masters Showcase Section -->
+        <section class="masters-showcase-section" id="masters">
+            <div class="section-container">
+                <div class="section-header">
+                    <div class="eyebrow-pill">Команда Професіоналів</div>
+                    <h2 class="section-title">Наші топ-майстри <span class="text-serif-italic">краси</span></h2>
+                    <p class="section-subtitle">Сертифіковані фахівці з багаторічним досвідом та сотнями задоволених клієнток</p>
+                </div>
+
+                <div class="masters-showcase-grid">
+                    <!-- Master 1 -->
+                    <div class="master-showcase-card-shell reveal-on-scroll">
+                        <div class="master-showcase-card-core">
+                            <div class="master-showcase-photo-box">
+                                <img src="assets/images/master_portrait.png" alt="Олена Соколова">
+                                <span class="master-showcase-badge senior"><i class="ri-vip-crown-fill"></i> Senior Top Artist</span>
+                                <span class="master-showcase-rating">★ 4.99</span>
+                            </div>
+                            <div class="master-showcase-info">
+                                <h3 class="master-showcase-name">Олена Соколова</h3>
+                                <span class="master-showcase-role">Top Lash Artist & Засновниця</span>
+                                <p class="master-showcase-bio">Досвід 7+ років. Авторські техніки нарощування від 2D до Мегаоб'ємів. 4000+ виконаних процедур.</p>
+                                <div class="master-socials-row">
+                                    <a href="https://instagram.com" target="_blank" class="master-social-btn" aria-label="Instagram"><i class="ri-instagram-line"></i></a>
+                                    <a href="https://t.me/kolyasikk70" target="_blank" class="master-social-btn" aria-label="Telegram"><i class="ri-telegram-line"></i></a>
+                                </div>
+                                <button class="btn-nested-primary btn-master-direct-book" data-master-id="m1" data-cat="lashes">
+                                    <span class="btn-text">Записатися до Олени</span>
+                                    <span class="btn-icon-wrapper"><i class="ri-calendar-check-line"></i></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Master 2 -->
+                    <div class="master-showcase-card-shell reveal-on-scroll">
+                        <div class="master-showcase-card-core">
+                            <div class="master-showcase-photo-box">
+                                <img src="assets/images/master_anna.png" alt="Анна Романова">
+                                <span class="master-showcase-badge senior"><i class="ri-vip-crown-fill"></i> Senior Architect</span>
+                                <span class="master-showcase-rating">★ 4.98</span>
+                            </div>
+                            <div class="master-showcase-info">
+                                <h3 class="master-showcase-name">Анна Романова</h3>
+                                <span class="master-showcase-role">Senior Brow Architect</span>
+                                <p class="master-showcase-bio">Досвід 6 років. Переможниця чемпіонату Brow-2025. Експерт довготривалої укладки та ламінування брів.</p>
+                                <div class="master-socials-row">
+                                    <a href="https://instagram.com" target="_blank" class="master-social-btn" aria-label="Instagram"><i class="ri-instagram-line"></i></a>
+                                    <a href="https://t.me/kolyasikk70" target="_blank" class="master-social-btn" aria-label="Telegram"><i class="ri-telegram-line"></i></a>
+                                </div>
+                                <button class="btn-nested-primary btn-master-direct-book" data-master-id="m2" data-cat="brows">
+                                    <span class="btn-text">Записатися до Анни</span>
+                                    <span class="btn-icon-wrapper"><i class="ri-calendar-check-line"></i></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Master 3 -->
+                    <div class="master-showcase-card-shell reveal-on-scroll">
+                        <div class="master-showcase-card-core">
+                            <div class="master-showcase-photo-box">
+                                <img src="assets/images/master_viktoria.png" alt="Вікторія Кім">
+                                <span class="master-showcase-badge senior"><i class="ri-vip-crown-fill"></i> Senior Instructor</span>
+                                <span class="master-showcase-rating">★ 4.98</span>
+                            </div>
+                            <div class="master-showcase-info">
+                                <h3 class="master-showcase-name">Вікторія Кім</h3>
+                                <span class="master-showcase-role">Senior Nail Instructor</span>
+                                <p class="master-showcase-bio">Досвід 6 років. Спеціалістка апаратного манікюру та полімерного Smart-педикюру. Бездоганне покриття.</p>
+                                <div class="master-socials-row">
+                                    <a href="https://instagram.com" target="_blank" class="master-social-btn" aria-label="Instagram"><i class="ri-instagram-line"></i></a>
+                                    <a href="https://t.me/kolyasikk70" target="_blank" class="master-social-btn" aria-label="Telegram"><i class="ri-telegram-line"></i></a>
+                                </div>
+                                <button class="btn-nested-primary btn-master-direct-book" data-master-id="m3" data-cat="nails">
+                                    <span class="btn-text">Записатися до Вікторії</span>
+                                    <span class="btn-icon-wrapper"><i class="ri-calendar-check-line"></i></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Master 4 -->
+                    <div class="master-showcase-card-shell reveal-on-scroll">
+                        <div class="master-showcase-card-core">
+                            <div class="master-showcase-photo-box">
+                                <img src="assets/images/master_maria.png" alt="Марія Орлова">
+                                <span class="master-showcase-badge junior"><i class="ri-sparkles-fill"></i> Lash Стиліст</span>
+                                <span class="master-showcase-rating">★ 4.94</span>
+                            </div>
+                            <div class="master-showcase-info">
+                                <h3 class="master-showcase-name">Марія Орлова</h3>
+                                <span class="master-showcase-role">Lash Стиліст</span>
+                                <p class="master-showcase-bio">Досвід 3 роки. Майстер з натурального нарощування класика / 2D та ламінування вій BOTOX.</p>
+                                <div class="master-socials-row">
+                                    <a href="https://instagram.com" target="_blank" class="master-social-btn" aria-label="Instagram"><i class="ri-instagram-line"></i></a>
+                                    <a href="https://t.me/kolyasikk70" target="_blank" class="master-social-btn" aria-label="Telegram"><i class="ri-telegram-line"></i></a>
+                                </div>
+                                <button class="btn-nested-primary btn-master-direct-book" data-master-id="m4" data-cat="lashes">
+                                    <span class="btn-text">Записатися до Марії</span>
+                                    <span class="btn-icon-wrapper"><i class="ri-calendar-check-line"></i></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Master 5 -->
+                    <div class="master-showcase-card-shell reveal-on-scroll">
+                        <div class="master-showcase-card-core">
+                            <div class="master-showcase-photo-box">
+                                <img src="assets/images/master_daria.png" alt="Дар'я Кравченко">
+                                <span class="master-showcase-badge junior"><i class="ri-sparkles-fill"></i> Brow Стиліст</span>
+                                <span class="master-showcase-rating">★ 4.92</span>
+                            </div>
+                            <div class="master-showcase-info">
+                                <h3 class="master-showcase-name">Дар'я Кравченко</h3>
+                                <span class="master-showcase-role">Brow Стиліст</span>
+                                <p class="master-showcase-bio">Досвід 2.5 роки. Майстер точної графіки брів, освітлення та доглядових процедур для брів.</p>
+                                <div class="master-socials-row">
+                                    <a href="https://instagram.com" target="_blank" class="master-social-btn" aria-label="Instagram"><i class="ri-instagram-line"></i></a>
+                                    <a href="https://t.me/kolyasikk70" target="_blank" class="master-social-btn" aria-label="Telegram"><i class="ri-telegram-line"></i></a>
+                                </div>
+                                <button class="btn-nested-primary btn-master-direct-book" data-master-id="m5" data-cat="brows">
+                                    <span class="btn-text">Записатися до Дар'ї</span>
+                                    <span class="btn-icon-wrapper"><i class="ri-calendar-check-line"></i></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Master 6 -->
+                    <div class="master-showcase-card-shell reveal-on-scroll">
+                        <div class="master-showcase-card-core">
+                            <div class="master-showcase-photo-box">
+                                <img src="assets/images/master_alina.png" alt="Аліна Мельник">
+                                <span class="master-showcase-badge junior"><i class="ri-sparkles-fill"></i> Nail Стиліст</span>
+                                <span class="master-showcase-rating">★ 4.93</span>
+                            </div>
+                            <div class="master-showcase-info">
+                                <h3 class="master-showcase-name">Аліна Мельник</h3>
+                                <span class="master-showcase-role">Nail Стиліст</span>
+                                <p class="master-showcase-bio">Досвід 3 роки. Майстер комбінованого манікюру, укріплення гелем та трендових французьких дизайнів.</p>
+                                <div class="master-socials-row">
+                                    <a href="https://instagram.com" target="_blank" class="master-social-btn" aria-label="Instagram"><i class="ri-instagram-line"></i></a>
+                                    <a href="https://t.me/kolyasikk70" target="_blank" class="master-social-btn" aria-label="Telegram"><i class="ri-telegram-line"></i></a>
+                                </div>
+                                <button class="btn-nested-primary btn-master-direct-book" data-master-id="m6" data-cat="nails">
+                                    <span class="btn-text">Записатися до Аліни</span>
+                                    <span class="btn-icon-wrapper"><i class="ri-calendar-check-line"></i></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Social Proof & Reviews -->
         <section class="reviews-section" id="reviews">
             <div class="section-container">
                 <div class="section-header">
-                    <div class="eyebrow-pill">Відгуки Задоволених Клієнток</div>
-                    <h2 class="section-title">Любов у <span class="text-serif-italic">кожному відгуку</span></h2>
-                    <p class="section-subtitle">Понад 1500 прекрасних дівчат довірили свою красу майстерні «Elegance»</p>
+                    <div class="eyebrow-pill">Відгуки Клієнток</div>
+                    <h2 class="section-title">Що про нас <span class="text-serif-italic">кажуть</span></h2>
+                    <p class="section-subtitle">Реальні враження дівчат, які довіряють нам свій погляд та манікюр</p>
                 </div>
 
                 <div class="reviews-grid">
                     <div class="review-card-shell">
                         <div class="review-card-core">
                             <div class="review-user">
-                                <div class="review-avatar">МК</div>
+                                <div class="review-avatar">АК</div>
                                 <div class="review-meta">
-                                    <h4>Марія Ковальова</h4>
-                                    <span class="review-stars">★★★★★</span>
+                                    <h4>Анастасія Ковальчук</h4>
+                                    <div class="review-stars">★★★★★</div>
                                 </div>
                             </div>
-                            <p class="review-text">«Ходжу до Олени на нарощування вій вже півроку! Носіння ідеальне — рівно місяць без жодного залому. У салоні неймовірний затишок, смачна кава та дуже уважні майстри!»</p>
-                            <span class="review-date">Учора • Google Maps Київ</span>
+                            <p class="review-text">«Олена — просто чарівниця! Нарощування 3D тримається рівно 5 тижнів без жодної лисини. Очі не печуть, вейп та гіпоалергенний клей дають про себе знати!»</p>
+                            <span class="review-date">12 Серпня 2026</span>
                         </div>
                     </div>
 
                     <div class="review-card-shell">
                         <div class="review-card-core">
                             <div class="review-user">
-                                <div class="review-avatar">ОС</div>
+                                <div class="review-avatar">ММ</div>
                                 <div class="review-meta">
-                                    <h4>Ольга Сергеєва</h4>
-                                    <span class="review-stars">★★★★★</span>
+                                    <h4>Марина Мельник</h4>
+                                    <div class="review-stars">★★★★★</div>
                                 </div>
                             </div>
-                            <p class="review-text">«Зробила довготривалу укладку брів та ламінування вій перед відпусткою. Результат перевершив усі очікування — природні, густі, слухняні! Дякую майстерні Elegance!»</p>
-                            <span class="review-date">3 дні тому • Instagram</span>
+                            <p class="review-text">«Робила ламінування вій та довготривалу укладку брів у 4 руки. Зекономила 2 години часу! Якість супер, студія духмяна та дуже затишна.»</p>
+                            <span class="review-date">04 Серпня 2026</span>
                         </div>
                     </div>
 
                     <div class="review-card-shell">
                         <div class="review-card-core">
                             <div class="review-user">
-                                <div class="review-avatar">АВ</div>
+                                <div class="review-avatar">ВШ</div>
                                 <div class="review-meta">
-                                    <h4>Анастасія Васильєва</h4>
-                                    <span class="review-stars">★★★★★</span>
+                                    <h4>Вікторія Шевченко</h4>
+                                    <div class="review-stars">★★★★★</div>
                                 </div>
                             </div>
-                            <p class="review-text">«Smart педикюр — це найкраще, що траплялося з моїми ніжками! П'яточки ідеально гладкі. Дуже стильний інтер'єр на Хрещатику та ввічливий персонал!»</p>
-                            <span class="review-date">Тиждень тому • Google Maps</span>
+                            <p class="review-text">«Найкращий Smart педикюр у Києві! Ніжки як у немовляти. Величезне дякую майстру Вікторії за швидкість та каву з солодощами.»</p>
+                            <span class="review-date">28 Липня 2026</span>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Masters & Experts Showcase Section -->
-        <section class="masters-showcase-section" id="masters">
-            <div class="section-container">
-                <div class="section-header">
-                    <div class="eyebrow-pill">Команда Топ-Фахівців</div>
-                    <h2 class="section-title">Наші <span class="text-serif-italic">Майстри Краси</span></h2>
-                    <p class="section-subtitle">Дипломовані експерти з багаторічним досвідом, які перетворюють кожну процедуру на ювелірне мистецтво.</p>
-                </div>
-
-                <div class="masters-showcase-grid">
-                    <!-- Master 1: Olena -->
-                    <div class="master-showcase-card-shell">
-                        <div class="master-showcase-card-core">
-                            <div class="master-showcase-photo-box">
-                                <img src="assets/images/master_portrait.png" alt="Олена Соколова">
-                                <span class="master-showcase-badge senior"><i class="ri-vip-crown-fill"></i> Senior Top Lash</span>
-                                <span class="master-showcase-rating">★ 4.99</span>
-                            </div>
-                            <div class="master-showcase-info">
-                                <h3 class="master-showcase-name">Олена Соколова</h3>
-                                <span class="master-showcase-role">Top Lash Artist & Стиліст</span>
-                                <p class="master-showcase-bio">Досвід 7 років • Понад 4000 ідеальних нарощувань. Спеціалізується на оксамитових об'ємах 2D/3D та голлівудських ефектах.</p>
-                                
-                                <div class="master-socials-row">
-                                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="master-social-btn" title="Instagram Олени"><i class="ri-instagram-line"></i></a>
-                                    <a href="https://t.me" target="_blank" rel="noopener noreferrer" class="master-social-btn" title="Telegram Олени"><i class="ri-telegram-fill"></i></a>
-                                    <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" class="master-social-btn" title="TikTok Олени"><i class="ri-tiktok-fill"></i></a>
-                                </div>
-
-                                <button class="btn-nested-primary btn-master-direct-book" data-master-id="m1" data-cat="lashes">
-                                    <span class="btn-text">Записатися до Олени</span>
-                                    <span class="btn-icon-wrapper"><i class="ri-calendar-event-line"></i></span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Master 2: Anna -->
-                    <div class="master-showcase-card-shell">
-                        <div class="master-showcase-card-core">
-                            <div class="master-showcase-photo-box">
-                                <img src="assets/images/master_anna.png" alt="Анна Романова">
-                                <span class="master-showcase-badge senior"><i class="ri-vip-crown-fill"></i> Brow Champion</span>
-                                <span class="master-showcase-rating">★ 4.98</span>
-                            </div>
-                            <div class="master-showcase-info">
-                                <h3 class="master-showcase-name">Анна Романова</h3>
-                                <span class="master-showcase-role">Senior Brow Architect</span>
-                                <p class="master-showcase-bio">Досвід 6 років • Переможець кубка Brow-2025. Експерт із геометричної архітектури, корекції та ламінування брів.</p>
-                                
-                                <div class="master-socials-row">
-                                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="master-social-btn" title="Instagram Анни"><i class="ri-instagram-line"></i></a>
-                                    <a href="https://t.me" target="_blank" rel="noopener noreferrer" class="master-social-btn" title="Telegram Анни"><i class="ri-telegram-fill"></i></a>
-                                </div>
-
-                                <button class="btn-nested-primary btn-master-direct-book" data-master-id="m2" data-cat="brows">
-                                    <span class="btn-text">Записатися до Анни</span>
-                                    <span class="btn-icon-wrapper"><i class="ri-calendar-event-line"></i></span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Master 3: Viktoria -->
-                    <div class="master-showcase-card-shell">
-                        <div class="master-showcase-card-core">
-                            <div class="master-showcase-photo-box">
-                                <img src="assets/images/master_viktoria.png" alt="Вікторія Кім">
-                                <span class="master-showcase-badge senior"><i class="ri-vip-crown-fill"></i> Smart Nail Pro</span>
-                                <span class="master-showcase-rating">★ 4.98</span>
-                            </div>
-                            <div class="master-showcase-info">
-                                <h3 class="master-showcase-name">Вікторія Кім</h3>
-                                <span class="master-showcase-role">Senior Nail Instructor</span>
-                                <p class="master-showcase-bio">Досвід 6 років • Спеціаліст із сучасної апаратної методики та Smart-педикюру. Створює дзеркально гладку шкіру та дизайн.</p>
-                                
-                                <div class="master-socials-row">
-                                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="master-social-btn" title="Instagram Вікторії"><i class="ri-instagram-line"></i></a>
-                                    <a href="https://t.me" target="_blank" rel="noopener noreferrer" class="master-social-btn" title="Telegram Вікторії"><i class="ri-telegram-fill"></i></a>
-                                </div>
-
-                                <button class="btn-nested-primary btn-master-direct-book" data-master-id="m3" data-cat="nails">
-                                    <span class="btn-text">Записатися до Вікторії</span>
-                                    <span class="btn-icon-wrapper"><i class="ri-calendar-event-line"></i></span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Master 4: Maria -->
-                    <div class="master-showcase-card-shell">
-                        <div class="master-showcase-card-core">
-                            <div class="master-showcase-photo-box">
-                                <img src="assets/images/master_maria.png" alt="Марія Орлова">
-                                <span class="master-showcase-badge junior"><i class="ri-sparkles-fill"></i> Lash Stylist</span>
-                                <span class="master-showcase-rating">★ 4.94</span>
-                            </div>
-                            <div class="master-showcase-info">
-                                <h3 class="master-showcase-name">Марія Орлова</h3>
-                                <span class="master-showcase-role">Lash Стиліст</span>
-                                <p class="master-showcase-bio">Досвід 3 роки • Майстер із трендових ефектів: мокрий ефект, промені Кайлі та оксамитове кератинове ламінування.</p>
-                                
-                                <div class="master-socials-row">
-                                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="master-social-btn" title="Instagram Марії"><i class="ri-instagram-line"></i></a>
-                                    <a href="https://t.me" target="_blank" rel="noopener noreferrer" class="master-social-btn" title="Telegram Марії"><i class="ri-telegram-fill"></i></a>
-                                </div>
-
-                                <button class="btn-nested-primary btn-master-direct-book" data-master-id="m4" data-cat="lashes">
-                                    <span class="btn-text">Записатися до Марії</span>
-                                    <span class="btn-icon-wrapper"><i class="ri-calendar-event-line"></i></span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Master 5: Daria -->
-                    <div class="master-showcase-card-shell">
-                        <div class="master-showcase-card-core">
-                            <div class="master-showcase-photo-box">
-                                <img src="assets/images/master_daria.png" alt="Дар'я Кравченко">
-                                <span class="master-showcase-badge junior"><i class="ri-sparkles-fill"></i> Brow Stylist</span>
-                                <span class="master-showcase-rating">★ 4.92</span>
-                            </div>
-                            <div class="master-showcase-info">
-                                <h3 class="master-showcase-name">Дар'я Кравченко</h3>
-                                <span class="master-showcase-role">Brow Стиліст</span>
-                                <p class="master-showcase-bio">Досвід 2.5 роки • Віртуоз довготривалої укладки та фарбування брів натуральними органічними пігментами.</p>
-                                
-                                <div class="master-socials-row">
-                                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="master-social-btn" title="Instagram Дар'ї"><i class="ri-instagram-line"></i></a>
-                                    <a href="https://t.me" target="_blank" rel="noopener noreferrer" class="master-social-btn" title="Telegram Дар'ї"><i class="ri-telegram-fill"></i></a>
-                                </div>
-
-                                <button class="btn-nested-primary btn-master-direct-book" data-master-id="m5" data-cat="brows">
-                                    <span class="btn-text">Записатися до Дар'ї</span>
-                                    <span class="btn-icon-wrapper"><i class="ri-calendar-event-line"></i></span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Master 6: Alina -->
-                    <div class="master-showcase-card-shell">
-                        <div class="master-showcase-card-core">
-                            <div class="master-showcase-photo-box">
-                                <img src="assets/images/master_alina.png" alt="Аліна Мельник">
-                                <span class="master-showcase-badge junior"><i class="ri-sparkles-fill"></i> Nail Stylist</span>
-                                <span class="master-showcase-rating">★ 4.93</span>
-                            </div>
-                            <div class="master-showcase-info">
-                                <h3 class="master-showcase-name">Аліна Мельник</h3>
-                                <span class="master-showcase-role">Nail Стиліст</span>
-                                <p class="master-showcase-bio">Досвід 3 роки • Експерт із гігієнічного манікюру, зміцнення нігтьової пластини та витонченого французького покриття.</p>
-                                
-                                <div class="master-socials-row">
-                                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="master-social-btn" title="Instagram Аліни"><i class="ri-instagram-line"></i></a>
-                                    <a href="https://t.me" target="_blank" rel="noopener noreferrer" class="master-social-btn" title="Telegram Аліни"><i class="ri-telegram-fill"></i></a>
-                                </div>
-
-                                <button class="btn-nested-primary btn-master-direct-book" data-master-id="m6" data-cat="nails">
-                                    <span class="btn-text">Записатися до Аліни</span>
-                                    <span class="btn-icon-wrapper"><i class="ri-calendar-event-line"></i></span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-        <!-- Location & Contact Section -->
+        <!-- Location & Contacts -->
         <section class="contacts-section" id="contacts">
             <div class="section-container">
                 <div class="contacts-grid">
                     <div class="contact-info-card-shell">
                         <div class="contact-info-card-core">
-                            <div class="eyebrow-pill">Чекаємо на вас у гості</div>
-                            <h2 class="contact-title">Контакти та <span class="text-serif-italic">Локація</span></h2>
-                            
+                            <h3 class="contact-title">Чекаємо на <span class="text-serif-italic">вас</span></h3>
                             <div class="contact-items-list">
                                 <div class="c-item">
-                                    <i class="ri-map-pin-2-line"></i>
+                                    <i class="ri-map-pin-line"></i>
                                     <div>
-                                        <strong>Адреса салону:</strong>
+                                        <strong>Адреса:</strong>
                                         <p>
-                                            <a href="https://www.google.com/maps/dir/?api=1&destination=%D0%BA%D0%B8%D1%97%D0%B2+%D1%85%D1%80%D0%B5%D1%89%D0%B0%D1%82%D0%B8%D0%BA+22" target="_blank" rel="noopener noreferrer" class="map-link-btn" title="Відкрити Google Карты та прокласти маршрут">
-                                                м. Київ, вул. Хрещатик, буд. 22 (ст. м. Майдан Незалежності)
-                                                <span class="route-inline-badge"><i class="ri-direction-line"></i> Маршрут</span>
+                                            <a href="https://maps.google.com/?q=Khreshchatyk+St,+22,+Kyiv,+Ukraine" target="_blank" rel="noopener" class="map-link-btn">
+                                                м. Київ, вул. Хрещатик, 22 (ст.м. Майдан Незалежності)
+                                                <span class="route-inline-badge"><i class="ri-direction-line"></i> Прокласти маршрут</span>
                                             </a>
                                         </p>
                                     </div>
                                 </div>
-
                                 <div class="c-item">
                                     <i class="ri-time-line"></i>
                                     <div>
-                                        <strong>Години роботи:</strong>
-                                        <p>Щодня з 11:00 до 20:00 (без вихідних)</p>
+                                        <strong>Графік роботи:</strong>
+                                        <p>Щодня з 09:00 до 20:00 (без вихідних)</p>
                                     </div>
                                 </div>
-
                                 <div class="c-item">
                                     <i class="ri-phone-line"></i>
                                     <div>
-                                        <strong>Телефони для зв'язку:</strong>
-                                        <p>
-                                            <a href="tel:+380443901234">+380 (44) 390-12-34</a> <br>
-                                            <a href="tel:+380675550199">+380 (67) 555-01-99</a>
-                                        </p>
+                                        <strong>Телефон для зв'язку:</strong>
+                                        <p><a href="tel:+380671234567">+38 (067) 123-45-67</a></p>
                                     </div>
                                 </div>
-
                                 <div class="c-item">
-                                    <i class="ri-messenger-line"></i>
+                                    <i class="ri-message-3-line"></i>
                                     <div>
-                                        <strong>Месенджери та соцмережі:</strong>
+                                        <strong>Месенджери:</strong>
                                         <div class="social-links-row">
-                                            <a href="https://t.me" target="_blank" rel="noopener noreferrer" class="social-badge tg" title="Відкрити Telegram"><i class="ri-telegram-fill"></i> Telegram</a>
-                                            <a href="https://web.whatsapp.com" target="_blank" rel="noopener noreferrer" class="social-badge wa" title="Відкрити WhatsApp"><i class="ri-whatsapp-fill"></i> WhatsApp</a>
-                                            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-badge ig" title="Відкрити Instagram"><i class="ri-instagram-line"></i> Instagram</a>
+                                            <a href="https://t.me/kolyasikk70" target="_blank" rel="noopener" class="social-badge tg">
+                                                <i class="ri-telegram-line"></i> Telegram
+                                            </a>
+                                            <a href="https://web.whatsapp.com" target="_blank" rel="noopener" class="social-badge wa">
+                                                <i class="ri-whatsapp-line"></i> WhatsApp
+                                            </a>
+                                            <a href="https://instagram.com" target="_blank" rel="noopener" class="social-badge ig">
+                                                <i class="ri-instagram-line"></i> Instagram
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -1212,16 +1313,17 @@
                         </div>
                     </div>
 
-                    <!-- Interactive Location Map Visual -->
+                    <!-- Interactive Map Card (Interactive Google Maps Navigation Route) -->
                     <div class="map-card-shell">
                         <div class="map-card-core">
-                            <a href="https://www.google.com/maps/dir/?api=1&destination=%D0%BA%D0%B8%D1%97%D0%B2+%D1%85%D1%80%D0%B5%D1%89%D0%B0%D1%82%D0%B8%D0%BA+22" target="_blank" rel="noopener noreferrer" class="map-visual-placeholder" title="Натисніть, щоб відкрити Google Maps та прокласти маршрут">
+                            <a href="https://maps.google.com/?q=Khreshchatyk+St,+22,+Kyiv,+Ukraine" target="_blank" rel="noopener" class="map-visual-placeholder" title="Натисніть щоб відкрити Google Карти та прокласти маршрут">
+                                <div class="map-grid-overlay"></div>
                                 <div class="map-pin-pulse">
                                     <i class="ri-map-pin-fill"></i>
-                                    <span>Салон «ELEGANCE» • Київ, Хрещатик 22</span>
-                                    <span class="map-route-btn"><i class="ri-direction-fill"></i> Прокласти маршрут в Google Maps</span>
+                                    <span>Студія «Elegance»</span>
+                                    <small style="color: var(--color-text-muted); font-weight: 500;">вул. Хрещатик, 22</small>
+                                    <span class="map-route-btn"><i class="ri-navigation-line"></i> Прокласти маршрут</span>
                                 </div>
-                                <div class="map-grid-overlay"></div>
                             </a>
                         </div>
                     </div>
@@ -1230,75 +1332,69 @@
         </section>
     </main>
 
-    <!-- Visual Confirmation Pass Ticket Modal -->
+    <!-- Modal Ticket Confirmation Window -->
     <div class="modal-backdrop" id="ticketModal">
         <div class="modal-ticket-shell">
             <div class="modal-ticket-core">
-                <button class="modal-close-btn" id="closeTicketModal"><i class="ri-close-line"></i></button>
+                <button class="modal-close-btn" id="closeTicketModal" aria-label="Закрити"><i class="ri-close-line"></i></button>
 
                 <div class="ticket-header">
-                    <div class="ticket-brand">ELEGANCE BEAUTY • КИЇВ</div>
-                    <span class="ticket-status-badge" id="tStatusBadge"><i class="ri-time-line"></i> ПЕРЕДПЕРЕГЛЯД</span>
+                    <span class="ticket-brand">ELEGANCE STUDIO</span>
+                    <span class="ticket-status-badge" id="tStatusBadge"><i class="ri-checkbox-circle-line"></i> ПЕРЕДПЕРЕГЛЯД БРОНЮВАННЯ</span>
                 </div>
 
-                <div class="ticket-body">
-                    <h3 class="ticket-title">Перевірте ваші дані:</h3>
-                    
-                    <div class="ticket-info-grid">
-                        <div class="t-info-item">
-                            <span class="t-label">Клієнт:</span>
-                            <span class="t-val" id="tClientName">Катерина</span>
-                        </div>
-                        <div class="t-info-item">
-                            <span class="t-label">Майстер:</span>
-                            <span class="t-val" id="tMasterName">Олена Соколова</span>
-                        </div>
-                        <div class="t-info-item">
-                            <span class="t-label">Дата та Час:</span>
-                            <span class="t-val" id="tDateTime">06 Серпня, 13:00</span>
-                        </div>
-                        <div class="t-info-item">
-                            <span class="t-label">Обрані послуги:</span>
-                            <span class="t-val" id="tServicesList">Нарощування вій 2D</span>
-                        </div>
-                        <div class="t-info-item total">
-                            <span class="t-label">Загальна вартість:</span>
-                            <span class="t-val text-pink luxury-price" id="tTotalPrice">950 грн</span>
-                        </div>
-                    </div>
+                <h3 class="ticket-title">Ваш квиток на візит</h3>
 
-                    <div class="ticket-qr-section">
-                        <div class="qr-box">
-                            <i class="ri-qr-code-line"></i>
-                        </div>
-                        <p class="qr-desc">Перевірте вибрані послуги та час. Якщо все вірно — натисніть підтвердження!</p>
+                <div class="ticket-info-grid">
+                    <div class="t-info-item">
+                        <span class="t-label">Клієнт:</span>
+                        <span class="t-val" id="tClientName">Катерина</span>
                     </div>
+                    <div class="t-info-item">
+                        <span class="t-label">Майстер:</span>
+                        <span class="t-val" id="tMasterName">Олена Соколова</span>
+                    </div>
+                    <div class="t-info-item">
+                        <span class="t-label">Дата та час:</span>
+                        <span class="t-val" id="tDateTime">14 Серпня 2026, 13:00</span>
+                    </div>
+                    <div class="t-info-item">
+                        <span class="t-label">Послуги:</span>
+                        <span class="t-val" id="tServicesList">Оксамитовий Об'єм 2D / 3D</span>
+                    </div>
+                    <div class="t-info-item">
+                        <span class="t-label">До сплати у салоні:</span>
+                        <span class="t-val price-total" id="tTotalPrice">950 грн</span>
+                    </div>
+                </div>
 
-                    <!-- Final Modal Actions -->
-                    <div class="ticket-actions-row">
-                        <button class="btn-secondary-glass" id="btnEditTicket">
-                            <i class="ri-edit-line"></i> Змінити деталі
-                        </button>
-                        <button class="btn-nested-primary" id="btnFinalConfirm">
-                            <span class="btn-text">Підтвердити запис</span>
-                            <span class="btn-icon-wrapper"><i class="ri-check-line"></i></span>
-                        </button>
-                    </div>
-                    <div class="ticket-success-message" id="tSuccessMsg" style="display:none;">
-                        <i class="ri-checkbox-circle-fill"></i> Дякуємо! Вашу броню успішно внесено в графік майстра! 🎉
-                    </div>
+                <div class="ticket-qr-section">
+                    <div class="qr-box"><i class="ri-qr-code-line"></i></div>
+                    <p class="qr-desc">Покажіть цей електронний квиток адміністратору при вході</p>
+                </div>
+
+                <div class="ticket-actions-row">
+                    <button class="btn-secondary-glass" id="btnEditTicket"><i class="ri-edit-line"></i> Змінити</button>
+                    <button class="btn-nested-primary" id="btnFinalConfirm">
+                        <span class="btn-text">Підтвердити візит</span>
+                        <span class="btn-icon-wrapper"><i class="ri-check-double-line"></i></span>
+                    </button>
+                </div>
+
+                <div class="ticket-success-message" id="tSuccessMsg" style="display: none;">
+                    <i class="ri-checkbox-circle-fill"></i> Дякуємо! Вашу броню успішно внесено в графік майстра!
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Mobile Sticky Mini-Booking Bar -->
+    <!-- Mobile Sticky Booking Bar -->
     <div class="mobile-sticky-bar">
-        <div class="mobile-bar-info">
-            <span class="m-bar-title">«Elegance» • Київ, Хрещатик</span>
-            <span class="m-bar-sub">★ 4.98 • 11:00 - 20:00</span>
+        <div>
+            <span class="m-bar-title">Elegance Kyiv</span>
+            <span class="m-bar-sub">Нарощування вій & Манікюр</span>
         </div>
-        <a href="#booking" class="btn-nested-primary btn-sm-mobile">
+        <a href="#booking" class="btn-nested-primary">
             <span class="btn-text">Записатися</span>
             <span class="btn-icon-wrapper"><i class="ri-calendar-line"></i></span>
         </a>
@@ -1310,12 +1406,12 @@
             <div class="footer-content">
                 <div class="footer-brand">
                     <span class="brand-title">ELEGANCE</span>
-                    <p>© 2026 Усі права захищені. Салон естетики та краси «Elegance» (Київ, вул. Хрещатик, 22).</p>
+                    <p>© 2026 Б'юті-Студія Elegance. Усі права захищено.</p>
                 </div>
                 <div class="footer-links">
                     <a href="#services">Послуги</a>
-                    <a href="#transformations">Роботи</a>
-                    <a href="#booking">Онлайн-запис</a>
+                    <a href="#masters">Майстри</a>
+                    <a href="#booking">Онлайн-Запис</a>
                     <a href="#contacts">Контакти</a>
                 </div>
             </div>
@@ -1323,6 +1419,6 @@
     </footer>
 
     <!-- App JavaScript -->
-    <script src="app.js?v=20260807_MASTERS_SHOWCASE_v1"></script>
+    <script src="app.js?v=20260807_PARALLEL_COMBOS_v2"></script>
 </body>
 </html>
