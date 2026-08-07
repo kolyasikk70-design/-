@@ -873,68 +873,28 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 const clientName = clientNameInput ? clientNameInput.value || 'Клієнт' : 'Клієнт';
                 const clientPhone = clientPhoneInput ? clientPhoneInput.value || '+380 67 000 0000' : '+380 67 000 0000';
-            const notesInput = document.getElementById('clientNotes');
-            const clientNotes = notesInput ? notesInput.value || '' : '';
-
-                const selectedMasterCard = document.querySelector('.cat-masters .master-card-shell.selected');
-                const currentMasterId = selectedMasterCard ? selectedMasterCard.getAttribute('data-master-id') : 'm1';
-
                 const selectedRadio = document.querySelector('.b-service-cb:checked');
                 const serviceName = selectedRadio ? selectedRadio.getAttribute('data-name') : 'Оксамитовий Об\'єм 2D / 3D';
-                const serviceDuration = selectedRadio ? parseInt(selectedRadio.getAttribute('data-time') || 90) : 90;
                 const activeSlot = document.querySelector('#timeSlotsGrid .time-slot-btn.active');
                 const isOvertime = activeSlot ? activeSlot.classList.contains('overtime') : false;
 
-                const bookingPayload = {
-                    date: selectedDateStr,
-                    time: selectedTimeStr,
-                    duration: serviceDuration,
-                    masterId: currentMasterId,
-                    masterName: selectedMasterName,
-                    serviceName: serviceName,
-                    clientName: clientName,
-                    phone: clientPhone,
-                    notes: clientNotes,
-                    isOvertime: isOvertime
-                };
+                document.getElementById('tClientName').textContent = clientName;
+                document.getElementById('tMasterName').textContent = selectedMasterName;
+                document.getElementById('tDateTime').textContent = `${selectedDateStr}, ${selectedTimeStr}${isOvertime ? ' (❓ Понадурочно)' : ''}`;
+                document.getElementById('tServicesList').textContent = serviceName;
+                document.getElementById('tTotalPrice').textContent = summaryPrice ? summaryPrice.textContent : '950 грн';
 
-                // 1. Показываем статус отправки на кнопке
-                const origBtnText = btnBookingNext.innerHTML;
-                btnBookingNext.disabled = true;
-                btnBookingNext.innerHTML = '<i class="ri-loader-4-line ri-spin"></i> Запис в Altegio...';
+                if (tStatusBadge) {
+                    tStatusBadge.className = 'ticket-status-badge';
+                    tStatusBadge.style.background = 'rgba(236, 72, 153, 0.15)';
+                    tStatusBadge.style.color = 'var(--color-pink-primary)';
+                    tStatusBadge.innerHTML = `<i class="ri-time-line"></i> ПЕРЕДПЕРЕГЛЯД БРОНЮВАННЯ`;
+                }
+                if (tSuccessMsg) tSuccessMsg.style.display = 'none';
 
-                // 2. Ждём гарантированного ответа от сервера и Altegio API!
-                saveBooking(bookingPayload).then((altegioRes) => {
-                    btnBookingNext.disabled = false;
-                    btnBookingNext.innerHTML = origBtnText;
-
-                    document.getElementById('tClientName').textContent = clientName;
-                    document.getElementById('tMasterName').textContent = selectedMasterName;
-                    document.getElementById('tDateTime').textContent = `${selectedDateStr}, ${selectedTimeStr}${isOvertime ? ' (❓ Понадурочно)' : ''}`;
-                    document.getElementById('tServicesList').textContent = serviceName;
-                    document.getElementById('tTotalPrice').textContent = summaryPrice ? summaryPrice.textContent : '950 грн';
-
-                    let recIdText = '';
-                    if (altegioRes && altegioRes.altegio && altegioRes.altegio.data && altegioRes.altegio.data[0]) {
-                        recIdText = ` (#${altegioRes.altegio.data[0].record_id})`;
-                    }
-
-                    if (tStatusBadge) {
-                        tStatusBadge.className = 'ticket-status-badge confirmed';
-                        tStatusBadge.style.background = 'rgba(16, 185, 129, 0.15)';
-                        tStatusBadge.style.color = '#10B981';
-                        tStatusBadge.innerHTML = `<i class="ri-checkbox-circle-fill"></i> ЗАПИС ПІДТВЕРДЖЕНО ТА НАДІСЛАНО В ALTEGIO${recIdText}`;
-                    }
-                    if (tSuccessMsg) tSuccessMsg.style.display = 'block';
-
-                    if (ticketModal) {
-                        ticketModal.classList.add('active');
-                    }
-                }).catch(() => {
-                    btnBookingNext.disabled = false;
-                    btnBookingNext.innerHTML = origBtnText;
-                    if (ticketModal) ticketModal.classList.add('active');
-                });
+                if (ticketModal) {
+                    ticketModal.classList.add('active');
+                }
             }
         });
     }
@@ -943,6 +903,8 @@ document.addEventListener('DOMContentLoaded', () => {
         btnFinalConfirm.addEventListener('click', () => {
             const clientName = clientNameInput ? clientNameInput.value || 'Катерина' : 'Катерина';
             const clientPhone = clientPhoneInput ? clientPhoneInput.value || '+380 67 000 0000' : '+380 67 000 0000';
+            const notesInput = document.getElementById('clientNotes');
+            const clientNotes = notesInput ? notesInput.value || '' : '';
             const selectedRadio = document.querySelector('.b-service-cb:checked');
             const selectedMasterCard = document.querySelector('.cat-masters .master-card-shell.selected');
             const masterId = selectedMasterCard ? selectedMasterCard.getAttribute('data-master-id') : 'm1';
@@ -950,6 +912,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const serviceName = selectedRadio ? selectedRadio.getAttribute('data-name') : 'Оксамитовий Об\'єм 2D / 3D';
             const activeSlot = document.querySelector('#timeSlotsGrid .time-slot-btn.active');
             const isOvertime = activeSlot ? activeSlot.classList.contains('overtime') : false;
+
+            const origBtnText = btnFinalConfirm.innerHTML;
+            btnFinalConfirm.disabled = true;
+            btnFinalConfirm.innerHTML = '<i class="ri-loader-4-line ri-spin"></i> Збереження...';
 
             saveBooking({
                 date: selectedDateStr,
@@ -960,42 +926,53 @@ document.addEventListener('DOMContentLoaded', () => {
                 serviceName: serviceName,
                 clientName: clientName,
                 phone: clientPhone,
-                isOvertime: isOvertime,
-                telegramStatus: isOvertime ? '❓ ПОНАДУРОЧНО (ПОТРЕБУЄ УЗГОДЖЕННЯ)' : '✅ ПІДТВЕРДЖЕНО'
+                notes: clientNotes,
+                isOvertime: isOvertime
+            }).then((altegioRes) => {
+                btnFinalConfirm.disabled = false;
+                btnFinalConfirm.innerHTML = origBtnText;
+
+                playChimeSound();
+
+                let recIdText = '';
+                if (altegioRes && altegioRes.altegioSync && altegioRes.altegioSync.data && altegioRes.altegioSync.data[0]) {
+                    recIdText = ` (#${altegioRes.altegioSync.data[0].record_id})`;
+                }
+
+                if (tStatusBadge) {
+                    if (isOvertime) {
+                        tStatusBadge.className = 'ticket-status-badge confirmed';
+                        tStatusBadge.style.background = 'rgba(245, 158, 11, 0.2)';
+                        tStatusBadge.style.color = '#D97706';
+                        tStatusBadge.innerHTML = '<i class="ri-question-mark"></i> НАДІСЛАНО НА УЗГОДЖЕННЯ';
+                    } else {
+                        tStatusBadge.className = 'ticket-status-badge confirmed';
+                        tStatusBadge.style.background = 'rgba(16, 185, 129, 0.15)';
+                        tStatusBadge.style.color = '#10B981';
+                        tStatusBadge.innerHTML = `<i class="ri-checkbox-circle-fill"></i> ЗАПИС ПІДТВЕРДЖЕНО ТА НАДІСЛАНО В ALTEGIO${recIdText}`;
+                    }
+                }
+
+                if (tSuccessMsg) {
+                    if (isOvertime) {
+                        tSuccessMsg.innerHTML = '<i class="ri-question-line"></i> Дякуємо! Запит надіслано в Telegram майстру для узгодження прийому після 20:00! 📲';
+                        tSuccessMsg.style.color = '#D97706';
+                        tSuccessMsg.style.background = 'rgba(245, 158, 11, 0.12)';
+                    } else {
+                        tSuccessMsg.innerHTML = '<i class="ri-checkbox-circle-fill"></i> Дякуємо! Вашу броню успішно внесено в графік майстра та Telegram! 🎉';
+                        tSuccessMsg.style.color = '#10B981';
+                        tSuccessMsg.style.background = 'rgba(16, 185, 129, 0.12)';
+                    }
+                    tSuccessMsg.style.display = 'block';
+                }
+
+                setTimeout(() => {
+                    if (ticketModal) ticketModal.classList.remove('active');
+                }, 2200);
+            }).catch(() => {
+                btnFinalConfirm.disabled = false;
+                btnFinalConfirm.innerHTML = origBtnText;
             });
-
-            playChimeSound();
-
-            if (tStatusBadge) {
-                if (isOvertime) {
-                    tStatusBadge.className = 'ticket-status-badge confirmed';
-                    tStatusBadge.style.background = 'rgba(245, 158, 11, 0.2)';
-                    tStatusBadge.style.color = '#D97706';
-                    tStatusBadge.innerHTML = '<i class="ri-question-mark"></i> НАДІСЛАНО НА УЗГОДЖЕННЯ';
-                } else {
-                    tStatusBadge.className = 'ticket-status-badge confirmed';
-                    tStatusBadge.style.background = 'rgba(16, 185, 129, 0.15)';
-                    tStatusBadge.style.color = '#10B981';
-                    tStatusBadge.innerHTML = '<i class="ri-checkbox-circle-fill"></i> ЗАПИС ПІДТВЕРДЖЕНО';
-                }
-            }
-
-            if (tSuccessMsg) {
-                if (isOvertime) {
-                    tSuccessMsg.innerHTML = '<i class="ri-question-line"></i> Дякуємо! Запит надіслано в Telegram майстру для узгодження прийому після 20:00! 📲';
-                    tSuccessMsg.style.color = '#D97706';
-                    tSuccessMsg.style.background = 'rgba(245, 158, 11, 0.12)';
-                } else {
-                    tSuccessMsg.innerHTML = '<i class="ri-checkbox-circle-fill"></i> Дякуємо! Вашу броню успішно внесено в графік майстра! 🎉';
-                    tSuccessMsg.style.color = '#10B981';
-                    tSuccessMsg.style.background = 'rgba(16, 185, 129, 0.1)';
-                }
-                tSuccessMsg.style.display = 'block';
-            }
-
-            setTimeout(() => {
-                if (ticketModal) ticketModal.classList.remove('active');
-            }, 2200);
         });
     }
 
