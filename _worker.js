@@ -3,15 +3,14 @@
  * Intercepts /api/bookings and /api/slots, and proxies static assets to env.ASSETS.
  */
 
-const ALTEGIO_COMPANY_ID = '1386901';
-const ALTEGIO_PARTNER_TOKEN = 'eygdaa9bgg844dse4at5';
+const DEFAULT_ALTEGIO_COMPANY_ID = '1386901';
+const DEFAULT_ALTEGIO_PARTNER_TOKEN = 'eygdaa9bgg844dse4at5';
+const DEFAULT_BOT_TOKEN = "8974021477:AAESXYJwA4MNYvNCX3QBe2FEeUgkm3zDqMc";
+const DEFAULT_ADMIN_ID = "773946321";
 
-const BOT_TOKEN = "8974021477:AAESXYJwA4MNYvNCX3QBe2FEeUgkm3zDqMc";
-const ADMIN_ID = "773946321"; // Telegram ID админа
-
-async function sendToTelegram(data) {
-    const BOT_TOKEN = "8974021477:AAESXYJwA4MNYvNCX3QBe2FEeUgkm3zDqMc";
-    const ADMIN_ID = "773946321";
+async function sendToTelegram(data, env = {}) {
+    const botToken = env.BOT_TOKEN || DEFAULT_BOT_TOKEN;
+    const adminId = env.ADMIN_ID || DEFAULT_ADMIN_ID;
 
     const text = `🆕 *НОВИЙ ЗАПИС З САЙТУ (Altegio CRM)*\n\n` +
         `👤 *Клієнт:* ${data.name || 'Клієнт'} (${data.phone || ''})\n` +
@@ -20,11 +19,11 @@ async function sendToTelegram(data) {
         `📅 *Дата/Час:* ${data.date_time || ''}\n` +
         `${data.notes ? `📝 *Примітка:* ${data.notes}\n` : ''}`;
 
-    await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+    await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-            chat_id: ADMIN_ID,
+            chat_id: adminId,
             text: text,
             parse_mode: 'Markdown',
             reply_markup: {
@@ -47,7 +46,16 @@ const STAFF_MAP = {
     'default': 3081868
 };
 
-const ALTEGIO_SERVICE_ID = 13734350;
+// Карта услуг Altegio
+const SERVICE_MAP = {
+    '1': 13734350,
+    '2': 13734350,
+    '3': 13734350,
+    '4': 13734350,
+    '5': 13734350,
+    '6': 13734350,
+    'default': 13734350
+};
 
 export default {
     async fetch(request, env, ctx) {
@@ -138,25 +146,27 @@ export default {
                             id, date, time, duration, master_id, master_name, service_name, client_name, phone, notes, is_overtime, status
                         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                     `).bind(
-                        id, date, time, parseInt(duration), masterId, masterName, serviceName, clientName, phone, notes,
+                        id, date, time, parseInt(duration) || 90, masterId, masterName, serviceName, clientName, phone, notes,
                         isOvertime ? 1 : 0, isOvertime ? 'PENDING_APPROVAL' : 'CONFIRMED'
                     ).run();
                 }
 
-                // Б. Форматируем дату для Altegio (YYYY-MM-DDTHH:MM:SS+03:00)
+                // Б. Динамически и безопасно форматируем дату для Altegio (YYYY-MM-DDTHH:MM:SS+03:00)
                 let formattedDatetime = '2026-08-08T14:00:00+03:00';
                 try {
-                    const currentYear = new Date().getFullYear();
+                    const now = new Date();
+                    let targetYear = now.getFullYear();
                     let monthStr = '08';
                     let dayStr = '08';
 
                     if (date) {
                         const lowerDate = date.toLowerCase();
-                        const parts = date.split(' ');
+                        const parts = date.trim().split(' ');
                         const dayNum = parseInt(parts[0]);
                         if (!isNaN(dayNum)) {
                             dayStr = dayNum < 10 ? '0' + dayNum : '' + dayNum;
                         }
+
                         if (lowerDate.includes('січ')) monthStr = '01';
                         else if (lowerDate.includes('лют')) monthStr = '02';
                         else if (lowerDate.includes('берез')) monthStr = '03';
@@ -169,11 +179,19 @@ export default {
                         else if (lowerDate.includes('жовт')) monthStr = '10';
                         else if (lowerDate.includes('листоп')) monthStr = '11';
                         else if (lowerDate.includes('груд')) monthStr = '12';
+
+                        // Корректировка года при переносе записи через Декабрь -> Январь
+                        if (now.getMonth() === 11 && monthStr === '01') {
+                            targetYear += 1;
+                        }
                     }
                     const cleanTime = (time || '14:00').trim();
-                    formattedDatetime = `${currentYear}-${monthStr}-${dayStr}T${cleanTime}:00+03:00`;
+                    formattedDatetime = `${targetYear}-${monthStr}-${dayStr}T${cleanTime}:00+03:00`;
                 } catch (e) {}
 
+                const companyId = env.ALTEGIO_COMPANY_ID || DEFAULT_ALTEGIO_COMPANY_ID;
+                const partnerToken = env.ALTEGIO_PARTNER_TOKEN || DEFAULT_ALTEGIO_PARTNER_TOKEN;
+                const serviceId = SERVICE_MAP[data.serviceId] || SERVICE_MAP['default'];
                 let targetStaffId = STAFF_MAP[masterId] || (masterName.includes('Олена') ? 3081874 : 3081868);
                 const clientEmail = (email && email.includes('@')) ? email.trim() : 'client@beauty-salon.kyiv';
 
@@ -182,12 +200,12 @@ export default {
                 try {
                     const cleanPhone = phone.replace(/\D/g, '');
                     const sendBookingToAltegio = async (staffId) => {
-                        return fetch(`https://api.altegio.com/api/v1/book_record/${ALTEGIO_COMPANY_ID}`, {
+                        return fetch(`https://api.altegio.com/api/v1/book_record/${companyId}`, {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
                                 'Accept': 'application/vnd.api.v2+json',
-                                'Authorization': `Bearer ${ALTEGIO_PARTNER_TOKEN}`
+                                'Authorization': `Bearer ${partnerToken}`
                             },
                             body: JSON.stringify({
                                 phone: cleanPhone,
@@ -196,7 +214,7 @@ export default {
                                 comment: `Запис з веб-сайту: ${serviceName} (Майстер: ${masterName}). ${notes}`.trim(),
                                 appointments: [{
                                     id: 1,
-                                    services: [ALTEGIO_SERVICE_ID],
+                                    services: [serviceId],
                                     staff_id: staffId,
                                     datetime: formattedDatetime
                                 }]
@@ -226,7 +244,7 @@ export default {
                         service: serviceName,
                         date_time: `${date}, о ${time}`,
                         notes: notes
-                    });
+                    }, env);
                 } catch (tgErr) {
                     console.warn('Telegram send status:', tgErr.message);
                 }
