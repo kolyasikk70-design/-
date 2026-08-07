@@ -1,5 +1,5 @@
 /* ==========================================================================
-   INTERACTIVE ENGINE — BEAUTY SALON «КОЛЯН» (KYIV REAL MARKET UAH PRICES)
+   INTERACTIVE ENGINE — BEAUTY SALON «ELEGANCE» (KYIV REAL MARKET UAH PRICES)
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
