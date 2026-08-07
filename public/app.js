@@ -968,6 +968,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 setTimeout(() => {
                     if (ticketModal) ticketModal.classList.remove('active');
+
+                    // 1. Очищаем поля ввода (Имя, Телефон, Примечания)
+                    if (clientNameInput) {
+                        clientNameInput.value = '';
+                        clientNameInput.classList.remove('invalid');
+                    }
+                    if (clientPhoneInput) {
+                        clientPhoneInput.value = '';
+                        clientPhoneInput.classList.remove('invalid');
+                    }
+                    const notesInput = document.getElementById('clientNotes');
+                    if (notesInput) notesInput.value = '';
+
+                    // 2. Сбрасываем шаги мастера бронирования на Шаг 1
+                    currentBookingStep = 1;
+                    renderBookingStep(1);
+
+                    // 3. Плавно скроллим страницу на самый верх
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
                 }, 2200);
             }).catch(() => {
                 btnFinalConfirm.disabled = false;
