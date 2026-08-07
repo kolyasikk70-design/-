@@ -1941,6 +1941,159 @@ button.cal-day-btn.active,
     color: var(--color-text-light);
 }
 
+/* Masters Showcase Section */
+.masters-showcase-section {
+    background: transparent;
+    border-top: 1px solid var(--color-border-hairline);
+}
+
+.masters-showcase-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.master-showcase-card-shell {
+    padding: 5px;
+    background: var(--color-bg-card-shell);
+    border-radius: var(--radius-outer);
+    border: 1px solid var(--color-border-hairline);
+    transition: var(--transition-normal);
+}
+
+.master-showcase-card-shell:hover {
+    transform: translateY(-6px);
+    border-color: var(--color-pink-primary);
+    box-shadow: var(--shadow-ambient);
+}
+
+.master-showcase-card-core {
+    background: var(--color-bg-card-core);
+    border-radius: calc(var(--radius-outer) - 5px);
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.master-showcase-photo-box {
+    position: relative;
+    width: 100%;
+    height: 240px;
+    overflow: hidden;
+}
+
+.master-showcase-photo-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s var(--ease-spring);
+}
+
+.master-showcase-card-shell:hover .master-showcase-photo-box img {
+    transform: scale(1.07);
+}
+
+.master-showcase-badge {
+    position: absolute;
+    top: 0.85rem;
+    left: 0.85rem;
+    padding: 0.3rem 0.75rem;
+    border-radius: var(--radius-btn);
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    backdrop-filter: blur(8px);
+}
+
+.master-showcase-badge.senior {
+    background: rgba(245, 158, 11, 0.9);
+    color: #FFFFFF;
+}
+
+.master-showcase-badge.junior {
+    background: rgba(217, 136, 136, 0.9);
+    color: #FFFFFF;
+}
+
+.master-showcase-rating {
+    position: absolute;
+    bottom: 0.85rem;
+    right: 0.85rem;
+    padding: 0.25rem 0.65rem;
+    border-radius: var(--radius-btn);
+    background: rgba(0, 0, 0, 0.75);
+    color: #F59E0B;
+    font-size: 0.75rem;
+    font-weight: 700;
+    backdrop-filter: blur(6px);
+}
+
+.master-showcase-info {
+    padding: 1.35rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.master-showcase-name {
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 0.25rem;
+}
+
+.master-showcase-role {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--color-pink-primary);
+    margin-bottom: 0.75rem;
+    display: block;
+}
+
+.master-showcase-bio {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+    margin-bottom: 1.1rem;
+    flex: 1;
+}
+
+.master-socials-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.1rem;
+}
+
+.master-social-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--color-bg-base);
+    border: 1px solid var(--color-border-hairline);
+    color: var(--color-text-main);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: var(--transition-fast);
+}
+
+.master-social-btn:hover {
+    background: var(--color-pink-primary);
+    color: #FFFFFF;
+    border-color: var(--color-pink-primary);
+    transform: scale(1.1);
+}
+
+.btn-master-direct-book {
+    width: 100%;
+    justify-content: center;
+}
+
 /* Contacts & Map */
 .contacts-grid {
     display: grid;
