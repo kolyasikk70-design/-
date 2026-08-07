@@ -1562,12 +1562,15 @@ section {
     transform: translateY(-2px);
 }
 
+button.cal-day-btn.active,
 .cal-day-btn.active {
-    background: var(--color-pink-primary) !important;
+    background: #D98888 !important;
+    background-color: #D98888 !important;
+    background-image: none !important;
     color: #FFFFFF !important;
     font-weight: 700;
-    border-color: var(--color-pink-primary) !important;
-    box-shadow: 0 4px 14px var(--color-pink-glow) !important;
+    border-color: #D98888 !important;
+    box-shadow: 0 4px 14px rgba(217, 136, 136, 0.4) !important;
     transform: scale(1.05);
 }
 
@@ -1985,26 +1988,86 @@ section {
     display: flex;
     align-items: center;
     justify-content: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: var(--transition-normal);
+}
+
+.map-visual-placeholder:hover {
+    background: radial-gradient(circle at center, #FAD6D6 0%, #D4BCBC 100%);
 }
 
 .map-pin-pulse {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.4rem;
+    gap: 0.45rem;
     background: #FFFFFF;
-    padding: 0.75rem 1.35rem;
-    border-radius: var(--radius-btn);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    padding: 1rem 1.4rem;
+    border-radius: 1.25rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     font-weight: 700;
     font-size: 0.9rem;
     color: var(--color-text-main);
     animation: mapPulse 2s infinite alternate;
+    transition: var(--transition-fast);
+    z-index: 2;
+}
+
+.map-visual-placeholder:hover .map-pin-pulse {
+    transform: scale(1.08);
+    box-shadow: 0 14px 35px rgba(217, 136, 136, 0.35);
 }
 
 .map-pin-pulse i {
     color: var(--color-pink-primary);
-    font-size: 1.6rem;
+    font-size: 1.8rem;
+}
+
+.map-route-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.85rem;
+    border-radius: var(--radius-btn);
+    background: var(--color-pink-primary);
+    color: #FFFFFF;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-top: 0.25rem;
+    box-shadow: 0 4px 12px rgba(217, 136, 136, 0.3);
+    transition: var(--transition-fast);
+}
+
+.map-visual-placeholder:hover .map-route-btn {
+    background: #C47575;
+    transform: scale(1.04);
+}
+
+.map-link-btn {
+    color: var(--color-text-main);
+    text-decoration: none;
+    transition: var(--transition-fast);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.map-link-btn:hover {
+    color: var(--color-pink-primary);
+}
+
+.route-inline-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-pink-primary);
+    background: rgba(217, 136, 136, 0.12);
+    padding: 0.15rem 0.6rem;
+    border-radius: var(--radius-btn);
 }
 
 @keyframes mapPulse {
