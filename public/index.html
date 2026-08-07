@@ -14,7 +14,7 @@
     <!-- Remix Icon -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     
-    <link rel="stylesheet" href="index.css?v=20260806_v10">
+    <link rel="stylesheet" href="index.css?v=20260807_v20">
 </head>
 <body>
 
@@ -667,7 +667,7 @@
                                                 <span class="b-s-title">Архітектура & Офарбування Брів</span>
                                                 <span class="time-badge"><i class="ri-time-line"></i> 50 хв</span>
                                             </div>
-                                            <span class="b-s-desc">Побудова симетричної форми та фарбування фарбою/хною</span>
+                                            <span class="b-s-desc">Геометрична розмітка форми, корекція воском та нанесення пігменту</span>
                                         </div>
                                         <span class="b-s-price luxury-price">650 грн</span>
                                     </label>
@@ -676,47 +676,47 @@
                                         <input type="checkbox" class="b-service-cb" data-id="4" data-cat="brows" data-name="Довготривала Укладка (Ламінування)" data-price="950" data-time="70">
                                         <div class="b-service-info">
                                             <div class="b-s-title-row">
-                                                <span class="b-s-title">Довготривала Укладка Брів</span>
+                                                <span class="b-s-title">Довготривала Укладка Брів (Ламінування)</span>
                                                 <span class="time-badge"><i class="ri-time-line"></i> 1 год 10 хв</span>
                                             </div>
-                                            <span class="b-s-desc">Фіксація та розчісування волосків у трендову зачесану форму</span>
+                                            <span class="b-s-desc">Укрощення неслухняних волосків та фіксуючий догляд на 2 місяці</span>
                                         </div>
                                         <span class="b-s-price luxury-price">950 грн</span>
                                     </label>
 
                                     <!-- NAILS GROUP -->
                                     <label class="b-service-item bcat-item nails">
-                                        <input type="checkbox" class="b-service-cb" data-id="5" data-cat="nails" data-name="Преміум Манікюр + Gel Polish" data-price="850" data-time="90">
+                                        <input type="checkbox" class="b-service-cb" data-id="5" data-cat="nails" data-name="Преміум Манікюр + Покриття Gel Polish" data-price="850" data-time="90">
                                         <div class="b-service-info">
                                             <div class="b-s-title-row">
                                                 <span class="b-s-title">Преміум Манікюр + Покриття Gel Polish</span>
                                                 <span class="time-badge"><i class="ri-time-line"></i> 1 год 30 хв</span>
                                             </div>
-                                            <span class="b-s-desc">Апаратний/комбінований манікюр із вирівнюванням нігтьової пластини</span>
+                                            <span class="b-s-desc">Апаратна обробка кутикули, вирівнювання та стійке покриття</span>
                                         </div>
                                         <span class="b-s-price luxury-price">850 грн</span>
                                     </label>
 
                                     <label class="b-service-item bcat-item nails">
-                                        <input type="checkbox" class="b-service-cb" data-id="6" data-cat="nails" data-name="Smart Педикюр з Обробкою Стопы" data-price="1200" data-time="105">
+                                        <input type="checkbox" class="b-service-cb" data-id="6" data-cat="nails" data-name="Smart Педикюр з Обробкою Стопи" data-price="1200" data-time="105">
                                         <div class="b-service-info">
                                             <div class="b-s-title-row">
                                                 <span class="b-s-title">Smart Педикюр з Обробкою Стопи</span>
                                                 <span class="time-badge"><i class="ri-time-line"></i> 1 год 45 хв</span>
                                             </div>
-                                            <span class="b-s-desc">Дисковий безпечний педикюр з індивідуальними насадками</span>
+                                            <span class="b-s-desc">Педикюр smart-дисками до дзеркальної гладкості стоп та естетика</span>
                                         </div>
                                         <span class="b-s-price luxury-price">1 200 грн</span>
                                     </label>
 
                                     <label class="b-service-item bcat-item nails">
-                                        <input type="checkbox" class="b-service-cb" data-id="10" data-cat="nails" data-name="Нарощування Нігтів Гель" data-price="1400" data-time="135">
+                                        <input type="checkbox" class="b-service-cb" data-id="10" data-cat="nails" data-name="Нарощування Нігтів Гель / Акрігель" data-price="1400" data-time="135">
                                         <div class="b-service-info">
                                             <div class="b-s-title-row">
                                                 <span class="b-s-title">Нарощування Нігтів Гель / Акрігель</span>
                                                 <span class="time-badge"><i class="ri-time-line"></i> 2 год 15 хв</span>
                                             </div>
-                                            <span class="b-s-desc">Моделювання ідеальної довжини та форми з армуванням</span>
+                                            <span class="b-s-desc">Моделювання будь-якої форми та довжини з армуванням</span>
                                         </div>
                                         <span class="b-s-price luxury-price">1 400 грн</span>
                                     </label>
@@ -724,34 +724,34 @@
                                 </div>
                             </div>
 
-                            <!-- Step 2: Select Master (Category Filtered) -->
+                            <!-- Step 2: Select Master for Category -->
                             <div class="b-step-content" id="bStep2">
-                                <h3>2. Оберіть вашого майстра:</h3>
-                                <div class="b-masters-selection-wrapper">
-                                    
+                                <h3>2. Оберіть майстра напрямку:</h3>
+                                
+                                <div class="masters-category-group" id="mastersGroup">
                                     <!-- LASH MASTERS -->
                                     <div class="masters-grid cat-masters lashes active">
                                         <div class="master-card-shell selected" data-master-id="m1" data-master-name="Олена Соколова (Старший Top Lash Artist)" data-cat="lashes">
                                             <div class="master-card-core">
-                                                <span class="rank-badge top"><i class="ri-award-fill"></i> Top Master</span>
+                                                <span class="rank-badge senior"><i class="ri-vip-crown-fill"></i> Старший майстер</span>
                                                 <div class="master-avatar-wrapper">
                                                     <img src="assets/images/master_portrait.png" alt="Майстер Олена">
                                                     <span class="master-rating">★ 4.99</span>
                                                 </div>
                                                 <h4 class="master-name">Олена Соколова</h4>
-                                                <span class="master-role">Старший Top Lash Artist</span>
-                                                <p class="master-experience">Досвід 7 років • Понад 3500 задоволених очей</p>
+                                                <span class="master-role">Top Lash Artist</span>
+                                                <p class="master-experience">Досвід 7 років • 4000+ процедур</p>
                                             </div>
                                         </div>
 
-                                        <div class="master-card-shell" data-master-id="m4" data-master-name="Вікторія Коваль (Lash Стиліст)" data-cat="lashes">
+                                        <div class="master-card-shell" data-master-id="m4" data-master-name="Марія Орлова (Lash Стиліст)" data-cat="lashes">
                                             <div class="master-card-core">
-                                                <span class="rank-badge mid"><i class="ri-star-fill"></i> Профі</span>
+                                                <span class="rank-badge junior"><i class="ri-sparkles-fill"></i> Молодший майстер</span>
                                                 <div class="master-avatar-wrapper">
-                                                    <img src="assets/images/master_viktoria.png" alt="Майстер Вікторія">
-                                                    <span class="master-rating">★ 4.95</span>
+                                                    <img src="assets/images/master_maria.png" alt="Майстер Марія">
+                                                    <span class="master-rating">★ 4.94</span>
                                                 </div>
-                                                <h4 class="master-name">Вікторія Коваль</h4>
+                                                <h4 class="master-name">Марія Орлова</h4>
                                                 <span class="master-role">Lash Стиліст</span>
                                                 <p class="master-experience">Досвід 3 роки • Моделювання вій</p>
                                             </div>
@@ -775,28 +775,28 @@
 
                                         <div class="master-card-shell" data-master-id="m5" data-master-name="Дар'я Кравченко (Brow Стиліст)" data-cat="brows">
                                             <div class="master-card-core">
-                                                <span class="rank-badge mid"><i class="ri-star-fill"></i> Профі</span>
+                                                <span class="rank-badge junior"><i class="ri-sparkles-fill"></i> Молодший майстер</span>
                                                 <div class="master-avatar-wrapper">
                                                     <img src="assets/images/master_daria.png" alt="Майстер Дар'я">
-                                                    <span class="master-rating">★ 4.94</span>
+                                                    <span class="master-rating">★ 4.92</span>
                                                 </div>
                                                 <h4 class="master-name">Дар'я Кравченко</h4>
                                                 <span class="master-role">Brow Стиліст</span>
-                                                <p class="master-experience">Досвід 4 роки • Ламінування брів</p>
+                                                <p class="master-experience">Досвід 2.5 роки • Укладка та фарбування</p>
                                             </div>
                                         </div>
                                     </div>
 
                                     <!-- NAIL MASTERS -->
                                     <div class="masters-grid cat-masters nails">
-                                        <div class="master-card-shell" data-master-id="m3" data-master-name="Марія Бондар (Senior Nail Instructor)" data-cat="nails">
+                                        <div class="master-card-shell" data-master-id="m3" data-master-name="Вікторія Кім (Старший Nail Instructor)" data-cat="nails">
                                             <div class="master-card-core">
-                                                <span class="rank-badge top"><i class="ri-award-fill"></i> Top Instructor</span>
+                                                <span class="rank-badge senior"><i class="ri-vip-crown-fill"></i> Старший майстер</span>
                                                 <div class="master-avatar-wrapper">
-                                                    <img src="assets/images/master_maria.png" alt="Майстер Марія">
-                                                    <span class="master-rating">★ 4.97</span>
+                                                    <img src="assets/images/master_viktoria.png" alt="Майстер Вікторія">
+                                                    <span class="master-rating">★ 4.98</span>
                                                 </div>
-                                                <h4 class="master-name">Марія Бондар</h4>
+                                                <h4 class="master-name">Вікторія Кім</h4>
                                                 <span class="master-role">Senior Nail Instructor</span>
                                                 <p class="master-experience">Досвід 6 років • Smart Педикюр</p>
                                             </div>
@@ -828,7 +828,14 @@
                                             <button type="button" class="cal-nav-btn" id="prevMonthBtn" aria-label="Попередній місяць">
                                                 <i class="ri-arrow-left-s-line"></i>
                                             </button>
-                                            <span class="calendar-month" id="calendarMonth">Серпень 2026</span>
+                                            <select id="calendarMonthSelect" class="calendar-month-select" aria-label="Оберіть місяць">
+                                                <option value="2026-7">Серпень 2026</option>
+                                                <option value="2026-8">Вересень 2026</option>
+                                                <option value="2026-9">Жовтень 2026</option>
+                                                <option value="2026-10">Листопад 2026</option>
+                                                <option value="2026-11">Грудень 2026</option>
+                                                <option value="2027-0">Січень 2027</option>
+                                            </select>
                                             <button type="button" class="cal-nav-btn" id="nextMonthBtn" aria-label="Наступний місяць">
                                                 <i class="ri-arrow-right-s-line"></i>
                                             </button>
@@ -1137,6 +1144,6 @@
     </footer>
 
     <!-- App JavaScript -->
-    <script src="app.js?v=20260807_v12"></script>
+    <script src="app.js?v=20260807_v20"></script>
 </body>
 </html>
