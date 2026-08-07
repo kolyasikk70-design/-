@@ -2147,20 +2147,46 @@ button.cal-day-btn.active,
 
 .social-links-row {
     display: flex;
+    flex-wrap: wrap;
     gap: 0.6rem;
-    margin-top: 0.35rem;
+    margin-top: 0.45rem;
 }
 
 .social-badge {
-    padding: 0.35rem 0.75rem;
+    padding: 0.4rem 0.85rem;
     border-radius: var(--radius-btn);
     background: var(--color-bg-base);
     border: 1px solid var(--color-border-hairline);
     color: var(--color-text-main) !important;
-    font-size: 0.8rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-decoration: none;
     display: inline-flex;
     align-items: center;
-    gap: 0.35rem;
+    gap: 0.4rem;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.social-badge i {
+    font-size: 1.1rem;
+    transition: color 0.2s ease;
+}
+
+.social-badge.tg i { color: #0088cc; }
+.social-badge.wa i { color: #25D366; }
+.social-badge.ig i { color: #E1306C; }
+
+.social-badge:hover {
+    background: var(--color-pink-primary);
+    color: #FFFFFF !important;
+    border-color: var(--color-pink-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(217, 136, 136, 0.35);
+}
+
+.social-badge:hover i {
+    color: #FFFFFF !important;
 }
 
 /* Map Visual Placeholder */
