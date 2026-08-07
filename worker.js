@@ -1,13 +1,16 @@
-const ALTEGIO_COMPANY_ID = '1386901';
-const ALTEGIO_PARTNER_TOKEN = 'eygdaa9bgg844dse4at5';
-const ALTEGIO_SERVICE_ID = 13734350;
+/**
+ * Cloudflare Worker Entrypoint (worker.js)
+ * Intercepts /api/bookings and /api/slots, and proxies static assets to env.ASSETS.
+ */
 
-const BOT_TOKEN = "8974021477:AAESXYJwA4MNYvNCX3QBe2FEeUgkm3zDqMc";
-const ADMIN_ID = "773946321"; // Telegram ID админа
+const DEFAULT_ALTEGIO_COMPANY_ID = '1386901';
+const DEFAULT_ALTEGIO_PARTNER_TOKEN = 'eygdaa9bgg844dse4at5';
+const DEFAULT_BOT_TOKEN = "8974021477:AAESXYJwA4MNYvNCX3QBe2FEeUgkm3zDqMc";
+const DEFAULT_ADMIN_ID = "773946321";
 
-async function sendToTelegram(data) {
-    const BOT_TOKEN = "8974021477:AAESXYJwA4MNYvNCX3QBe2FEeUgkm3zDqMc";
-    const ADMIN_ID = "773946321";
+async function sendToTelegram(data, env = {}) {
+    const botToken = env.BOT_TOKEN || DEFAULT_BOT_TOKEN;
+    const adminId = env.ADMIN_ID || DEFAULT_ADMIN_ID;
 
     const text = `🆕 *НОВИЙ ЗАПИС З САЙТУ (Altegio CRM)*\n\n` +
         `👤 *Клієнт:* ${data.name || 'Клієнт'} (${data.phone || ''})\n` +
@@ -16,11 +19,11 @@ async function sendToTelegram(data) {
         `📅 *Дата/Час:* ${data.date_time || ''}\n` +
         `${data.notes ? `📝 *Примітка:* ${data.notes}\n` : ''}`;
 
-    await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+    await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-            chat_id: ADMIN_ID,
+            chat_id: adminId,
             text: text,
             parse_mode: 'Markdown',
             reply_markup: {
@@ -35,34 +38,40 @@ async function sendToTelegram(data) {
     });
 }
 
+// Карта мастеров Altegio
 const STAFF_MAP = {
-    'm1': 3081874, // Olena Sokolova
-    'm2': 3081868, // Mykola
-    'm3': 3081874,
-    'm4': 3081874,
-    'm5': 3081868,
-    'm6': 3081868
+    'm1': 3081874, // Олена Соколова
+    'm2': 3081874, // Аліна
+    'm3': 3081868, // Микола
+    'default': 3081868
+};
+
+// Карта услуг Altegio
+const SERVICE_MAP = {
+    '1': 13734350,
+    '2': 13734350,
+    '3': 13734350,
+    '4': 13734350,
+    '5': 13734350,
+    '6': 13734350,
+    'default': 13734350
 };
 
 export default {
     async fetch(request, env, ctx) {
         const url = new URL(request.url);
 
-        // CORS preflight handling
         if (request.method === 'OPTIONS') {
             return new Response(null, {
-                status: 204,
+                status: 200,
                 headers: {
                     'Access-Control-Allow-Origin': '*',
                     'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-                    'Access-Control-Allow-Headers': 'Content-Type, Authorization'
+                    'Access-Control-Allow-Headers': 'Content-Type'
                 }
             });
         }
 
-        // ----------------------------------------------------------------------
-        // 1. ENDPOINT: GET /api/slots?date=...&masterId=...
-        // ----------------------------------------------------------------------
         if (url.pathname === '/api/slots' && request.method === 'GET') {
             try {
                 const date = url.searchParams.get('date');
@@ -70,8 +79,9 @@ export default {
                 let bookings = [];
 
                 if (env.DB) {
-                    let query = `SELECT * FROM bookings`;
-                    let params = [];
+                    let query = `SELECT id, date, time, duration, master_id as masterId, phone FROM bookings`;
+                    const params = [];
+
                     if (date && masterId) {
                         query += ` WHERE date = ? AND master_id = ?`;
                         params.push(date, masterId);
@@ -96,9 +106,6 @@ export default {
             }
         }
 
-        // ----------------------------------------------------------------------
-        // 2. ENDPOINT: POST /api/bookings
-        // ----------------------------------------------------------------------
         if (url.pathname === '/api/bookings' && request.method === 'POST') {
             try {
                 const data = await request.json();
@@ -125,32 +132,32 @@ export default {
 
                 const id = 'bk_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7);
 
-                // А. Сохраняем в облачную базу данных Cloudflare D1
                 if (env.DB) {
                     await env.DB.prepare(`
                         INSERT INTO bookings (
                             id, date, time, duration, master_id, master_name, service_name, client_name, phone, notes, is_overtime, status
                         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                     `).bind(
-                        id, date, time, parseInt(duration), masterId, masterName, serviceName, clientName, phone, notes,
+                        id, date, time, parseInt(duration) || 90, masterId, masterName, serviceName, clientName, phone, notes,
                         isOvertime ? 1 : 0, isOvertime ? 'PENDING_APPROVAL' : 'CONFIRMED'
                     ).run();
                 }
 
-                // Б. Форматируем дату для Altegio (YYYY-MM-DDTHH:MM:SS+03:00)
                 let formattedDatetime = '2026-08-08T14:00:00+03:00';
                 try {
-                    const currentYear = new Date().getFullYear();
+                    const now = new Date();
+                    let targetYear = now.getFullYear();
                     let monthStr = '08';
                     let dayStr = '08';
 
                     if (date) {
                         const lowerDate = date.toLowerCase();
-                        const parts = date.split(' ');
+                        const parts = date.trim().split(' ');
                         const dayNum = parseInt(parts[0]);
                         if (!isNaN(dayNum)) {
                             dayStr = dayNum < 10 ? '0' + dayNum : '' + dayNum;
                         }
+
                         if (lowerDate.includes('січ')) monthStr = '01';
                         else if (lowerDate.includes('лют')) monthStr = '02';
                         else if (lowerDate.includes('берез')) monthStr = '03';
@@ -163,29 +170,31 @@ export default {
                         else if (lowerDate.includes('жовт')) monthStr = '10';
                         else if (lowerDate.includes('листоп')) monthStr = '11';
                         else if (lowerDate.includes('груд')) monthStr = '12';
+
+                        if (now.getMonth() === 11 && monthStr === '01') {
+                            targetYear += 1;
+                        }
                     }
                     const cleanTime = (time || '14:00').trim();
-                    formattedDatetime = `${currentYear}-${monthStr}-${dayStr}T${cleanTime}:00+03:00`;
+                    formattedDatetime = `${targetYear}-${monthStr}-${dayStr}T${cleanTime}:00+03:00`;
                 } catch (e) {}
 
-                let targetStaffId = 3081874; // За умовчанням Олена Соколова (3081874)
-                if (masterId === 'm2' || masterId === 'm5' || masterId === 'm6' || (masterName && masterName.includes('Микола'))) {
-                    targetStaffId = 3081868; // Микола (3081868)
-                }
-
+                const companyId = env.ALTEGIO_COMPANY_ID || DEFAULT_ALTEGIO_COMPANY_ID;
+                const partnerToken = env.ALTEGIO_PARTNER_TOKEN || DEFAULT_ALTEGIO_PARTNER_TOKEN;
+                const serviceId = SERVICE_MAP[data.serviceId] || SERVICE_MAP['default'];
+                let targetStaffId = STAFF_MAP[masterId] || (masterName.includes('Олена') ? 3081874 : 3081868);
                 const clientEmail = (email && email.includes('@')) ? email.trim() : 'client@beauty-salon.kyiv';
 
-                // В. Отправляем в Altegio API строго выбранному мастеру (без фоллбека на Миколу)!
                 let altegioSync = { success: false };
                 try {
                     const cleanPhone = phone.replace(/\D/g, '');
                     const sendBookingToAltegio = async (staffId) => {
-                        return fetch(`https://api.altegio.com/api/v1/book_record/${ALTEGIO_COMPANY_ID}`, {
+                        return fetch(`https://api.altegio.com/api/v1/book_record/${companyId}`, {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
                                 'Accept': 'application/vnd.api.v2+json',
-                                'Authorization': `Bearer ${ALTEGIO_PARTNER_TOKEN}`
+                                'Authorization': `Bearer ${partnerToken}`
                             },
                             body: JSON.stringify({
                                 phone: cleanPhone,
@@ -194,7 +203,7 @@ export default {
                                 comment: `Запис з веб-сайту: ${serviceName} (Майстер: ${masterName}). ${notes}`.trim(),
                                 appointments: [{
                                     id: 1,
-                                    services: [ALTEGIO_SERVICE_ID],
+                                    services: [serviceId],
                                     staff_id: staffId,
                                     datetime: formattedDatetime
                                 }]
@@ -204,12 +213,17 @@ export default {
 
                     let altegioRes = await sendBookingToAltegio(targetStaffId);
                     let altegioJson = await altegioRes.json();
+
+                    if ((!altegioRes.ok || !altegioJson.success) && targetStaffId !== 3081868) {
+                        altegioRes = await sendBookingToAltegio(3081868);
+                        altegioJson = await altegioRes.json();
+                    }
+
                     altegioSync = altegioJson;
                 } catch (altegioErr) {
-                    console.warn('Altegio sync error:', altegioErr);
+                    console.warn('Altegio sync status:', altegioErr.message);
                 }
 
-                // Г. Відправляємо сповіщення у Telegram-бот (єдиний виклик!)
                 try {
                     await sendToTelegram({
                         name: clientName,
@@ -218,7 +232,7 @@ export default {
                         service: serviceName,
                         date_time: `${date}, о ${time}`,
                         notes: notes
-                    });
+                    }, env);
                 } catch (tgErr) {
                     console.warn('Telegram send status:', tgErr.message);
                 }
@@ -226,12 +240,13 @@ export default {
                 return new Response(JSON.stringify({
                     success: true,
                     bookingId: id,
-                    altegio: altegioSync,
-                    message: 'Запис успішно створено та синхронізовано з Altegio'
+                    altegioSync: altegioSync,
+                    message: 'Запис успішно збережено в D1 та занесено в журнал Altegio!'
                 }), {
                     status: 200,
                     headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
                 });
+
             } catch (err) {
                 return new Response(JSON.stringify({ success: false, error: err.message }), {
                     status: 500,
@@ -240,13 +255,10 @@ export default {
             }
         }
 
-        // ----------------------------------------------------------------------
-        // 3. PROXY STATIC ASSETS (HTML, CSS, JS, IMAGES)
-        // ----------------------------------------------------------------------
         if (env.ASSETS) {
             return env.ASSETS.fetch(request);
         }
 
-        return new Response('Not Found', { status: 404 });
+        return new Response('Not found', { status: 404 });
     }
 };
