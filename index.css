@@ -1295,15 +1295,48 @@ section {
     transition: var(--transition-fast);
 }
 
-.b-service-item:hover {
+.b-service-item:hover, .b-service-item:has(.b-service-cb:checked) {
     border-color: var(--color-pink-primary);
+    background: rgba(217, 136, 136, 0.05);
 }
 
 .b-service-cb {
-    width: 18px;
-    height: 18px;
-    accent-color: var(--color-pink-primary);
+    appearance: none;
+    -webkit-appearance: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 2px solid var(--color-border-hairline);
+    background: var(--color-bg-card-core);
     cursor: pointer;
+    position: relative;
+    outline: none;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+}
+
+.b-service-cb:hover {
+    border-color: var(--color-pink-primary);
+    box-shadow: 0 0 0 3px rgba(217, 136, 136, 0.15);
+}
+
+.b-service-cb:checked {
+    border-color: var(--color-pink-primary);
+    background: var(--color-bg-card-core);
+    box-shadow: 0 0 0 3px rgba(217, 136, 136, 0.2);
+}
+
+.b-service-cb:checked::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--color-pink-primary);
+    box-shadow: 0 0 8px var(--color-pink-glow);
 }
 
 .b-service-info {
