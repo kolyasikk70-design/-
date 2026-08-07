@@ -394,14 +394,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         serviceCbs.forEach(cb => {
             if (cb.checked) {
-                count = 1;
-                totalMinutes = parseInt(cb.getAttribute('data-time') || 0);
-                totalPrice = parseInt(cb.getAttribute('data-price') || 0);
+                count++;
+                totalMinutes += parseInt(cb.getAttribute('data-time') || 0);
+                totalPrice += parseInt(cb.getAttribute('data-price') || 0);
             }
         });
 
         if (summaryCount) {
-            summaryCount.textContent = '1 процедура';
+            summaryCount.textContent = count === 1 ? '1 процедура' : `${count} процедури`;
         }
         if (summaryTime) {
             summaryTime.textContent = formatMinutesToHours(totalMinutes);
@@ -619,8 +619,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (slotBtn && slotBtn.classList.contains('overtime')) {
             const slotTimeStr = slotBtn.getAttribute('data-time') || '19:00';
-            const selectedRadio = document.querySelector('.b-service-cb:checked');
-            let selectedDuration = selectedRadio ? parseInt(selectedRadio.getAttribute('data-time') || 90) : 90;
+            const selectedCbs = document.querySelectorAll('.b-service-cb:checked');
+            let selectedDuration = 0;
+            selectedCbs.forEach(cb => {
+                selectedDuration += parseInt(cb.getAttribute('data-time') || 90);
+            });
             if (selectedDuration === 0) selectedDuration = 60;
 
             const endMin = timeToMinutes(slotTimeStr) + selectedDuration;
@@ -660,8 +663,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } catch(e) {}
 
-        const selectedRadio = document.querySelector('.b-service-cb:checked');
-        let selectedDuration = selectedRadio ? parseInt(selectedRadio.getAttribute('data-time') || 90) : 90;
+        const selectedCbs = document.querySelectorAll('.b-service-cb:checked');
+        let selectedDuration = 0;
+        selectedCbs.forEach(cb => {
+            selectedDuration += parseInt(cb.getAttribute('data-time') || 90);
+        });
         if (selectedDuration === 0) selectedDuration = 60;
 
         const clientPhone = (document.getElementById('clientPhone')?.value || '').trim();
@@ -1174,7 +1180,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (tSuccessMsg) {
                     if (isOvertime) {
-                        tSuccessMsg.innerHTML = '<i class="ri-question-line"></i> Дякуємо! Запит надіслано в Telegram-бот майстру для узгодження прийому після 20:00! 📲';
+                        tSuccessMsg.innerHTML = '<i class="ri-question-line"></i> Дякуємо! Запит надіслано в Telegram майстру для узгодження прийому після 20:00! 📲';
                         tSuccessMsg.style.color = '#D97706';
                         tSuccessMsg.style.background = 'rgba(245, 158, 11, 0.12)';
                     } else {
@@ -1244,3 +1250,5 @@ document.addEventListener('DOMContentLoaded', () => {
         widgetObserver.observe(document.body, { childList: true, subtree: true });
     }
 });
+
+
