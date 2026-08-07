@@ -1460,6 +1460,33 @@ section {
     letter-spacing: 0.02em;
 }
 
+.calendar-month-select {
+    font-family: 'Playfair Display', var(--font-heading-serif), serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--color-text-main);
+    background: var(--color-bg-card-core);
+    border: 1px solid var(--color-border-hairline);
+    border-radius: 0.75rem;
+    padding: 0.35rem 0.85rem;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    text-align-last: center;
+}
+
+.calendar-month-select:hover, .calendar-month-select:focus {
+    border-color: var(--color-pink-primary);
+    box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.15);
+}
+
+[data-theme="dark"] .calendar-month-select {
+    background: #1C1A19;
+    color: #F5F3F0;
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
 .cal-nav-btn {
     width: 34px;
     height: 34px;
