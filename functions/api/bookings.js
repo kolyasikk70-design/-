@@ -6,6 +6,40 @@
 const ALTEGIO_COMPANY_ID = '1386901';
 const ALTEGIO_PARTNER_TOKEN = 'eygdaa9bgg844dse4at5';
 
+const BOT_TOKEN = "8974021477:AAESXYJwA4MNYvNCX3QBe2FEeUgkm3zDqMc";
+const ADMIN_ID = "773946321"; // Telegram ID админа
+
+async function sendTelegramNotification(booking) {
+    const text = `🆕 *НОВИЙ ЗАПИС З САЙТУ (Altegio CRM)*\n\n` +
+        `👤 *Клієнт:* ${booking.client_name || booking.clientName || 'Клієнт'} (${booking.client_phone || booking.phone || ''})\n` +
+        `💅 *Майстер:* ${booking.master_name || booking.masterName || 'Олена Соколова'}\n` +
+        `✂️ *Послуга:* ${booking.service_name || booking.serviceName || 'Процедура beauty'} (${booking.price || booking.totalPrice || '950'} грн)\n` +
+        `📅 *Дата/Час:* ${booking.date_time || `${booking.date || ''}, о ${booking.time || ''}`}\n` +
+        `${booking.notes ? `📝 *Примітка:* ${booking.notes}\n` : ''}` +
+        `${(booking.is_after_hours || booking.isOvertime) ? '❓ *Потребує підтвердження майстра (Після 20:00)*' : ''}`;
+    try {
+        await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                chat_id: ADMIN_ID,
+                text: text,
+                parse_mode: 'Markdown',
+                reply_markup: {
+                    inline_keyboard: [
+                        [
+                            { text: '✅ Підтвердити', callback_data: `confirm_site` },
+                            { text: '❌ Скасувати', callback_data: `cancel_site` }
+                        ]
+                    ]
+                }
+            })
+        });
+    } catch (err) {
+        console.warn('Telegram notification error:', err);
+    }
+}
+
 // Карта мастеров Altegio: Name/ID -> Altegio Staff ID
 const STAFF_MAP = {
     'm1': 3081874, // Олена Соколова
@@ -137,6 +171,22 @@ export async function onRequestPost(context) {
             altegioSync = altegioJson;
         } catch (altegioErr) {
             console.warn('Altegio sync status:', altegioErr.message);
+        }
+
+        // Г. Відправляємо сповіщення у Telegram-бот друга
+        try {
+            await sendTelegramNotification({
+                client_name: clientName,
+                client_phone: phone,
+                master_name: masterName,
+                service_name: serviceName,
+                price: data.price || data.totalPrice || '950',
+                date_time: `${date}, о ${time}`,
+                notes: notes,
+                is_after_hours: isOvertime
+            });
+        } catch (tgErr) {
+            console.warn('Telegram send status:', tgErr.message);
         }
 
         return new Response(JSON.stringify({
