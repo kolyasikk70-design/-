@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. SCROLL REVEAL ANIMATIONS (INTERSECTION OBSERVER)
     // ----------------------------------------------------------------------
     const revealElements = document.querySelectorAll(
-        '.section-header, .service-card-shell, .stat-card-bezel, .transformation-stage, .calculator-shell, .booking-widget-shell, .review-card-shell, .contact-info-card-shell, .map-card-shell'
+        '.section-header, .service-card-shell, .stat-card-bezel, .transformation-stage, .calculator-shell, .booking-widget-shell, .review-card-shell, .master-showcase-card-shell, .contact-info-card-shell, .map-card-shell'
     );
 
     revealElements.forEach(el => el.classList.add('reveal-on-scroll'));
@@ -425,6 +425,27 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('.master-card-shell').forEach(m => m.classList.remove('selected'));
             card.classList.add('selected');
             selectedMasterName = card.getAttribute('data-master-name') || 'Олена Соколова';
+        });
+    });
+
+    document.querySelectorAll('.btn-master-direct-book').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const mId = btn.getAttribute('data-master-id');
+            const cat = btn.getAttribute('data-cat') || 'lashes';
+            
+            switchBookingCategory(cat);
+            
+            const targetMasterCard = document.querySelector(`.cat-masters.${cat} .master-card-shell[data-master-id="${mId}"]`);
+            if (targetMasterCard) {
+                document.querySelectorAll('.master-card-shell').forEach(m => m.classList.remove('selected'));
+                targetMasterCard.classList.add('selected');
+                selectedMasterName = targetMasterCard.getAttribute('data-master-name') || 'Олена Соколова';
+            }
+            
+            const bookingSection = document.getElementById('booking');
+            if (bookingSection) {
+                bookingSection.scrollIntoView({ behavior: 'smooth' });
+            }
         });
     });
 
